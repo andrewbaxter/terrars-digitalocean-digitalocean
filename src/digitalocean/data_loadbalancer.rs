@@ -6,6 +6,8 @@ use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
 struct DataLoadbalancerData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -28,6 +30,11 @@ pub struct DataLoadbalancer(Rc<DataLoadbalancer_>);
 impl DataLoadbalancer {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderDigitalocean) -> &Self {
@@ -159,6 +166,12 @@ impl Datasource for DataLoadbalancer {
     }
 }
 
+impl Dependable for DataLoadbalancer {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataLoadbalancer {
     type O = ListRef<DataLoadbalancerRef>;
 
@@ -192,6 +205,7 @@ impl BuildDataLoadbalancer {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataLoadbalancerData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

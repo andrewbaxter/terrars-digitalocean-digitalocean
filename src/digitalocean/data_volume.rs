@@ -6,6 +6,8 @@ use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
 struct DataVolumeData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -31,6 +33,11 @@ pub struct DataVolume(Rc<DataVolume_>);
 impl DataVolume {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderDigitalocean) -> &Self {
@@ -113,6 +120,12 @@ impl Datasource for DataVolume {
     }
 }
 
+impl Dependable for DataVolume {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataVolume {
     type O = ListRef<DataVolumeRef>;
 
@@ -148,6 +161,7 @@ impl BuildDataVolume {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataVolumeData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 description: core::default::Default::default(),

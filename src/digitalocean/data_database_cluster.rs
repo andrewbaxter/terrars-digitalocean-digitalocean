@@ -6,6 +6,8 @@ use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
 struct DataDatabaseClusterData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -29,6 +31,11 @@ pub struct DataDatabaseCluster(Rc<DataDatabaseCluster_>);
 impl DataDatabaseCluster {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderDigitalocean) -> &Self {
@@ -150,6 +157,12 @@ impl Datasource for DataDatabaseCluster {
     }
 }
 
+impl Dependable for DataDatabaseCluster {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataDatabaseCluster {
     type O = ListRef<DataDatabaseClusterRef>;
 
@@ -185,6 +198,7 @@ impl BuildDataDatabaseCluster {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataDatabaseClusterData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

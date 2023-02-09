@@ -6,6 +6,8 @@ use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
 struct DataTagData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -27,6 +29,11 @@ pub struct DataTag(Rc<DataTag_>);
 impl DataTag {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderDigitalocean) -> &Self {
@@ -87,6 +94,12 @@ impl Datasource for DataTag {
     }
 }
 
+impl Dependable for DataTag {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataTag {
     type O = ListRef<DataTagRef>;
 
@@ -122,6 +135,7 @@ impl BuildDataTag {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataTagData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

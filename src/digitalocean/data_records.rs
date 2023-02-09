@@ -6,6 +6,8 @@ use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
 struct DataRecordsData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -32,6 +34,11 @@ pub struct DataRecords(Rc<DataRecords_>);
 impl DataRecords {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderDigitalocean) -> &Self {
@@ -98,6 +105,12 @@ impl Datasource for DataRecords {
     }
 }
 
+impl Dependable for DataRecords {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataRecords {
     type O = ListRef<DataRecordsRef>;
 
@@ -133,6 +146,7 @@ impl BuildDataRecords {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataRecordsData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 domain: self.domain,
