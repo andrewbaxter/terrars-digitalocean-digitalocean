@@ -1,7 +1,7 @@
 [package]
 name = "terrars-digitalocean-digitalocean"
 edition = "2021"
-version = "0.1.3"
+version = "0.1.4"
 description = "Pre-generated Terrars Digitalocean bindings"
 readme = "readme.md"
 license = "ISC"
