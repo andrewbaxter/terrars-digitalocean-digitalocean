@@ -27,6 +27,8 @@ struct ProjectData {
     purpose: Option<PrimField<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     resources: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    timeouts: Option<ProjectTimeoutsEl>,
 }
 
 struct Project_ {
@@ -135,6 +137,12 @@ impl Project {
         self
     }
 
+    #[doc= "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl Into<ProjectTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = Some(v.into());
+        self
+    }
+
     #[doc= "Get a reference to the value of field `created_at` after provisioning.\nthe date and time when the project was created, (ISO8601)"]
     pub fn created_at(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
@@ -188,6 +196,11 @@ impl Project {
     #[doc= "Get a reference to the value of field `updated_at` after provisioning.\nthe date and time when the project was last updated, (ISO8601)"]
     pub fn updated_at(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.updated_at", self.extract_ref()))
+    }
+
+    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> ProjectTimeoutsElRef {
+        ProjectTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -245,6 +258,7 @@ impl BuildProject {
                 name: self.name,
                 purpose: core::default::Default::default(),
                 resources: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -328,5 +342,69 @@ impl ProjectRef {
     #[doc= "Get a reference to the value of field `updated_at` after provisioning.\nthe date and time when the project was last updated, (ISO8601)"]
     pub fn updated_at(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.updated_at", self.extract_ref()))
+    }
+
+    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> ProjectTimeoutsElRef {
+        ProjectTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ProjectTimeoutsEl {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    delete: Option<PrimField<String>>,
+}
+
+impl ProjectTimeoutsEl {
+    #[doc= "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
+        self.delete = Some(v.into());
+        self
+    }
+}
+
+impl ToListMappable for ProjectTimeoutsEl {
+    type O = BlockAssignable<ProjectTimeoutsEl>;
+
+    fn do_map(self, base: String) -> Self::O {
+        BlockAssignable::Dynamic(DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildProjectTimeoutsEl {}
+
+impl BuildProjectTimeoutsEl {
+    pub fn build(self) -> ProjectTimeoutsEl {
+        ProjectTimeoutsEl { delete: core::default::Default::default() }
+    }
+}
+
+pub struct ProjectTimeoutsElRef {
+    shared: StackShared,
+    base: String,
+}
+
+impl Ref for ProjectTimeoutsElRef {
+    fn new(shared: StackShared, base: String) -> ProjectTimeoutsElRef {
+        ProjectTimeoutsElRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ProjectTimeoutsElRef {
+    fn shared(&self) -> &StackShared {
+        &self.shared
+    }
+
+    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 }

@@ -115,6 +115,11 @@ impl DataDatabaseCluster {
         PrimExpr::new(self.shared().clone(), format!("{}.private_uri", self.extract_ref()))
     }
 
+    #[doc= "Get a reference to the value of field `project_id` after provisioning.\n"]
+    pub fn project_id(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.extract_ref()))
+    }
+
     #[doc= "Get a reference to the value of field `region` after provisioning.\n"]
     pub fn region(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
@@ -123,6 +128,11 @@ impl DataDatabaseCluster {
     #[doc= "Get a reference to the value of field `size` after provisioning.\n"]
     pub fn size(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.size", self.extract_ref()))
+    }
+
+    #[doc= "Get a reference to the value of field `storage_size_mib` after provisioning.\n"]
+    pub fn storage_size_mib(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.storage_size_mib", self.extract_ref()))
     }
 
     #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -290,6 +300,11 @@ impl DataDatabaseClusterRef {
         PrimExpr::new(self.shared().clone(), format!("{}.private_uri", self.extract_ref()))
     }
 
+    #[doc= "Get a reference to the value of field `project_id` after provisioning.\n"]
+    pub fn project_id(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.extract_ref()))
+    }
+
     #[doc= "Get a reference to the value of field `region` after provisioning.\n"]
     pub fn region(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
@@ -298,6 +313,11 @@ impl DataDatabaseClusterRef {
     #[doc= "Get a reference to the value of field `size` after provisioning.\n"]
     pub fn size(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.size", self.extract_ref()))
+    }
+
+    #[doc= "Get a reference to the value of field `storage_size_mib` after provisioning.\n"]
+    pub fn storage_size_mib(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.storage_size_mib", self.extract_ref()))
     }
 
     #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]

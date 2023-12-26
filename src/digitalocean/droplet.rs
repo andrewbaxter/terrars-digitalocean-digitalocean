@@ -26,6 +26,8 @@ struct DropletData {
     #[serde(skip_serializing_if = "Option::is_none")]
     ipv6: Option<PrimField<bool>>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    ipv6_address: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     monitoring: Option<PrimField<bool>>,
     name: PrimField<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -146,6 +148,12 @@ impl Droplet {
     #[doc= "Set the field `ipv6`.\n"]
     pub fn set_ipv6(self, v: impl Into<PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().ipv6 = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `ipv6_address`.\n"]
+    pub fn set_ipv6_address(self, v: impl Into<PrimField<String>>) -> Self {
+        self.0.data.borrow_mut().ipv6_address = Some(v.into());
         self
     }
 
@@ -417,6 +425,7 @@ impl BuildDroplet {
                 id: core::default::Default::default(),
                 image: self.image,
                 ipv6: core::default::Default::default(),
+                ipv6_address: core::default::Default::default(),
                 monitoring: core::default::Default::default(),
                 name: self.name,
                 private_networking: core::default::Default::default(),

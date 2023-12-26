@@ -16,6 +16,8 @@ struct DataLoadbalancerData {
     id: Option<PrimField<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     name: Option<PrimField<String>>,
+    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
+    type_: Option<PrimField<String>>,
 }
 
 struct DataLoadbalancer_ {
@@ -54,6 +56,12 @@ impl DataLoadbalancer {
         self
     }
 
+    #[doc= "Set the field `type_`.\nthe type of the load balancer (GLOBAL or REGIONAL)"]
+    pub fn set_type(self, v: impl Into<PrimField<String>>) -> Self {
+        self.0.data.borrow_mut().type_ = Some(v.into());
+        self
+    }
+
     #[doc= "Get a reference to the value of field `algorithm` after provisioning.\nalgorithm used to determine which backend Droplet will be selected by a client"]
     pub fn algorithm(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.algorithm", self.extract_ref()))
@@ -82,6 +90,11 @@ impl DataLoadbalancer {
     #[doc= "Get a reference to the value of field `enable_proxy_protocol` after provisioning.\nwhether PROXY Protocol should be used to pass information from connecting client requests to the backend service"]
     pub fn enable_proxy_protocol(&self) -> PrimExpr<bool> {
         PrimExpr::new(self.shared().clone(), format!("{}.enable_proxy_protocol", self.extract_ref()))
+    }
+
+    #[doc= "Get a reference to the value of field `firewall` after provisioning.\nthe firewall rules for allowing/denying traffic to the load balancer"]
+    pub fn firewall(&self) -> ListRef<DataLoadbalancerFirewallElRef> {
+        ListRef::new(self.shared().clone(), format!("{}.firewall", self.extract_ref()))
     }
 
     #[doc= "Get a reference to the value of field `forwarding_rule` after provisioning.\nlist of forwarding rules of the load balancer"]
@@ -149,6 +162,11 @@ impl DataLoadbalancer {
         ListRef::new(self.shared().clone(), format!("{}.sticky_sessions", self.extract_ref()))
     }
 
+    #[doc= "Get a reference to the value of field `type_` after provisioning.\nthe type of the load balancer (GLOBAL or REGIONAL)"]
+    pub fn type_(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    }
+
     #[doc= "Get a reference to the value of field `urn` after provisioning.\nthe uniform resource name for the load balancer"]
     pub fn urn(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.urn", self.extract_ref()))
@@ -206,6 +224,7 @@ impl BuildDataLoadbalancer {
                 for_each: None,
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
+                type_: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -266,6 +285,11 @@ impl DataLoadbalancerRef {
         PrimExpr::new(self.shared().clone(), format!("{}.enable_proxy_protocol", self.extract_ref()))
     }
 
+    #[doc= "Get a reference to the value of field `firewall` after provisioning.\nthe firewall rules for allowing/denying traffic to the load balancer"]
+    pub fn firewall(&self) -> ListRef<DataLoadbalancerFirewallElRef> {
+        ListRef::new(self.shared().clone(), format!("{}.firewall", self.extract_ref()))
+    }
+
     #[doc= "Get a reference to the value of field `forwarding_rule` after provisioning.\nlist of forwarding rules of the load balancer"]
     pub fn forwarding_rule(&self) -> SetRef<DataLoadbalancerForwardingRuleElRef> {
         SetRef::new(self.shared().clone(), format!("{}.forwarding_rule", self.extract_ref()))
@@ -331,6 +355,11 @@ impl DataLoadbalancerRef {
         ListRef::new(self.shared().clone(), format!("{}.sticky_sessions", self.extract_ref()))
     }
 
+    #[doc= "Get a reference to the value of field `type_` after provisioning.\nthe type of the load balancer (GLOBAL or REGIONAL)"]
+    pub fn type_(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    }
+
     #[doc= "Get a reference to the value of field `urn` after provisioning.\nthe uniform resource name for the load balancer"]
     pub fn urn(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.urn", self.extract_ref()))
@@ -339,6 +368,81 @@ impl DataLoadbalancerRef {
     #[doc= "Get a reference to the value of field `vpc_uuid` after provisioning.\nUUID of the VPC in which the load balancer is located"]
     pub fn vpc_uuid(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.vpc_uuid", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataLoadbalancerFirewallEl {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    allow: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    deny: Option<SetField<PrimField<String>>>,
+}
+
+impl DataLoadbalancerFirewallEl {
+    #[doc= "Set the field `allow`.\n"]
+    pub fn set_allow(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
+        self.allow = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `deny`.\n"]
+    pub fn set_deny(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
+        self.deny = Some(v.into());
+        self
+    }
+}
+
+impl ToListMappable for DataLoadbalancerFirewallEl {
+    type O = BlockAssignable<DataLoadbalancerFirewallEl>;
+
+    fn do_map(self, base: String) -> Self::O {
+        BlockAssignable::Dynamic(DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataLoadbalancerFirewallEl {}
+
+impl BuildDataLoadbalancerFirewallEl {
+    pub fn build(self) -> DataLoadbalancerFirewallEl {
+        DataLoadbalancerFirewallEl {
+            allow: core::default::Default::default(),
+            deny: core::default::Default::default(),
+        }
+    }
+}
+
+pub struct DataLoadbalancerFirewallElRef {
+    shared: StackShared,
+    base: String,
+}
+
+impl Ref for DataLoadbalancerFirewallElRef {
+    fn new(shared: StackShared, base: String) -> DataLoadbalancerFirewallElRef {
+        DataLoadbalancerFirewallElRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataLoadbalancerFirewallElRef {
+    fn shared(&self) -> &StackShared {
+        &self.shared
+    }
+
+    #[doc= "Get a reference to the value of field `allow` after provisioning.\n"]
+    pub fn allow(&self) -> SetRef<PrimExpr<String>> {
+        SetRef::new(self.shared().clone(), format!("{}.allow", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `deny` after provisioning.\n"]
+    pub fn deny(&self) -> SetRef<PrimExpr<String>> {
+        SetRef::new(self.shared().clone(), format!("{}.deny", self.base))
     }
 }
 

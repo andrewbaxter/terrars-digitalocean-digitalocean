@@ -35,13 +35,18 @@ struct LoadbalancerData {
     project_id: Option<PrimField<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     redirect_http_to_https: Option<PrimField<bool>>,
-    region: PrimField<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    region: Option<PrimField<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     size: Option<PrimField<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     size_unit: Option<PrimField<f64>>,
+    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
+    type_: Option<PrimField<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     vpc_uuid: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    firewall: Option<Vec<LoadbalancerFirewallEl>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     forwarding_rule: Option<Vec<LoadbalancerForwardingRuleEl>>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -181,6 +186,12 @@ impl Loadbalancer {
         self
     }
 
+    #[doc= "Set the field `region`.\n"]
+    pub fn set_region(self, v: impl Into<PrimField<String>>) -> Self {
+        self.0.data.borrow_mut().region = Some(v.into());
+        self
+    }
+
     #[doc= "Set the field `size`.\n"]
     pub fn set_size(self, v: impl Into<PrimField<String>>) -> Self {
         self.0.data.borrow_mut().size = Some(v.into());
@@ -193,9 +204,28 @@ impl Loadbalancer {
         self
     }
 
+    #[doc= "Set the field `type_`.\nthe type of the load balancer (GLOBAL or REGIONAL)"]
+    pub fn set_type(self, v: impl Into<PrimField<String>>) -> Self {
+        self.0.data.borrow_mut().type_ = Some(v.into());
+        self
+    }
+
     #[doc= "Set the field `vpc_uuid`.\n"]
     pub fn set_vpc_uuid(self, v: impl Into<PrimField<String>>) -> Self {
         self.0.data.borrow_mut().vpc_uuid = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `firewall`.\n"]
+    pub fn set_firewall(self, v: impl Into<BlockAssignable<LoadbalancerFirewallEl>>) -> Self {
+        match v.into() {
+            BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().firewall = Some(v);
+            },
+            BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.firewall = Some(d);
+            },
+        }
         self
     }
 
@@ -318,6 +348,11 @@ impl Loadbalancer {
         PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
+    #[doc= "Get a reference to the value of field `type_` after provisioning.\nthe type of the load balancer (GLOBAL or REGIONAL)"]
+    pub fn type_(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    }
+
     #[doc= "Get a reference to the value of field `urn` after provisioning.\nthe uniform resource name for the load balancer"]
     pub fn urn(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.urn", self.extract_ref()))
@@ -374,8 +409,6 @@ pub struct BuildLoadbalancer {
     pub tf_id: String,
     #[doc= ""]
     pub name: PrimField<String>,
-    #[doc= ""]
-    pub region: PrimField<String>,
 }
 
 impl BuildLoadbalancer {
@@ -399,10 +432,12 @@ impl BuildLoadbalancer {
                 name: self.name,
                 project_id: core::default::Default::default(),
                 redirect_http_to_https: core::default::Default::default(),
-                region: self.region,
+                region: core::default::Default::default(),
                 size: core::default::Default::default(),
                 size_unit: core::default::Default::default(),
+                type_: core::default::Default::default(),
                 vpc_uuid: core::default::Default::default(),
+                firewall: core::default::Default::default(),
                 forwarding_rule: core::default::Default::default(),
                 healthcheck: core::default::Default::default(),
                 sticky_sessions: core::default::Default::default(),
@@ -517,6 +552,11 @@ impl LoadbalancerRef {
         PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
+    #[doc= "Get a reference to the value of field `type_` after provisioning.\nthe type of the load balancer (GLOBAL or REGIONAL)"]
+    pub fn type_(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    }
+
     #[doc= "Get a reference to the value of field `urn` after provisioning.\nthe uniform resource name for the load balancer"]
     pub fn urn(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.urn", self.extract_ref()))
@@ -535,6 +575,81 @@ impl LoadbalancerRef {
     #[doc= "Get a reference to the value of field `sticky_sessions` after provisioning.\n"]
     pub fn sticky_sessions(&self) -> ListRef<LoadbalancerStickySessionsElRef> {
         ListRef::new(self.shared().clone(), format!("{}.sticky_sessions", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize)]
+pub struct LoadbalancerFirewallEl {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    allow: Option<ListField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    deny: Option<ListField<PrimField<String>>>,
+}
+
+impl LoadbalancerFirewallEl {
+    #[doc= "Set the field `allow`.\nthe rules for ALLOWING traffic to the LB (strings in the form: 'ip:1.2.3.4' or 'cidr:1.2.0.0/16')"]
+    pub fn set_allow(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
+        self.allow = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `deny`.\nthe rules for DENYING traffic to the LB (strings in the form: 'ip:1.2.3.4' or 'cidr:1.2.0.0/16')"]
+    pub fn set_deny(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
+        self.deny = Some(v.into());
+        self
+    }
+}
+
+impl ToListMappable for LoadbalancerFirewallEl {
+    type O = BlockAssignable<LoadbalancerFirewallEl>;
+
+    fn do_map(self, base: String) -> Self::O {
+        BlockAssignable::Dynamic(DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLoadbalancerFirewallEl {}
+
+impl BuildLoadbalancerFirewallEl {
+    pub fn build(self) -> LoadbalancerFirewallEl {
+        LoadbalancerFirewallEl {
+            allow: core::default::Default::default(),
+            deny: core::default::Default::default(),
+        }
+    }
+}
+
+pub struct LoadbalancerFirewallElRef {
+    shared: StackShared,
+    base: String,
+}
+
+impl Ref for LoadbalancerFirewallElRef {
+    fn new(shared: StackShared, base: String) -> LoadbalancerFirewallElRef {
+        LoadbalancerFirewallElRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl LoadbalancerFirewallElRef {
+    fn shared(&self) -> &StackShared {
+        &self.shared
+    }
+
+    #[doc= "Get a reference to the value of field `allow` after provisioning.\nthe rules for ALLOWING traffic to the LB (strings in the form: 'ip:1.2.3.4' or 'cidr:1.2.0.0/16')"]
+    pub fn allow(&self) -> ListRef<PrimExpr<String>> {
+        ListRef::new(self.shared().clone(), format!("{}.allow", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `deny` after provisioning.\nthe rules for DENYING traffic to the LB (strings in the form: 'ip:1.2.3.4' or 'cidr:1.2.0.0/16')"]
+    pub fn deny(&self) -> ListRef<PrimExpr<String>> {
+        ListRef::new(self.shared().clone(), format!("{}.deny", self.base))
     }
 }
 
@@ -891,6 +1006,7 @@ impl LoadbalancerStickySessionsElRef {
 
 #[derive(Serialize, Default)]
 struct LoadbalancerDynamic {
+    firewall: Option<DynamicBlock<LoadbalancerFirewallEl>>,
     forwarding_rule: Option<DynamicBlock<LoadbalancerForwardingRuleEl>>,
     healthcheck: Option<DynamicBlock<LoadbalancerHealthcheckEl>>,
     sticky_sessions: Option<DynamicBlock<LoadbalancerStickySessionsEl>>,

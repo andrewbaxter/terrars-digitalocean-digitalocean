@@ -17,11 +17,15 @@ struct KubernetesClusterData {
     #[serde(skip_serializing_if = "Option::is_none")]
     auto_upgrade: Option<PrimField<bool>>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    destroy_all_associated_resources: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     ha: Option<PrimField<bool>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     id: Option<PrimField<String>>,
     name: PrimField<String>,
     region: PrimField<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    registry_integration: Option<PrimField<bool>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     surge_upgrade: Option<PrimField<bool>>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -114,6 +118,12 @@ impl KubernetesCluster {
         self
     }
 
+    #[doc= "Set the field `destroy_all_associated_resources`.\n"]
+    pub fn set_destroy_all_associated_resources(self, v: impl Into<PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().destroy_all_associated_resources = Some(v.into());
+        self
+    }
+
     #[doc= "Set the field `ha`.\n"]
     pub fn set_ha(self, v: impl Into<PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().ha = Some(v.into());
@@ -123,6 +133,12 @@ impl KubernetesCluster {
     #[doc= "Set the field `id`.\n"]
     pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
         self.0.data.borrow_mut().id = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `registry_integration`.\n"]
+    pub fn set_registry_integration(self, v: impl Into<PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().registry_integration = Some(v.into());
         self
     }
 
@@ -191,6 +207,11 @@ impl KubernetesCluster {
         PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
     }
 
+    #[doc= "Get a reference to the value of field `destroy_all_associated_resources` after provisioning.\n"]
+    pub fn destroy_all_associated_resources(&self) -> PrimExpr<bool> {
+        PrimExpr::new(self.shared().clone(), format!("{}.destroy_all_associated_resources", self.extract_ref()))
+    }
+
     #[doc= "Get a reference to the value of field `endpoint` after provisioning.\n"]
     pub fn endpoint(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
@@ -224,6 +245,11 @@ impl KubernetesCluster {
     #[doc= "Get a reference to the value of field `region` after provisioning.\n"]
     pub fn region(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc= "Get a reference to the value of field `registry_integration` after provisioning.\n"]
+    pub fn registry_integration(&self) -> PrimExpr<bool> {
+        PrimExpr::new(self.shared().clone(), format!("{}.registry_integration", self.extract_ref()))
     }
 
     #[doc= "Get a reference to the value of field `service_subnet` after provisioning.\n"]
@@ -334,10 +360,12 @@ impl BuildKubernetesCluster {
                 lifecycle: core::default::Default::default(),
                 for_each: None,
                 auto_upgrade: core::default::Default::default(),
+                destroy_all_associated_resources: core::default::Default::default(),
                 ha: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 region: self.region,
+                registry_integration: core::default::Default::default(),
                 surge_upgrade: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 version: self.version,
@@ -391,6 +419,11 @@ impl KubernetesClusterRef {
         PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
     }
 
+    #[doc= "Get a reference to the value of field `destroy_all_associated_resources` after provisioning.\n"]
+    pub fn destroy_all_associated_resources(&self) -> PrimExpr<bool> {
+        PrimExpr::new(self.shared().clone(), format!("{}.destroy_all_associated_resources", self.extract_ref()))
+    }
+
     #[doc= "Get a reference to the value of field `endpoint` after provisioning.\n"]
     pub fn endpoint(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
@@ -424,6 +457,11 @@ impl KubernetesClusterRef {
     #[doc= "Get a reference to the value of field `region` after provisioning.\n"]
     pub fn region(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc= "Get a reference to the value of field `registry_integration` after provisioning.\n"]
+    pub fn registry_integration(&self) -> PrimExpr<bool> {
+        PrimExpr::new(self.shared().clone(), format!("{}.registry_integration", self.extract_ref()))
     }
 
     #[doc= "Get a reference to the value of field `service_subnet` after provisioning.\n"]

@@ -10,6 +10,14 @@ struct ProviderDigitaloceanData {
     #[serde(skip_serializing_if = "Option::is_none")]
     api_endpoint: Option<PrimField<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    http_retry_max: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    http_retry_wait_max: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    http_retry_wait_min: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    requests_per_second: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     spaces_access_id: Option<PrimField<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     spaces_endpoint: Option<PrimField<String>>,
@@ -46,6 +54,30 @@ impl ProviderDigitalocean {
         self
     }
 
+    #[doc= "Set the field `http_retry_max`.\nThe maximum number of retries on a failed API request."]
+    pub fn set_http_retry_max(self, v: impl Into<PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().http_retry_max = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `http_retry_wait_max`.\nThe maximum wait time (in seconds) between failed API requests."]
+    pub fn set_http_retry_wait_max(self, v: impl Into<PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().http_retry_wait_max = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `http_retry_wait_min`.\nThe minimum wait time (in seconds) between failed API requests."]
+    pub fn set_http_retry_wait_min(self, v: impl Into<PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().http_retry_wait_min = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `requests_per_second`.\nThe rate of requests per second to limit the HTTP client."]
+    pub fn set_requests_per_second(self, v: impl Into<PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().requests_per_second = Some(v.into());
+        self
+    }
+
     #[doc= "Set the field `spaces_access_id`.\nThe access key ID for Spaces API operations."]
     pub fn set_spaces_access_id(self, v: impl Into<PrimField<String>>) -> Self {
         self.0.data.borrow_mut().spaces_access_id = Some(v.into());
@@ -79,7 +111,7 @@ impl Provider for ProviderDigitalocean_ {
     fn extract_provider_type(&self) -> serde_json::Value {
         serde_json::json!({
             "source": "digitalocean/digitalocean",
-            "version": "2.25.2",
+            "version": "2.34.1",
         })
     }
 
@@ -95,6 +127,10 @@ impl BuildProviderDigitalocean {
         let out = ProviderDigitalocean(Rc::new(ProviderDigitalocean_ { data: RefCell::new(ProviderDigitaloceanData {
             alias: None,
             api_endpoint: core::default::Default::default(),
+            http_retry_max: core::default::Default::default(),
+            http_retry_wait_max: core::default::Default::default(),
+            http_retry_wait_min: core::default::Default::default(),
+            requests_per_second: core::default::Default::default(),
             spaces_access_id: core::default::Default::default(),
             spaces_endpoint: core::default::Default::default(),
             spaces_secret_key: core::default::Default::default(),

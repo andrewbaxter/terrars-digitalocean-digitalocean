@@ -23,14 +23,20 @@ struct DatabaseClusterData {
     node_count: PrimField<f64>,
     #[serde(skip_serializing_if = "Option::is_none")]
     private_network_uuid: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    project_id: Option<PrimField<String>>,
     region: PrimField<String>,
     size: PrimField<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     sql_mode: Option<PrimField<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    storage_size_mib: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     tags: Option<SetField<PrimField<String>>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     version: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    backup_restore: Option<Vec<DatabaseClusterBackupRestoreEl>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     maintenance_window: Option<Vec<DatabaseClusterMaintenanceWindowEl>>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -126,9 +132,21 @@ impl DatabaseCluster {
         self
     }
 
+    #[doc= "Set the field `project_id`.\n"]
+    pub fn set_project_id(self, v: impl Into<PrimField<String>>) -> Self {
+        self.0.data.borrow_mut().project_id = Some(v.into());
+        self
+    }
+
     #[doc= "Set the field `sql_mode`.\n"]
     pub fn set_sql_mode(self, v: impl Into<PrimField<String>>) -> Self {
         self.0.data.borrow_mut().sql_mode = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `storage_size_mib`.\n"]
+    pub fn set_storage_size_mib(self, v: impl Into<PrimField<String>>) -> Self {
+        self.0.data.borrow_mut().storage_size_mib = Some(v.into());
         self
     }
 
@@ -141,6 +159,19 @@ impl DatabaseCluster {
     #[doc= "Set the field `version`.\n"]
     pub fn set_version(self, v: impl Into<PrimField<String>>) -> Self {
         self.0.data.borrow_mut().version = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `backup_restore`.\n"]
+    pub fn set_backup_restore(self, v: impl Into<BlockAssignable<DatabaseClusterBackupRestoreEl>>) -> Self {
+        match v.into() {
+            BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().backup_restore = Some(v);
+            },
+            BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.backup_restore = Some(d);
+            },
+        }
         self
     }
 
@@ -223,6 +254,11 @@ impl DatabaseCluster {
         PrimExpr::new(self.shared().clone(), format!("{}.private_uri", self.extract_ref()))
     }
 
+    #[doc= "Get a reference to the value of field `project_id` after provisioning.\n"]
+    pub fn project_id(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.extract_ref()))
+    }
+
     #[doc= "Get a reference to the value of field `region` after provisioning.\n"]
     pub fn region(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
@@ -236,6 +272,11 @@ impl DatabaseCluster {
     #[doc= "Get a reference to the value of field `sql_mode` after provisioning.\n"]
     pub fn sql_mode(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.sql_mode", self.extract_ref()))
+    }
+
+    #[doc= "Get a reference to the value of field `storage_size_mib` after provisioning.\n"]
+    pub fn storage_size_mib(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.storage_size_mib", self.extract_ref()))
     }
 
     #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -261,6 +302,11 @@ impl DatabaseCluster {
     #[doc= "Get a reference to the value of field `version` after provisioning.\n"]
     pub fn version(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
+    }
+
+    #[doc= "Get a reference to the value of field `backup_restore` after provisioning.\n"]
+    pub fn backup_restore(&self) -> ListRef<DatabaseClusterBackupRestoreElRef> {
+        ListRef::new(self.shared().clone(), format!("{}.backup_restore", self.extract_ref()))
     }
 
     #[doc= "Get a reference to the value of field `maintenance_window` after provisioning.\n"]
@@ -335,11 +381,14 @@ impl BuildDatabaseCluster {
                 name: self.name,
                 node_count: self.node_count,
                 private_network_uuid: core::default::Default::default(),
+                project_id: core::default::Default::default(),
                 region: self.region,
                 size: self.size,
                 sql_mode: core::default::Default::default(),
+                storage_size_mib: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 version: core::default::Default::default(),
+                backup_restore: core::default::Default::default(),
                 maintenance_window: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: Default::default(),
@@ -433,6 +482,11 @@ impl DatabaseClusterRef {
         PrimExpr::new(self.shared().clone(), format!("{}.private_uri", self.extract_ref()))
     }
 
+    #[doc= "Get a reference to the value of field `project_id` after provisioning.\n"]
+    pub fn project_id(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.extract_ref()))
+    }
+
     #[doc= "Get a reference to the value of field `region` after provisioning.\n"]
     pub fn region(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
@@ -446,6 +500,11 @@ impl DatabaseClusterRef {
     #[doc= "Get a reference to the value of field `sql_mode` after provisioning.\n"]
     pub fn sql_mode(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.sql_mode", self.extract_ref()))
+    }
+
+    #[doc= "Get a reference to the value of field `storage_size_mib` after provisioning.\n"]
+    pub fn storage_size_mib(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.storage_size_mib", self.extract_ref()))
     }
 
     #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -473,6 +532,11 @@ impl DatabaseClusterRef {
         PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 
+    #[doc= "Get a reference to the value of field `backup_restore` after provisioning.\n"]
+    pub fn backup_restore(&self) -> ListRef<DatabaseClusterBackupRestoreElRef> {
+        ListRef::new(self.shared().clone(), format!("{}.backup_restore", self.extract_ref()))
+    }
+
     #[doc= "Get a reference to the value of field `maintenance_window` after provisioning.\n"]
     pub fn maintenance_window(&self) -> ListRef<DatabaseClusterMaintenanceWindowElRef> {
         ListRef::new(self.shared().clone(), format!("{}.maintenance_window", self.extract_ref()))
@@ -481,6 +545,77 @@ impl DatabaseClusterRef {
     #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DatabaseClusterTimeoutsElRef {
         DatabaseClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DatabaseClusterBackupRestoreEl {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    backup_created_at: Option<PrimField<String>>,
+    database_name: PrimField<String>,
+}
+
+impl DatabaseClusterBackupRestoreEl {
+    #[doc= "Set the field `backup_created_at`.\n"]
+    pub fn set_backup_created_at(mut self, v: impl Into<PrimField<String>>) -> Self {
+        self.backup_created_at = Some(v.into());
+        self
+    }
+}
+
+impl ToListMappable for DatabaseClusterBackupRestoreEl {
+    type O = BlockAssignable<DatabaseClusterBackupRestoreEl>;
+
+    fn do_map(self, base: String) -> Self::O {
+        BlockAssignable::Dynamic(DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDatabaseClusterBackupRestoreEl {
+    #[doc= ""]
+    pub database_name: PrimField<String>,
+}
+
+impl BuildDatabaseClusterBackupRestoreEl {
+    pub fn build(self) -> DatabaseClusterBackupRestoreEl {
+        DatabaseClusterBackupRestoreEl {
+            backup_created_at: core::default::Default::default(),
+            database_name: self.database_name,
+        }
+    }
+}
+
+pub struct DatabaseClusterBackupRestoreElRef {
+    shared: StackShared,
+    base: String,
+}
+
+impl Ref for DatabaseClusterBackupRestoreElRef {
+    fn new(shared: StackShared, base: String) -> DatabaseClusterBackupRestoreElRef {
+        DatabaseClusterBackupRestoreElRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DatabaseClusterBackupRestoreElRef {
+    fn shared(&self) -> &StackShared {
+        &self.shared
+    }
+
+    #[doc= "Get a reference to the value of field `backup_created_at` after provisioning.\n"]
+    pub fn backup_created_at(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.backup_created_at", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `database_name` after provisioning.\n"]
+    pub fn database_name(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.base))
     }
 }
 
@@ -611,5 +746,6 @@ impl DatabaseClusterTimeoutsElRef {
 
 #[derive(Serialize, Default)]
 struct DatabaseClusterDynamic {
+    backup_restore: Option<DynamicBlock<DatabaseClusterBackupRestoreEl>>,
     maintenance_window: Option<DynamicBlock<DatabaseClusterMaintenanceWindowEl>>,
 }

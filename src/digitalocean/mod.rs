@@ -62,6 +62,24 @@ pub mod database_firewall;
 #[cfg(feature = "database_firewall")]
 pub use database_firewall::*;
 
+#[cfg(feature = "database_kafka_topic")]
+pub mod database_kafka_topic;
+
+#[cfg(feature = "database_kafka_topic")]
+pub use database_kafka_topic::*;
+
+#[cfg(feature = "database_mysql_config")]
+pub mod database_mysql_config;
+
+#[cfg(feature = "database_mysql_config")]
+pub use database_mysql_config::*;
+
+#[cfg(feature = "database_redis_config")]
+pub mod database_redis_config;
+
+#[cfg(feature = "database_redis_config")]
+pub use database_redis_config::*;
+
 #[cfg(feature = "database_replica")]
 pub mod database_replica;
 
@@ -170,6 +188,12 @@ pub mod spaces_bucket;
 #[cfg(feature = "spaces_bucket")]
 pub use spaces_bucket::*;
 
+#[cfg(feature = "spaces_bucket_cors_configuration")]
+pub mod spaces_bucket_cors_configuration;
+
+#[cfg(feature = "spaces_bucket_cors_configuration")]
+pub use spaces_bucket_cors_configuration::*;
+
 #[cfg(feature = "spaces_bucket_object")]
 pub mod spaces_bucket_object;
 
@@ -193,6 +217,18 @@ pub mod tag;
 
 #[cfg(feature = "tag")]
 pub use tag::*;
+
+#[cfg(feature = "uptime_alert")]
+pub mod uptime_alert;
+
+#[cfg(feature = "uptime_alert")]
+pub use uptime_alert::*;
+
+#[cfg(feature = "uptime_check")]
+pub mod uptime_check;
+
+#[cfg(feature = "uptime_check")]
+pub use uptime_check::*;
 
 #[cfg(feature = "volume")]
 pub mod volume;
@@ -254,11 +290,23 @@ pub mod data_database_cluster;
 #[cfg(feature = "data_database_cluster")]
 pub use data_database_cluster::*;
 
+#[cfg(feature = "data_database_connection_pool")]
+pub mod data_database_connection_pool;
+
+#[cfg(feature = "data_database_connection_pool")]
+pub use data_database_connection_pool::*;
+
 #[cfg(feature = "data_database_replica")]
 pub mod data_database_replica;
 
 #[cfg(feature = "data_database_replica")]
 pub use data_database_replica::*;
+
+#[cfg(feature = "data_database_user")]
+pub mod data_database_user;
+
+#[cfg(feature = "data_database_user")]
+pub use data_database_user::*;
 
 #[cfg(feature = "data_domain")]
 pub mod data_domain;

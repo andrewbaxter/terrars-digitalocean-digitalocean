@@ -2032,6 +2032,799 @@ impl AppSpecElFunctionElRef {
 }
 
 #[derive(Serialize)]
+pub struct AppSpecElIngressElRuleElComponentEl {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    name: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    preserve_path_prefix: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    rewrite: Option<PrimField<String>>,
+}
+
+impl AppSpecElIngressElRuleElComponentEl {
+    #[doc= "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
+        self.name = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `preserve_path_prefix`.\n"]
+    pub fn set_preserve_path_prefix(mut self, v: impl Into<PrimField<bool>>) -> Self {
+        self.preserve_path_prefix = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `rewrite`.\n"]
+    pub fn set_rewrite(mut self, v: impl Into<PrimField<String>>) -> Self {
+        self.rewrite = Some(v.into());
+        self
+    }
+}
+
+impl ToListMappable for AppSpecElIngressElRuleElComponentEl {
+    type O = BlockAssignable<AppSpecElIngressElRuleElComponentEl>;
+
+    fn do_map(self, base: String) -> Self::O {
+        BlockAssignable::Dynamic(DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppSpecElIngressElRuleElComponentEl {}
+
+impl BuildAppSpecElIngressElRuleElComponentEl {
+    pub fn build(self) -> AppSpecElIngressElRuleElComponentEl {
+        AppSpecElIngressElRuleElComponentEl {
+            name: core::default::Default::default(),
+            preserve_path_prefix: core::default::Default::default(),
+            rewrite: core::default::Default::default(),
+        }
+    }
+}
+
+pub struct AppSpecElIngressElRuleElComponentElRef {
+    shared: StackShared,
+    base: String,
+}
+
+impl Ref for AppSpecElIngressElRuleElComponentElRef {
+    fn new(shared: StackShared, base: String) -> AppSpecElIngressElRuleElComponentElRef {
+        AppSpecElIngressElRuleElComponentElRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppSpecElIngressElRuleElComponentElRef {
+    fn shared(&self) -> &StackShared {
+        &self.shared
+    }
+
+    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `preserve_path_prefix` after provisioning.\n"]
+    pub fn preserve_path_prefix(&self) -> PrimExpr<bool> {
+        PrimExpr::new(self.shared().clone(), format!("{}.preserve_path_prefix", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `rewrite` after provisioning.\n"]
+    pub fn rewrite(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.rewrite", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppSpecElIngressElRuleElCorsElAllowOriginsEl {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    exact: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    prefix: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    regex: Option<PrimField<String>>,
+}
+
+impl AppSpecElIngressElRuleElCorsElAllowOriginsEl {
+    #[doc= "Set the field `exact`.\nExact string match."]
+    pub fn set_exact(mut self, v: impl Into<PrimField<String>>) -> Self {
+        self.exact = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `prefix`.\nPrefix-based match. "]
+    pub fn set_prefix(mut self, v: impl Into<PrimField<String>>) -> Self {
+        self.prefix = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `regex`.\nRE2 style regex-based match."]
+    pub fn set_regex(mut self, v: impl Into<PrimField<String>>) -> Self {
+        self.regex = Some(v.into());
+        self
+    }
+}
+
+impl ToListMappable for AppSpecElIngressElRuleElCorsElAllowOriginsEl {
+    type O = BlockAssignable<AppSpecElIngressElRuleElCorsElAllowOriginsEl>;
+
+    fn do_map(self, base: String) -> Self::O {
+        BlockAssignable::Dynamic(DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppSpecElIngressElRuleElCorsElAllowOriginsEl {}
+
+impl BuildAppSpecElIngressElRuleElCorsElAllowOriginsEl {
+    pub fn build(self) -> AppSpecElIngressElRuleElCorsElAllowOriginsEl {
+        AppSpecElIngressElRuleElCorsElAllowOriginsEl {
+            exact: core::default::Default::default(),
+            prefix: core::default::Default::default(),
+            regex: core::default::Default::default(),
+        }
+    }
+}
+
+pub struct AppSpecElIngressElRuleElCorsElAllowOriginsElRef {
+    shared: StackShared,
+    base: String,
+}
+
+impl Ref for AppSpecElIngressElRuleElCorsElAllowOriginsElRef {
+    fn new(shared: StackShared, base: String) -> AppSpecElIngressElRuleElCorsElAllowOriginsElRef {
+        AppSpecElIngressElRuleElCorsElAllowOriginsElRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppSpecElIngressElRuleElCorsElAllowOriginsElRef {
+    fn shared(&self) -> &StackShared {
+        &self.shared
+    }
+
+    #[doc= "Get a reference to the value of field `exact` after provisioning.\nExact string match."]
+    pub fn exact(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.exact", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `prefix` after provisioning.\nPrefix-based match. "]
+    pub fn prefix(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `regex` after provisioning.\nRE2 style regex-based match."]
+    pub fn regex(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.regex", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppSpecElIngressElRuleElCorsElDynamic {
+    allow_origins: Option<DynamicBlock<AppSpecElIngressElRuleElCorsElAllowOriginsEl>>,
+}
+
+#[derive(Serialize)]
+pub struct AppSpecElIngressElRuleElCorsEl {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    allow_credentials: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    allow_headers: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    allow_methods: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    expose_headers: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    max_age: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    allow_origins: Option<Vec<AppSpecElIngressElRuleElCorsElAllowOriginsEl>>,
+    dynamic: AppSpecElIngressElRuleElCorsElDynamic,
+}
+
+impl AppSpecElIngressElRuleElCorsEl {
+    #[doc= "Set the field `allow_credentials`.\nWhether browsers should expose the response to the client-side JavaScript code when the request’s credentials mode is `include`. This configures the Access-Control-Allow-Credentials header."]
+    pub fn set_allow_credentials(mut self, v: impl Into<PrimField<bool>>) -> Self {
+        self.allow_credentials = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `allow_headers`.\nThe set of allowed HTTP request headers. This configures the Access-Control-Allow-Headers header."]
+    pub fn set_allow_headers(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
+        self.allow_headers = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `allow_methods`.\nThe set of allowed HTTP methods. This configures the Access-Control-Allow-Methods header."]
+    pub fn set_allow_methods(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
+        self.allow_methods = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `expose_headers`.\nThe set of HTTP response headers that browsers are allowed to access. This configures the Access-Control-Expose-Headers header."]
+    pub fn set_expose_headers(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
+        self.expose_headers = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `max_age`.\nAn optional duration specifying how long browsers can cache the results of a preflight request. This configures the Access-Control-Max-Age header. Example: `5h30m`."]
+    pub fn set_max_age(mut self, v: impl Into<PrimField<String>>) -> Self {
+        self.max_age = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `allow_origins`.\n"]
+    pub fn set_allow_origins(
+        mut self,
+        v: impl Into<BlockAssignable<AppSpecElIngressElRuleElCorsElAllowOriginsEl>>,
+    ) -> Self {
+        match v.into() {
+            BlockAssignable::Literal(v) => {
+                self.allow_origins = Some(v);
+            },
+            BlockAssignable::Dynamic(d) => {
+                self.dynamic.allow_origins = Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl ToListMappable for AppSpecElIngressElRuleElCorsEl {
+    type O = BlockAssignable<AppSpecElIngressElRuleElCorsEl>;
+
+    fn do_map(self, base: String) -> Self::O {
+        BlockAssignable::Dynamic(DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppSpecElIngressElRuleElCorsEl {}
+
+impl BuildAppSpecElIngressElRuleElCorsEl {
+    pub fn build(self) -> AppSpecElIngressElRuleElCorsEl {
+        AppSpecElIngressElRuleElCorsEl {
+            allow_credentials: core::default::Default::default(),
+            allow_headers: core::default::Default::default(),
+            allow_methods: core::default::Default::default(),
+            expose_headers: core::default::Default::default(),
+            max_age: core::default::Default::default(),
+            allow_origins: core::default::Default::default(),
+            dynamic: Default::default(),
+        }
+    }
+}
+
+pub struct AppSpecElIngressElRuleElCorsElRef {
+    shared: StackShared,
+    base: String,
+}
+
+impl Ref for AppSpecElIngressElRuleElCorsElRef {
+    fn new(shared: StackShared, base: String) -> AppSpecElIngressElRuleElCorsElRef {
+        AppSpecElIngressElRuleElCorsElRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppSpecElIngressElRuleElCorsElRef {
+    fn shared(&self) -> &StackShared {
+        &self.shared
+    }
+
+    #[doc= "Get a reference to the value of field `allow_credentials` after provisioning.\nWhether browsers should expose the response to the client-side JavaScript code when the request’s credentials mode is `include`. This configures the Access-Control-Allow-Credentials header."]
+    pub fn allow_credentials(&self) -> PrimExpr<bool> {
+        PrimExpr::new(self.shared().clone(), format!("{}.allow_credentials", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `allow_headers` after provisioning.\nThe set of allowed HTTP request headers. This configures the Access-Control-Allow-Headers header."]
+    pub fn allow_headers(&self) -> SetRef<PrimExpr<String>> {
+        SetRef::new(self.shared().clone(), format!("{}.allow_headers", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `allow_methods` after provisioning.\nThe set of allowed HTTP methods. This configures the Access-Control-Allow-Methods header."]
+    pub fn allow_methods(&self) -> SetRef<PrimExpr<String>> {
+        SetRef::new(self.shared().clone(), format!("{}.allow_methods", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `expose_headers` after provisioning.\nThe set of HTTP response headers that browsers are allowed to access. This configures the Access-Control-Expose-Headers header."]
+    pub fn expose_headers(&self) -> SetRef<PrimExpr<String>> {
+        SetRef::new(self.shared().clone(), format!("{}.expose_headers", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `max_age` after provisioning.\nAn optional duration specifying how long browsers can cache the results of a preflight request. This configures the Access-Control-Max-Age header. Example: `5h30m`."]
+    pub fn max_age(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.max_age", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `allow_origins` after provisioning.\n"]
+    pub fn allow_origins(&self) -> ListRef<AppSpecElIngressElRuleElCorsElAllowOriginsElRef> {
+        ListRef::new(self.shared().clone(), format!("{}.allow_origins", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppSpecElIngressElRuleElMatchElPathEl {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    prefix: Option<PrimField<String>>,
+}
+
+impl AppSpecElIngressElRuleElMatchElPathEl {
+    #[doc= "Set the field `prefix`.\n"]
+    pub fn set_prefix(mut self, v: impl Into<PrimField<String>>) -> Self {
+        self.prefix = Some(v.into());
+        self
+    }
+}
+
+impl ToListMappable for AppSpecElIngressElRuleElMatchElPathEl {
+    type O = BlockAssignable<AppSpecElIngressElRuleElMatchElPathEl>;
+
+    fn do_map(self, base: String) -> Self::O {
+        BlockAssignable::Dynamic(DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppSpecElIngressElRuleElMatchElPathEl {}
+
+impl BuildAppSpecElIngressElRuleElMatchElPathEl {
+    pub fn build(self) -> AppSpecElIngressElRuleElMatchElPathEl {
+        AppSpecElIngressElRuleElMatchElPathEl { prefix: core::default::Default::default() }
+    }
+}
+
+pub struct AppSpecElIngressElRuleElMatchElPathElRef {
+    shared: StackShared,
+    base: String,
+}
+
+impl Ref for AppSpecElIngressElRuleElMatchElPathElRef {
+    fn new(shared: StackShared, base: String) -> AppSpecElIngressElRuleElMatchElPathElRef {
+        AppSpecElIngressElRuleElMatchElPathElRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppSpecElIngressElRuleElMatchElPathElRef {
+    fn shared(&self) -> &StackShared {
+        &self.shared
+    }
+
+    #[doc= "Get a reference to the value of field `prefix` after provisioning.\n"]
+    pub fn prefix(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppSpecElIngressElRuleElMatchElDynamic {
+    path: Option<DynamicBlock<AppSpecElIngressElRuleElMatchElPathEl>>,
+}
+
+#[derive(Serialize)]
+pub struct AppSpecElIngressElRuleElMatchEl {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    path: Option<Vec<AppSpecElIngressElRuleElMatchElPathEl>>,
+    dynamic: AppSpecElIngressElRuleElMatchElDynamic,
+}
+
+impl AppSpecElIngressElRuleElMatchEl {
+    #[doc= "Set the field `path`.\n"]
+    pub fn set_path(mut self, v: impl Into<BlockAssignable<AppSpecElIngressElRuleElMatchElPathEl>>) -> Self {
+        match v.into() {
+            BlockAssignable::Literal(v) => {
+                self.path = Some(v);
+            },
+            BlockAssignable::Dynamic(d) => {
+                self.dynamic.path = Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl ToListMappable for AppSpecElIngressElRuleElMatchEl {
+    type O = BlockAssignable<AppSpecElIngressElRuleElMatchEl>;
+
+    fn do_map(self, base: String) -> Self::O {
+        BlockAssignable::Dynamic(DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppSpecElIngressElRuleElMatchEl {}
+
+impl BuildAppSpecElIngressElRuleElMatchEl {
+    pub fn build(self) -> AppSpecElIngressElRuleElMatchEl {
+        AppSpecElIngressElRuleElMatchEl {
+            path: core::default::Default::default(),
+            dynamic: Default::default(),
+        }
+    }
+}
+
+pub struct AppSpecElIngressElRuleElMatchElRef {
+    shared: StackShared,
+    base: String,
+}
+
+impl Ref for AppSpecElIngressElRuleElMatchElRef {
+    fn new(shared: StackShared, base: String) -> AppSpecElIngressElRuleElMatchElRef {
+        AppSpecElIngressElRuleElMatchElRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppSpecElIngressElRuleElMatchElRef {
+    fn shared(&self) -> &StackShared {
+        &self.shared
+    }
+
+    #[doc= "Get a reference to the value of field `path` after provisioning.\n"]
+    pub fn path(&self) -> ListRef<AppSpecElIngressElRuleElMatchElPathElRef> {
+        ListRef::new(self.shared().clone(), format!("{}.path", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppSpecElIngressElRuleElRedirectEl {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    authority: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    port: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    redirect_code: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    scheme: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    uri: Option<PrimField<String>>,
+}
+
+impl AppSpecElIngressElRuleElRedirectEl {
+    #[doc= "Set the field `authority`.\n"]
+    pub fn set_authority(mut self, v: impl Into<PrimField<String>>) -> Self {
+        self.authority = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `port`.\n"]
+    pub fn set_port(mut self, v: impl Into<PrimField<f64>>) -> Self {
+        self.port = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `redirect_code`.\n"]
+    pub fn set_redirect_code(mut self, v: impl Into<PrimField<f64>>) -> Self {
+        self.redirect_code = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `scheme`.\n"]
+    pub fn set_scheme(mut self, v: impl Into<PrimField<String>>) -> Self {
+        self.scheme = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `uri`.\n"]
+    pub fn set_uri(mut self, v: impl Into<PrimField<String>>) -> Self {
+        self.uri = Some(v.into());
+        self
+    }
+}
+
+impl ToListMappable for AppSpecElIngressElRuleElRedirectEl {
+    type O = BlockAssignable<AppSpecElIngressElRuleElRedirectEl>;
+
+    fn do_map(self, base: String) -> Self::O {
+        BlockAssignable::Dynamic(DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppSpecElIngressElRuleElRedirectEl {}
+
+impl BuildAppSpecElIngressElRuleElRedirectEl {
+    pub fn build(self) -> AppSpecElIngressElRuleElRedirectEl {
+        AppSpecElIngressElRuleElRedirectEl {
+            authority: core::default::Default::default(),
+            port: core::default::Default::default(),
+            redirect_code: core::default::Default::default(),
+            scheme: core::default::Default::default(),
+            uri: core::default::Default::default(),
+        }
+    }
+}
+
+pub struct AppSpecElIngressElRuleElRedirectElRef {
+    shared: StackShared,
+    base: String,
+}
+
+impl Ref for AppSpecElIngressElRuleElRedirectElRef {
+    fn new(shared: StackShared, base: String) -> AppSpecElIngressElRuleElRedirectElRef {
+        AppSpecElIngressElRuleElRedirectElRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppSpecElIngressElRuleElRedirectElRef {
+    fn shared(&self) -> &StackShared {
+        &self.shared
+    }
+
+    #[doc= "Get a reference to the value of field `authority` after provisioning.\n"]
+    pub fn authority(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.authority", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `port` after provisioning.\n"]
+    pub fn port(&self) -> PrimExpr<f64> {
+        PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `redirect_code` after provisioning.\n"]
+    pub fn redirect_code(&self) -> PrimExpr<f64> {
+        PrimExpr::new(self.shared().clone(), format!("{}.redirect_code", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `scheme` after provisioning.\n"]
+    pub fn scheme(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.scheme", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `uri` after provisioning.\n"]
+    pub fn uri(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.uri", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppSpecElIngressElRuleElDynamic {
+    component: Option<DynamicBlock<AppSpecElIngressElRuleElComponentEl>>,
+    cors: Option<DynamicBlock<AppSpecElIngressElRuleElCorsEl>>,
+    match_: Option<DynamicBlock<AppSpecElIngressElRuleElMatchEl>>,
+    redirect: Option<DynamicBlock<AppSpecElIngressElRuleElRedirectEl>>,
+}
+
+#[derive(Serialize)]
+pub struct AppSpecElIngressElRuleEl {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    component: Option<Vec<AppSpecElIngressElRuleElComponentEl>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    cors: Option<Vec<AppSpecElIngressElRuleElCorsEl>>,
+    #[serde(rename = "match", skip_serializing_if = "Option::is_none")]
+    match_: Option<Vec<AppSpecElIngressElRuleElMatchEl>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    redirect: Option<Vec<AppSpecElIngressElRuleElRedirectEl>>,
+    dynamic: AppSpecElIngressElRuleElDynamic,
+}
+
+impl AppSpecElIngressElRuleEl {
+    #[doc= "Set the field `component`.\n"]
+    pub fn set_component(mut self, v: impl Into<BlockAssignable<AppSpecElIngressElRuleElComponentEl>>) -> Self {
+        match v.into() {
+            BlockAssignable::Literal(v) => {
+                self.component = Some(v);
+            },
+            BlockAssignable::Dynamic(d) => {
+                self.dynamic.component = Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc= "Set the field `cors`.\n"]
+    pub fn set_cors(mut self, v: impl Into<BlockAssignable<AppSpecElIngressElRuleElCorsEl>>) -> Self {
+        match v.into() {
+            BlockAssignable::Literal(v) => {
+                self.cors = Some(v);
+            },
+            BlockAssignable::Dynamic(d) => {
+                self.dynamic.cors = Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc= "Set the field `match_`.\n"]
+    pub fn set_match(mut self, v: impl Into<BlockAssignable<AppSpecElIngressElRuleElMatchEl>>) -> Self {
+        match v.into() {
+            BlockAssignable::Literal(v) => {
+                self.match_ = Some(v);
+            },
+            BlockAssignable::Dynamic(d) => {
+                self.dynamic.match_ = Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc= "Set the field `redirect`.\n"]
+    pub fn set_redirect(mut self, v: impl Into<BlockAssignable<AppSpecElIngressElRuleElRedirectEl>>) -> Self {
+        match v.into() {
+            BlockAssignable::Literal(v) => {
+                self.redirect = Some(v);
+            },
+            BlockAssignable::Dynamic(d) => {
+                self.dynamic.redirect = Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl ToListMappable for AppSpecElIngressElRuleEl {
+    type O = BlockAssignable<AppSpecElIngressElRuleEl>;
+
+    fn do_map(self, base: String) -> Self::O {
+        BlockAssignable::Dynamic(DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppSpecElIngressElRuleEl {}
+
+impl BuildAppSpecElIngressElRuleEl {
+    pub fn build(self) -> AppSpecElIngressElRuleEl {
+        AppSpecElIngressElRuleEl {
+            component: core::default::Default::default(),
+            cors: core::default::Default::default(),
+            match_: core::default::Default::default(),
+            redirect: core::default::Default::default(),
+            dynamic: Default::default(),
+        }
+    }
+}
+
+pub struct AppSpecElIngressElRuleElRef {
+    shared: StackShared,
+    base: String,
+}
+
+impl Ref for AppSpecElIngressElRuleElRef {
+    fn new(shared: StackShared, base: String) -> AppSpecElIngressElRuleElRef {
+        AppSpecElIngressElRuleElRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppSpecElIngressElRuleElRef {
+    fn shared(&self) -> &StackShared {
+        &self.shared
+    }
+
+    #[doc= "Get a reference to the value of field `component` after provisioning.\n"]
+    pub fn component(&self) -> ListRef<AppSpecElIngressElRuleElComponentElRef> {
+        ListRef::new(self.shared().clone(), format!("{}.component", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `cors` after provisioning.\n"]
+    pub fn cors(&self) -> ListRef<AppSpecElIngressElRuleElCorsElRef> {
+        ListRef::new(self.shared().clone(), format!("{}.cors", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `match_` after provisioning.\n"]
+    pub fn match_(&self) -> ListRef<AppSpecElIngressElRuleElMatchElRef> {
+        ListRef::new(self.shared().clone(), format!("{}.match", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `redirect` after provisioning.\n"]
+    pub fn redirect(&self) -> ListRef<AppSpecElIngressElRuleElRedirectElRef> {
+        ListRef::new(self.shared().clone(), format!("{}.redirect", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppSpecElIngressElDynamic {
+    rule: Option<DynamicBlock<AppSpecElIngressElRuleEl>>,
+}
+
+#[derive(Serialize)]
+pub struct AppSpecElIngressEl {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    rule: Option<Vec<AppSpecElIngressElRuleEl>>,
+    dynamic: AppSpecElIngressElDynamic,
+}
+
+impl AppSpecElIngressEl {
+    #[doc= "Set the field `rule`.\n"]
+    pub fn set_rule(mut self, v: impl Into<BlockAssignable<AppSpecElIngressElRuleEl>>) -> Self {
+        match v.into() {
+            BlockAssignable::Literal(v) => {
+                self.rule = Some(v);
+            },
+            BlockAssignable::Dynamic(d) => {
+                self.dynamic.rule = Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl ToListMappable for AppSpecElIngressEl {
+    type O = BlockAssignable<AppSpecElIngressEl>;
+
+    fn do_map(self, base: String) -> Self::O {
+        BlockAssignable::Dynamic(DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppSpecElIngressEl {}
+
+impl BuildAppSpecElIngressEl {
+    pub fn build(self) -> AppSpecElIngressEl {
+        AppSpecElIngressEl {
+            rule: core::default::Default::default(),
+            dynamic: Default::default(),
+        }
+    }
+}
+
+pub struct AppSpecElIngressElRef {
+    shared: StackShared,
+    base: String,
+}
+
+impl Ref for AppSpecElIngressElRef {
+    fn new(shared: StackShared, base: String) -> AppSpecElIngressElRef {
+        AppSpecElIngressElRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppSpecElIngressElRef {
+    fn shared(&self) -> &StackShared {
+        &self.shared
+    }
+
+    #[doc= "Get a reference to the value of field `rule` after provisioning.\n"]
+    pub fn rule(&self) -> ListRef<AppSpecElIngressElRuleElRef> {
+        ListRef::new(self.shared().clone(), format!("{}.rule", self.base))
+    }
+}
+
+#[derive(Serialize)]
 pub struct AppSpecElJobElAlertEl {
     #[serde(skip_serializing_if = "Option::is_none")]
     disabled: Option<PrimField<bool>>,
@@ -3999,6 +4792,8 @@ pub struct AppSpecElServiceElHealthCheckEl {
     #[serde(skip_serializing_if = "Option::is_none")]
     period_seconds: Option<PrimField<f64>>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    port: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     success_threshold: Option<PrimField<f64>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     timeout_seconds: Option<PrimField<f64>>,
@@ -4026,6 +4821,12 @@ impl AppSpecElServiceElHealthCheckEl {
     #[doc= "Set the field `period_seconds`.\nThe number of seconds to wait between health checks."]
     pub fn set_period_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
         self.period_seconds = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `port`.\nThe port on which the health check will be performed. If not set, the health check will be performed on the component's http_port."]
+    pub fn set_port(mut self, v: impl Into<PrimField<f64>>) -> Self {
+        self.port = Some(v.into());
         self
     }
 
@@ -4063,6 +4864,7 @@ impl BuildAppSpecElServiceElHealthCheckEl {
             http_path: core::default::Default::default(),
             initial_delay_seconds: core::default::Default::default(),
             period_seconds: core::default::Default::default(),
+            port: core::default::Default::default(),
             success_threshold: core::default::Default::default(),
             timeout_seconds: core::default::Default::default(),
         }
@@ -4106,6 +4908,11 @@ impl AppSpecElServiceElHealthCheckElRef {
     #[doc= "Get a reference to the value of field `period_seconds` after provisioning.\nThe number of seconds to wait between health checks."]
     pub fn period_seconds(&self) -> PrimExpr<f64> {
         PrimExpr::new(self.shared().clone(), format!("{}.period_seconds", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `port` after provisioning.\nThe port on which the health check will be performed. If not set, the health check will be performed on the component's http_port."]
+    pub fn port(&self) -> PrimExpr<f64> {
+        PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
     }
 
     #[doc= "Get a reference to the value of field `success_threshold` after provisioning.\nThe number of successful health checks before considered healthy."]
@@ -7327,6 +8134,7 @@ struct AppSpecElDynamic {
     domain: Option<DynamicBlock<AppSpecElDomainEl>>,
     env: Option<DynamicBlock<AppSpecElEnvEl>>,
     function: Option<DynamicBlock<AppSpecElFunctionEl>>,
+    ingress: Option<DynamicBlock<AppSpecElIngressEl>>,
     job: Option<DynamicBlock<AppSpecElJobEl>>,
     service: Option<DynamicBlock<AppSpecElServiceEl>>,
     static_site: Option<DynamicBlock<AppSpecElStaticSiteEl>>,
@@ -7337,6 +8145,8 @@ struct AppSpecElDynamic {
 pub struct AppSpecEl {
     #[serde(skip_serializing_if = "Option::is_none")]
     domains: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    features: Option<SetField<PrimField<String>>>,
     name: PrimField<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     region: Option<PrimField<String>>,
@@ -7350,6 +8160,8 @@ pub struct AppSpecEl {
     env: Option<Vec<AppSpecElEnvEl>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     function: Option<Vec<AppSpecElFunctionEl>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    ingress: Option<Vec<AppSpecElIngressEl>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     job: Option<Vec<AppSpecElJobEl>>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -7365,6 +8177,12 @@ impl AppSpecEl {
     #[doc= "Set the field `domains`.\n"]
     pub fn set_domains(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
         self.domains = Some(v.into());
+        self
+    }
+
+    #[doc= "Set the field `features`.\nList of features which is applied to the app"]
+    pub fn set_features(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
+        self.features = Some(v.into());
         self
     }
 
@@ -7434,6 +8252,19 @@ impl AppSpecEl {
             },
             BlockAssignable::Dynamic(d) => {
                 self.dynamic.function = Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc= "Set the field `ingress`.\n"]
+    pub fn set_ingress(mut self, v: impl Into<BlockAssignable<AppSpecElIngressEl>>) -> Self {
+        match v.into() {
+            BlockAssignable::Literal(v) => {
+                self.ingress = Some(v);
+            },
+            BlockAssignable::Dynamic(d) => {
+                self.dynamic.ingress = Some(d);
             },
         }
         self
@@ -7513,6 +8344,7 @@ impl BuildAppSpecEl {
     pub fn build(self) -> AppSpecEl {
         AppSpecEl {
             domains: core::default::Default::default(),
+            features: core::default::Default::default(),
             name: self.name,
             region: core::default::Default::default(),
             alert: core::default::Default::default(),
@@ -7520,6 +8352,7 @@ impl BuildAppSpecEl {
             domain: core::default::Default::default(),
             env: core::default::Default::default(),
             function: core::default::Default::default(),
+            ingress: core::default::Default::default(),
             job: core::default::Default::default(),
             service: core::default::Default::default(),
             static_site: core::default::Default::default(),
@@ -7553,6 +8386,11 @@ impl AppSpecElRef {
         SetRef::new(self.shared().clone(), format!("{}.domains", self.base))
     }
 
+    #[doc= "Get a reference to the value of field `features` after provisioning.\nList of features which is applied to the app"]
+    pub fn features(&self) -> SetRef<PrimExpr<String>> {
+        SetRef::new(self.shared().clone(), format!("{}.features", self.base))
+    }
+
     #[doc= "Get a reference to the value of field `name` after provisioning.\nThe name of the app. Must be unique across all apps in the same account."]
     pub fn name(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
@@ -7576,6 +8414,11 @@ impl AppSpecElRef {
     #[doc= "Get a reference to the value of field `function` after provisioning.\n"]
     pub fn function(&self) -> ListRef<AppSpecElFunctionElRef> {
         ListRef::new(self.shared().clone(), format!("{}.function", self.base))
+    }
+
+    #[doc= "Get a reference to the value of field `ingress` after provisioning.\n"]
+    pub fn ingress(&self) -> ListRef<AppSpecElIngressElRef> {
+        ListRef::new(self.shared().clone(), format!("{}.ingress", self.base))
     }
 
     #[doc= "Get a reference to the value of field `job` after provisioning.\n"]

@@ -125,6 +125,11 @@ impl DataDatabaseReplica {
     pub fn user(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.user", self.extract_ref()))
     }
+
+    #[doc= "Get a reference to the value of field `uuid` after provisioning.\n"]
+    pub fn uuid(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.uuid", self.extract_ref()))
+    }
 }
 
 impl Referable for DataDatabaseReplica {
@@ -277,5 +282,10 @@ impl DataDatabaseReplicaRef {
     #[doc= "Get a reference to the value of field `user` after provisioning.\n"]
     pub fn user(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.user", self.extract_ref()))
+    }
+
+    #[doc= "Get a reference to the value of field `uuid` after provisioning.\n"]
+    pub fn uuid(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.uuid", self.extract_ref()))
     }
 }

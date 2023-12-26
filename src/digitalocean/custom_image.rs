@@ -25,6 +25,8 @@ struct CustomImageData {
     #[serde(skip_serializing_if = "Option::is_none")]
     tags: Option<SetField<PrimField<String>>>,
     url: PrimField<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    timeouts: Option<CustomImageTimeoutsEl>,
 }
 
 struct CustomImage_ {
@@ -121,6 +123,12 @@ impl CustomImage {
         self
     }
 
+    #[doc= "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl Into<CustomImageTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = Some(v.into());
+        self
+    }
+
     #[doc= "Get a reference to the value of field `created_at` after provisioning.\n"]
     pub fn created_at(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
@@ -195,6 +203,11 @@ impl CustomImage {
     pub fn url(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
     }
+
+    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> CustomImageTimeoutsElRef {
+        CustomImageTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
 }
 
 impl Referable for CustomImage {
@@ -255,6 +268,7 @@ impl BuildCustomImage {
                 regions: self.regions,
                 tags: core::default::Default::default(),
                 url: self.url,
+                timeouts: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -358,5 +372,69 @@ impl CustomImageRef {
     #[doc= "Get a reference to the value of field `url` after provisioning.\n"]
     pub fn url(&self) -> PrimExpr<String> {
         PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
+    }
+
+    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> CustomImageTimeoutsElRef {
+        CustomImageTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CustomImageTimeoutsEl {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    create: Option<PrimField<String>>,
+}
+
+impl CustomImageTimeoutsEl {
+    #[doc= "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
+        self.create = Some(v.into());
+        self
+    }
+}
+
+impl ToListMappable for CustomImageTimeoutsEl {
+    type O = BlockAssignable<CustomImageTimeoutsEl>;
+
+    fn do_map(self, base: String) -> Self::O {
+        BlockAssignable::Dynamic(DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCustomImageTimeoutsEl {}
+
+impl BuildCustomImageTimeoutsEl {
+    pub fn build(self) -> CustomImageTimeoutsEl {
+        CustomImageTimeoutsEl { create: core::default::Default::default() }
+    }
+}
+
+pub struct CustomImageTimeoutsElRef {
+    shared: StackShared,
+    base: String,
+}
+
+impl Ref for CustomImageTimeoutsElRef {
+    fn new(shared: StackShared, base: String) -> CustomImageTimeoutsElRef {
+        CustomImageTimeoutsElRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CustomImageTimeoutsElRef {
+    fn shared(&self) -> &StackShared {
+        &self.shared
+    }
+
+    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> PrimExpr<String> {
+        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 }
