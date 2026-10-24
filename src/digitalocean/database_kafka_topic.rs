@@ -1,53 +1,57 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
 struct DatabaseKafkaTopicData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    cluster_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    partition_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    replication_factor: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    config: Option<Vec<DatabaseKafkaTopicConfigEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    cluster_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    partition_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    replication_factor: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    config: std::option::Option<std::vec::Vec<DatabaseKafkaTopicConfigEl>>,
     dynamic: DatabaseKafkaTopicDynamic,
 }
 
 struct DatabaseKafkaTopic_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DatabaseKafkaTopicData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DatabaseKafkaTopicData>,
 }
 
 #[derive(Clone)]
-pub struct DatabaseKafkaTopic(Rc<DatabaseKafkaTopic_>);
+pub struct DatabaseKafkaTopic(std::rc::Rc<DatabaseKafkaTopic_>);
 
 impl DatabaseKafkaTopic {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderDigitalocean) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -62,131 +66,164 @@ impl DatabaseKafkaTopic {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `partition_count`.\n"]
-    pub fn set_partition_count(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().partition_count = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `replication_factor`.\n"]
-    pub fn set_replication_factor(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().replication_factor = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `config`.\n"]
-    pub fn set_config(self, v: impl Into<BlockAssignable<DatabaseKafkaTopicConfigEl>>) -> Self {
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `partition_count`.\n"]
+    pub fn set_partition_count(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().partition_count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `replication_factor`.\n"]
+    pub fn set_replication_factor(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().replication_factor = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `config`.\n"]
+    pub fn set_config(self, v: impl std::convert::Into<terrars::BlockAssignable<DatabaseKafkaTopicConfigEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `cluster_id` after provisioning.\n"]
-    pub fn cluster_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_id` after provisioning.\n"]
+    pub fn cluster_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `partition_count` after provisioning.\n"]
-    pub fn partition_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.partition_count", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `partition_count` after provisioning.\n"]
+    pub fn partition_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.partition_count", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `replication_factor` after provisioning.\n"]
-    pub fn replication_factor(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.replication_factor", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `replication_factor` after provisioning.\n"]
+    pub fn replication_factor(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replication_factor", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\n"]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> ListRef<DatabaseKafkaTopicConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
+    pub fn config(&self) -> terrars::ListRef<DatabaseKafkaTopicConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 }
 
-impl Referable for DatabaseKafkaTopic {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DatabaseKafkaTopic {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for DatabaseKafkaTopic { }
+impl terrars::Resource for DatabaseKafkaTopic { }
 
-impl ToListMappable for DatabaseKafkaTopic {
-    type O = ListRef<DatabaseKafkaTopicRef>;
+impl terrars::ToListMappable for DatabaseKafkaTopic {
+    type O = terrars::ListRef<DatabaseKafkaTopicRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for DatabaseKafkaTopic_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for DatabaseKafkaTopic_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "digitalocean_database_kafka_topic".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -196,30 +233,31 @@ impl Resource_ for DatabaseKafkaTopic_ {
 }
 
 pub struct BuildDatabaseKafkaTopic {
-    pub tf_id: String,
-    #[doc= ""]
-    pub cluster_id: PrimField<String>,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub cluster_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDatabaseKafkaTopic {
-    pub fn build(self, stack: &mut Stack) -> DatabaseKafkaTopic {
-        let out = DatabaseKafkaTopic(Rc::new(DatabaseKafkaTopic_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DatabaseKafkaTopic {
+        let out = DatabaseKafkaTopic(std::rc::Rc::new(DatabaseKafkaTopic_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DatabaseKafkaTopicData {
+            data: std::cell::RefCell::new(DatabaseKafkaTopicData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 cluster_id: self.cluster_id,
                 id: core::default::Default::default(),
                 name: self.name,
                 partition_count: core::default::Default::default(),
                 replication_factor: core::default::Default::default(),
                 config: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -228,12 +266,12 @@ impl BuildDatabaseKafkaTopic {
 }
 
 pub struct DatabaseKafkaTopicRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatabaseKafkaTopicRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DatabaseKafkaTopicRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -242,245 +280,272 @@ impl Ref for DatabaseKafkaTopicRef {
 }
 
 impl DatabaseKafkaTopicRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cluster_id` after provisioning.\n"]
-    pub fn cluster_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_id` after provisioning.\n"]
+    pub fn cluster_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `partition_count` after provisioning.\n"]
-    pub fn partition_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.partition_count", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `partition_count` after provisioning.\n"]
+    pub fn partition_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.partition_count", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `replication_factor` after provisioning.\n"]
-    pub fn replication_factor(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.replication_factor", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `replication_factor` after provisioning.\n"]
+    pub fn replication_factor(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replication_factor", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\n"]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> ListRef<DatabaseKafkaTopicConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
+    pub fn config(&self) -> terrars::ListRef<DatabaseKafkaTopicConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DatabaseKafkaTopicConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cleanup_policy: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    compression_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete_retention_ms: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    file_delete_delay_ms: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    flush_messages: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    flush_ms: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    index_interval_bytes: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_compaction_lag_ms: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_message_bytes: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    message_down_conversion_enable: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    message_format_version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    message_timestamp_difference_max_ms: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    message_timestamp_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min_cleanable_dirty_ratio: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min_compaction_lag_ms: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min_insync_replicas: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    preallocate: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    retention_bytes: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    retention_ms: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    segment_bytes: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    segment_index_bytes: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    segment_jitter_ms: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    segment_ms: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cleanup_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    compression_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete_retention_ms: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    file_delete_delay_ms: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    flush_messages: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    flush_ms: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    index_interval_bytes: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_compaction_lag_ms: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_message_bytes: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message_down_conversion_enable: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message_format_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message_timestamp_difference_max_ms: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message_timestamp_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_cleanable_dirty_ratio: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_compaction_lag_ms: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_insync_replicas: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    preallocate: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retention_bytes: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retention_ms: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    segment_bytes: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    segment_index_bytes: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    segment_jitter_ms: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    segment_ms: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DatabaseKafkaTopicConfigEl {
-    #[doc= "Set the field `cleanup_policy`.\n"]
-    pub fn set_cleanup_policy(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cleanup_policy = Some(v.into());
+    #[doc = "Set the field `cleanup_policy`.\n"]
+    pub fn set_cleanup_policy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cleanup_policy = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `compression_type`.\n"]
-    pub fn set_compression_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.compression_type = Some(v.into());
+    #[doc = "Set the field `compression_type`.\n"]
+    pub fn set_compression_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.compression_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete_retention_ms`.\n"]
-    pub fn set_delete_retention_ms(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete_retention_ms = Some(v.into());
+    #[doc = "Set the field `delete_retention_ms`.\n"]
+    pub fn set_delete_retention_ms(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.delete_retention_ms = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `file_delete_delay_ms`.\n"]
-    pub fn set_file_delete_delay_ms(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.file_delete_delay_ms = Some(v.into());
+    #[doc = "Set the field `file_delete_delay_ms`.\n"]
+    pub fn set_file_delete_delay_ms(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.file_delete_delay_ms = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `flush_messages`.\n"]
-    pub fn set_flush_messages(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.flush_messages = Some(v.into());
+    #[doc = "Set the field `flush_messages`.\n"]
+    pub fn set_flush_messages(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.flush_messages = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `flush_ms`.\n"]
-    pub fn set_flush_ms(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.flush_ms = Some(v.into());
+    #[doc = "Set the field `flush_ms`.\n"]
+    pub fn set_flush_ms(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.flush_ms = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `index_interval_bytes`.\n"]
-    pub fn set_index_interval_bytes(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.index_interval_bytes = Some(v.into());
+    #[doc = "Set the field `index_interval_bytes`.\n"]
+    pub fn set_index_interval_bytes(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.index_interval_bytes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_compaction_lag_ms`.\n"]
-    pub fn set_max_compaction_lag_ms(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.max_compaction_lag_ms = Some(v.into());
+    #[doc = "Set the field `max_compaction_lag_ms`.\n"]
+    pub fn set_max_compaction_lag_ms(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.max_compaction_lag_ms = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_message_bytes`.\n"]
-    pub fn set_max_message_bytes(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.max_message_bytes = Some(v.into());
+    #[doc = "Set the field `max_message_bytes`.\n"]
+    pub fn set_max_message_bytes(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.max_message_bytes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `message_down_conversion_enable`.\n"]
-    pub fn set_message_down_conversion_enable(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.message_down_conversion_enable = Some(v.into());
+    #[doc = "Set the field `message_down_conversion_enable`.\n"]
+    pub fn set_message_down_conversion_enable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.message_down_conversion_enable = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `message_format_version`.\n"]
-    pub fn set_message_format_version(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.message_format_version = Some(v.into());
+    #[doc = "Set the field `message_format_version`.\n"]
+    pub fn set_message_format_version(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.message_format_version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `message_timestamp_difference_max_ms`.\n"]
-    pub fn set_message_timestamp_difference_max_ms(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.message_timestamp_difference_max_ms = Some(v.into());
+    #[doc = "Set the field `message_timestamp_difference_max_ms`.\n"]
+    pub fn set_message_timestamp_difference_max_ms(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.message_timestamp_difference_max_ms = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `message_timestamp_type`.\n"]
-    pub fn set_message_timestamp_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.message_timestamp_type = Some(v.into());
+    #[doc = "Set the field `message_timestamp_type`.\n"]
+    pub fn set_message_timestamp_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.message_timestamp_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min_cleanable_dirty_ratio`.\n"]
-    pub fn set_min_cleanable_dirty_ratio(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.min_cleanable_dirty_ratio = Some(v.into());
+    #[doc = "Set the field `min_cleanable_dirty_ratio`.\n"]
+    pub fn set_min_cleanable_dirty_ratio(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min_cleanable_dirty_ratio = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min_compaction_lag_ms`.\n"]
-    pub fn set_min_compaction_lag_ms(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.min_compaction_lag_ms = Some(v.into());
+    #[doc = "Set the field `min_compaction_lag_ms`.\n"]
+    pub fn set_min_compaction_lag_ms(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.min_compaction_lag_ms = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min_insync_replicas`.\n"]
-    pub fn set_min_insync_replicas(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.min_insync_replicas = Some(v.into());
+    #[doc = "Set the field `min_insync_replicas`.\n"]
+    pub fn set_min_insync_replicas(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min_insync_replicas = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `preallocate`.\n"]
-    pub fn set_preallocate(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.preallocate = Some(v.into());
+    #[doc = "Set the field `preallocate`.\n"]
+    pub fn set_preallocate(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.preallocate = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `retention_bytes`.\n"]
-    pub fn set_retention_bytes(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.retention_bytes = Some(v.into());
+    #[doc = "Set the field `retention_bytes`.\n"]
+    pub fn set_retention_bytes(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.retention_bytes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `retention_ms`.\n"]
-    pub fn set_retention_ms(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.retention_ms = Some(v.into());
+    #[doc = "Set the field `retention_ms`.\n"]
+    pub fn set_retention_ms(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.retention_ms = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `segment_bytes`.\n"]
-    pub fn set_segment_bytes(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.segment_bytes = Some(v.into());
+    #[doc = "Set the field `segment_bytes`.\n"]
+    pub fn set_segment_bytes(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.segment_bytes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `segment_index_bytes`.\n"]
-    pub fn set_segment_index_bytes(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.segment_index_bytes = Some(v.into());
+    #[doc = "Set the field `segment_index_bytes`.\n"]
+    pub fn set_segment_index_bytes(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.segment_index_bytes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `segment_jitter_ms`.\n"]
-    pub fn set_segment_jitter_ms(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.segment_jitter_ms = Some(v.into());
+    #[doc = "Set the field `segment_jitter_ms`.\n"]
+    pub fn set_segment_jitter_ms(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.segment_jitter_ms = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `segment_ms`.\n"]
-    pub fn set_segment_ms(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.segment_ms = Some(v.into());
+    #[doc = "Set the field `segment_ms`.\n"]
+    pub fn set_segment_ms(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.segment_ms = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DatabaseKafkaTopicConfigEl {
-    type O = BlockAssignable<DatabaseKafkaTopicConfigEl>;
+impl terrars::ToListMappable for DatabaseKafkaTopicConfigEl {
+    type O = terrars::BlockAssignable<DatabaseKafkaTopicConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -521,12 +586,12 @@ impl BuildDatabaseKafkaTopicConfigEl {
 }
 
 pub struct DatabaseKafkaTopicConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DatabaseKafkaTopicConfigElRef {
-    fn new(shared: StackShared, base: String) -> DatabaseKafkaTopicConfigElRef {
+impl terrars::Ref for DatabaseKafkaTopicConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatabaseKafkaTopicConfigElRef {
         DatabaseKafkaTopicConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -535,127 +600,127 @@ impl Ref for DatabaseKafkaTopicConfigElRef {
 }
 
 impl DatabaseKafkaTopicConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cleanup_policy` after provisioning.\n"]
-    pub fn cleanup_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cleanup_policy", self.base))
+    #[doc = "Get a reference to the value of field `cleanup_policy` after provisioning.\n"]
+    pub fn cleanup_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cleanup_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `compression_type` after provisioning.\n"]
-    pub fn compression_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.compression_type", self.base))
+    #[doc = "Get a reference to the value of field `compression_type` after provisioning.\n"]
+    pub fn compression_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compression_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete_retention_ms` after provisioning.\n"]
-    pub fn delete_retention_ms(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete_retention_ms", self.base))
+    #[doc = "Get a reference to the value of field `delete_retention_ms` after provisioning.\n"]
+    pub fn delete_retention_ms(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_retention_ms", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `file_delete_delay_ms` after provisioning.\n"]
-    pub fn file_delete_delay_ms(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.file_delete_delay_ms", self.base))
+    #[doc = "Get a reference to the value of field `file_delete_delay_ms` after provisioning.\n"]
+    pub fn file_delete_delay_ms(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_delete_delay_ms", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `flush_messages` after provisioning.\n"]
-    pub fn flush_messages(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.flush_messages", self.base))
+    #[doc = "Get a reference to the value of field `flush_messages` after provisioning.\n"]
+    pub fn flush_messages(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.flush_messages", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `flush_ms` after provisioning.\n"]
-    pub fn flush_ms(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.flush_ms", self.base))
+    #[doc = "Get a reference to the value of field `flush_ms` after provisioning.\n"]
+    pub fn flush_ms(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.flush_ms", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `index_interval_bytes` after provisioning.\n"]
-    pub fn index_interval_bytes(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.index_interval_bytes", self.base))
+    #[doc = "Get a reference to the value of field `index_interval_bytes` after provisioning.\n"]
+    pub fn index_interval_bytes(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_interval_bytes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_compaction_lag_ms` after provisioning.\n"]
-    pub fn max_compaction_lag_ms(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_compaction_lag_ms", self.base))
+    #[doc = "Get a reference to the value of field `max_compaction_lag_ms` after provisioning.\n"]
+    pub fn max_compaction_lag_ms(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_compaction_lag_ms", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_message_bytes` after provisioning.\n"]
-    pub fn max_message_bytes(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_message_bytes", self.base))
+    #[doc = "Get a reference to the value of field `max_message_bytes` after provisioning.\n"]
+    pub fn max_message_bytes(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_message_bytes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `message_down_conversion_enable` after provisioning.\n"]
-    pub fn message_down_conversion_enable(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.message_down_conversion_enable", self.base))
+    #[doc = "Get a reference to the value of field `message_down_conversion_enable` after provisioning.\n"]
+    pub fn message_down_conversion_enable(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message_down_conversion_enable", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `message_format_version` after provisioning.\n"]
-    pub fn message_format_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.message_format_version", self.base))
+    #[doc = "Get a reference to the value of field `message_format_version` after provisioning.\n"]
+    pub fn message_format_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message_format_version", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `message_timestamp_difference_max_ms` after provisioning.\n"]
-    pub fn message_timestamp_difference_max_ms(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.message_timestamp_difference_max_ms", self.base))
+    #[doc = "Get a reference to the value of field `message_timestamp_difference_max_ms` after provisioning.\n"]
+    pub fn message_timestamp_difference_max_ms(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message_timestamp_difference_max_ms", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `message_timestamp_type` after provisioning.\n"]
-    pub fn message_timestamp_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.message_timestamp_type", self.base))
+    #[doc = "Get a reference to the value of field `message_timestamp_type` after provisioning.\n"]
+    pub fn message_timestamp_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message_timestamp_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min_cleanable_dirty_ratio` after provisioning.\n"]
-    pub fn min_cleanable_dirty_ratio(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_cleanable_dirty_ratio", self.base))
+    #[doc = "Get a reference to the value of field `min_cleanable_dirty_ratio` after provisioning.\n"]
+    pub fn min_cleanable_dirty_ratio(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_cleanable_dirty_ratio", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min_compaction_lag_ms` after provisioning.\n"]
-    pub fn min_compaction_lag_ms(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_compaction_lag_ms", self.base))
+    #[doc = "Get a reference to the value of field `min_compaction_lag_ms` after provisioning.\n"]
+    pub fn min_compaction_lag_ms(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_compaction_lag_ms", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min_insync_replicas` after provisioning.\n"]
-    pub fn min_insync_replicas(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_insync_replicas", self.base))
+    #[doc = "Get a reference to the value of field `min_insync_replicas` after provisioning.\n"]
+    pub fn min_insync_replicas(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_insync_replicas", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `preallocate` after provisioning.\n"]
-    pub fn preallocate(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.preallocate", self.base))
+    #[doc = "Get a reference to the value of field `preallocate` after provisioning.\n"]
+    pub fn preallocate(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preallocate", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `retention_bytes` after provisioning.\n"]
-    pub fn retention_bytes(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.retention_bytes", self.base))
+    #[doc = "Get a reference to the value of field `retention_bytes` after provisioning.\n"]
+    pub fn retention_bytes(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retention_bytes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `retention_ms` after provisioning.\n"]
-    pub fn retention_ms(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.retention_ms", self.base))
+    #[doc = "Get a reference to the value of field `retention_ms` after provisioning.\n"]
+    pub fn retention_ms(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retention_ms", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `segment_bytes` after provisioning.\n"]
-    pub fn segment_bytes(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.segment_bytes", self.base))
+    #[doc = "Get a reference to the value of field `segment_bytes` after provisioning.\n"]
+    pub fn segment_bytes(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.segment_bytes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `segment_index_bytes` after provisioning.\n"]
-    pub fn segment_index_bytes(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.segment_index_bytes", self.base))
+    #[doc = "Get a reference to the value of field `segment_index_bytes` after provisioning.\n"]
+    pub fn segment_index_bytes(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.segment_index_bytes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `segment_jitter_ms` after provisioning.\n"]
-    pub fn segment_jitter_ms(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.segment_jitter_ms", self.base))
+    #[doc = "Get a reference to the value of field `segment_jitter_ms` after provisioning.\n"]
+    pub fn segment_jitter_ms(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.segment_jitter_ms", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `segment_ms` after provisioning.\n"]
-    pub fn segment_ms(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.segment_ms", self.base))
+    #[doc = "Get a reference to the value of field `segment_ms` after provisioning.\n"]
+    pub fn segment_ms(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.segment_ms", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DatabaseKafkaTopicDynamic {
-    config: Option<DynamicBlock<DatabaseKafkaTopicConfigEl>>,
+    config: std::option::Option<terrars::DynamicBlock<DatabaseKafkaTopicConfigEl>>,
 }

@@ -1,49 +1,53 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
 struct SpacesBucketCorsConfigurationData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    bucket: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    region: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cors_rule: Option<Vec<SpacesBucketCorsConfigurationCorsRuleEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    bucket: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    region: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cors_rule: std::option::Option<std::vec::Vec<SpacesBucketCorsConfigurationCorsRuleEl>>,
     dynamic: SpacesBucketCorsConfigurationDynamic,
 }
 
 struct SpacesBucketCorsConfiguration_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<SpacesBucketCorsConfigurationData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<SpacesBucketCorsConfigurationData>,
 }
 
 #[derive(Clone)]
-pub struct SpacesBucketCorsConfiguration(Rc<SpacesBucketCorsConfiguration_>);
+pub struct SpacesBucketCorsConfiguration(std::rc::Rc<SpacesBucketCorsConfiguration_>);
 
 impl SpacesBucketCorsConfiguration {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderDigitalocean) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -58,99 +62,135 @@ impl SpacesBucketCorsConfiguration {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `cors_rule`.\n"]
-    pub fn set_cors_rule(self, v: impl Into<BlockAssignable<SpacesBucketCorsConfigurationCorsRuleEl>>) -> Self {
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cors_rule`.\n"]
+    pub fn set_cors_rule(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SpacesBucketCorsConfigurationCorsRuleEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().cors_rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cors_rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.cors_rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cors_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\nBucket ID"]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\nBucket ID"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `region` after provisioning.\n"]
-    pub fn region(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
-impl Referable for SpacesBucketCorsConfiguration {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for SpacesBucketCorsConfiguration {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for SpacesBucketCorsConfiguration { }
+impl terrars::Resource for SpacesBucketCorsConfiguration { }
 
-impl ToListMappable for SpacesBucketCorsConfiguration {
-    type O = ListRef<SpacesBucketCorsConfigurationRef>;
+impl terrars::ToListMappable for SpacesBucketCorsConfiguration {
+    type O = terrars::ListRef<SpacesBucketCorsConfigurationRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for SpacesBucketCorsConfiguration_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for SpacesBucketCorsConfiguration_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "digitalocean_spaces_bucket_cors_configuration".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -160,28 +200,29 @@ impl Resource_ for SpacesBucketCorsConfiguration_ {
 }
 
 pub struct BuildSpacesBucketCorsConfiguration {
-    pub tf_id: String,
-    #[doc= "Bucket ID"]
-    pub bucket: PrimField<String>,
-    #[doc= ""]
-    pub region: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "Bucket ID"]
+    pub bucket: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub region: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSpacesBucketCorsConfiguration {
-    pub fn build(self, stack: &mut Stack) -> SpacesBucketCorsConfiguration {
-        let out = SpacesBucketCorsConfiguration(Rc::new(SpacesBucketCorsConfiguration_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> SpacesBucketCorsConfiguration {
+        let out = SpacesBucketCorsConfiguration(std::rc::Rc::new(SpacesBucketCorsConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(SpacesBucketCorsConfigurationData {
+            data: std::cell::RefCell::new(SpacesBucketCorsConfigurationData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 bucket: self.bucket,
                 id: core::default::Default::default(),
                 region: self.region,
                 cors_rule: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -190,12 +231,12 @@ impl BuildSpacesBucketCorsConfiguration {
 }
 
 pub struct SpacesBucketCorsConfigurationRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SpacesBucketCorsConfigurationRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for SpacesBucketCorsConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -204,75 +245,81 @@ impl Ref for SpacesBucketCorsConfigurationRef {
 }
 
 impl SpacesBucketCorsConfigurationRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\nBucket ID"]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\nBucket ID"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `region` after provisioning.\n"]
-    pub fn region(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct SpacesBucketCorsConfigurationCorsRuleEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    allowed_headers: Option<SetField<PrimField<String>>>,
-    allowed_methods: SetField<PrimField<String>>,
-    allowed_origins: SetField<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    expose_headers: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_age_seconds: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allowed_headers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    allowed_methods: terrars::SetField<terrars::PrimField<std::string::String>>,
+    allowed_origins: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    expose_headers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_age_seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl SpacesBucketCorsConfigurationCorsRuleEl {
-    #[doc= "Set the field `allowed_headers`.\n"]
-    pub fn set_allowed_headers(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.allowed_headers = Some(v.into());
+    #[doc = "Set the field `allowed_headers`.\n"]
+    pub fn set_allowed_headers(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.allowed_headers = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `expose_headers`.\n"]
-    pub fn set_expose_headers(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.expose_headers = Some(v.into());
+    #[doc = "Set the field `expose_headers`.\n"]
+    pub fn set_expose_headers(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.expose_headers = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.id = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_age_seconds`.\n"]
-    pub fn set_max_age_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_age_seconds = Some(v.into());
+    #[doc = "Set the field `max_age_seconds`.\n"]
+    pub fn set_max_age_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_age_seconds = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SpacesBucketCorsConfigurationCorsRuleEl {
-    type O = BlockAssignable<SpacesBucketCorsConfigurationCorsRuleEl>;
+impl terrars::ToListMappable for SpacesBucketCorsConfigurationCorsRuleEl {
+    type O = terrars::BlockAssignable<SpacesBucketCorsConfigurationCorsRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -281,10 +328,10 @@ impl ToListMappable for SpacesBucketCorsConfigurationCorsRuleEl {
 }
 
 pub struct BuildSpacesBucketCorsConfigurationCorsRuleEl {
-    #[doc= ""]
-    pub allowed_methods: SetField<PrimField<String>>,
-    #[doc= ""]
-    pub allowed_origins: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub allowed_methods: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub allowed_origins: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildSpacesBucketCorsConfigurationCorsRuleEl {
@@ -301,12 +348,12 @@ impl BuildSpacesBucketCorsConfigurationCorsRuleEl {
 }
 
 pub struct SpacesBucketCorsConfigurationCorsRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SpacesBucketCorsConfigurationCorsRuleElRef {
-    fn new(shared: StackShared, base: String) -> SpacesBucketCorsConfigurationCorsRuleElRef {
+impl terrars::Ref for SpacesBucketCorsConfigurationCorsRuleElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SpacesBucketCorsConfigurationCorsRuleElRef {
         SpacesBucketCorsConfigurationCorsRuleElRef {
             shared: shared,
             base: base.to_string(),
@@ -315,42 +362,42 @@ impl Ref for SpacesBucketCorsConfigurationCorsRuleElRef {
 }
 
 impl SpacesBucketCorsConfigurationCorsRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `allowed_headers` after provisioning.\n"]
-    pub fn allowed_headers(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.allowed_headers", self.base))
+    #[doc = "Get a reference to the value of field `allowed_headers` after provisioning.\n"]
+    pub fn allowed_headers(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.allowed_headers", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `allowed_methods` after provisioning.\n"]
-    pub fn allowed_methods(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.allowed_methods", self.base))
+    #[doc = "Get a reference to the value of field `allowed_methods` after provisioning.\n"]
+    pub fn allowed_methods(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.allowed_methods", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `allowed_origins` after provisioning.\n"]
-    pub fn allowed_origins(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.allowed_origins", self.base))
+    #[doc = "Get a reference to the value of field `allowed_origins` after provisioning.\n"]
+    pub fn allowed_origins(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.allowed_origins", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `expose_headers` after provisioning.\n"]
-    pub fn expose_headers(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.expose_headers", self.base))
+    #[doc = "Get a reference to the value of field `expose_headers` after provisioning.\n"]
+    pub fn expose_headers(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.expose_headers", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_age_seconds` after provisioning.\n"]
-    pub fn max_age_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_age_seconds", self.base))
+    #[doc = "Get a reference to the value of field `max_age_seconds` after provisioning.\n"]
+    pub fn max_age_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_age_seconds", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SpacesBucketCorsConfigurationDynamic {
-    cors_rule: Option<DynamicBlock<SpacesBucketCorsConfigurationCorsRuleEl>>,
+    cors_rule: std::option::Option<terrars::DynamicBlock<SpacesBucketCorsConfigurationCorsRuleEl>>,
 }

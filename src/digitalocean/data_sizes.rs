@@ -1,121 +1,149 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
 struct DataSizesData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    filter: Option<Vec<DataSizesFilterEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sort: Option<Vec<DataSizesSortEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filter: std::option::Option<std::vec::Vec<DataSizesFilterEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sort: std::option::Option<std::vec::Vec<DataSizesSortEl>>,
     dynamic: DataSizesDynamic,
 }
 
 struct DataSizes_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataSizesData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataSizesData>,
 }
 
 #[derive(Clone)]
-pub struct DataSizes(Rc<DataSizes_>);
+pub struct DataSizes(std::rc::Rc<DataSizes_>);
 
 impl DataSizes {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderDigitalocean) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl Into<BlockAssignable<DataSizesFilterEl>>) -> Self {
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `filter`.\n"]
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataSizesFilterEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().filter = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().filter = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.filter = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.filter = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `sort`.\n"]
-    pub fn set_sort(self, v: impl Into<BlockAssignable<DataSizesSortEl>>) -> Self {
+    #[doc = "Set the field `sort`.\n"]
+    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataSizesSortEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().sort = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().sort = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.sort = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.sort = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `sizes` after provisioning.\n"]
-    pub fn sizes(&self) -> ListRef<DataSizesSizesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sizes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `sizes` after provisioning.\n"]
+    pub fn sizes(&self) -> terrars::ListRef<DataSizesSizesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sizes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> ListRef<DataSizesSortElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
+    pub fn sort(&self) -> terrars::ListRef<DataSizesSortElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
 
-impl Referable for DataSizes {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataSizes {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataSizes { }
+impl terrars::Datasource for DataSizes { }
 
-impl ToListMappable for DataSizes {
-    type O = ListRef<DataSizesRef>;
+impl terrars::ToListMappable for DataSizes {
+    type O = terrars::ListRef<DataSizesRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataSizes_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataSizes_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "digitalocean_sizes".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -125,22 +153,23 @@ impl Datasource_ for DataSizes_ {
 }
 
 pub struct BuildDataSizes {
-    pub tf_id: String,
+    pub tf_id: std::string::String,
 }
 
 impl BuildDataSizes {
-    pub fn build(self, stack: &mut Stack) -> DataSizes {
-        let out = DataSizes(Rc::new(DataSizes_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataSizes {
+        let out = DataSizes(std::rc::Rc::new(DataSizes_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataSizesData {
+            data: std::cell::RefCell::new(DataSizesData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 sort: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -149,12 +178,12 @@ impl BuildDataSizes {
 }
 
 pub struct DataSizesRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataSizesRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataSizesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -163,113 +192,116 @@ impl Ref for DataSizesRef {
 }
 
 impl DataSizesRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `sizes` after provisioning.\n"]
-    pub fn sizes(&self) -> ListRef<DataSizesSizesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sizes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `sizes` after provisioning.\n"]
+    pub fn sizes(&self) -> terrars::ListRef<DataSizesSizesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sizes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> ListRef<DataSizesSortElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
+    pub fn sort(&self) -> terrars::ListRef<DataSizesSortElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataSizesSizesEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    available: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    disk: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    memory: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    price_hourly: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    price_monthly: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    regions: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    slug: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    transfer: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vcpus: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    available: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disk: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    memory: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    price_hourly: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    price_monthly: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    regions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    slug: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    transfer: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vcpus: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl DataSizesSizesEl {
-    #[doc= "Set the field `available`.\n"]
-    pub fn set_available(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.available = Some(v.into());
+    #[doc = "Set the field `available`.\n"]
+    pub fn set_available(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.available = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `disk`.\n"]
-    pub fn set_disk(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.disk = Some(v.into());
+    #[doc = "Set the field `disk`.\n"]
+    pub fn set_disk(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.disk = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `memory`.\n"]
-    pub fn set_memory(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.memory = Some(v.into());
+    #[doc = "Set the field `memory`.\n"]
+    pub fn set_memory(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.memory = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `price_hourly`.\n"]
-    pub fn set_price_hourly(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.price_hourly = Some(v.into());
+    #[doc = "Set the field `price_hourly`.\n"]
+    pub fn set_price_hourly(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.price_hourly = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `price_monthly`.\n"]
-    pub fn set_price_monthly(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.price_monthly = Some(v.into());
+    #[doc = "Set the field `price_monthly`.\n"]
+    pub fn set_price_monthly(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.price_monthly = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `regions`.\n"]
-    pub fn set_regions(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.regions = Some(v.into());
+    #[doc = "Set the field `regions`.\n"]
+    pub fn set_regions(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.regions = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `slug`.\n"]
-    pub fn set_slug(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.slug = Some(v.into());
+    #[doc = "Set the field `slug`.\n"]
+    pub fn set_slug(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.slug = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `transfer`.\n"]
-    pub fn set_transfer(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.transfer = Some(v.into());
+    #[doc = "Set the field `transfer`.\n"]
+    pub fn set_transfer(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.transfer = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vcpus`.\n"]
-    pub fn set_vcpus(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.vcpus = Some(v.into());
+    #[doc = "Set the field `vcpus`.\n"]
+    pub fn set_vcpus(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.vcpus = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataSizesSizesEl {
-    type O = BlockAssignable<DataSizesSizesEl>;
+impl terrars::ToListMappable for DataSizesSizesEl {
+    type O = terrars::BlockAssignable<DataSizesSizesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -296,12 +328,12 @@ impl BuildDataSizesSizesEl {
 }
 
 pub struct DataSizesSizesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataSizesSizesElRef {
-    fn new(shared: StackShared, base: String) -> DataSizesSizesElRef {
+impl terrars::Ref for DataSizesSizesElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSizesSizesElRef {
         DataSizesSizesElRef {
             shared: shared,
             base: base.to_string(),
@@ -310,85 +342,85 @@ impl Ref for DataSizesSizesElRef {
 }
 
 impl DataSizesSizesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `available` after provisioning.\n"]
-    pub fn available(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.available", self.base))
+    #[doc = "Get a reference to the value of field `available` after provisioning.\n"]
+    pub fn available(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.available", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `disk` after provisioning.\n"]
-    pub fn disk(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disk", self.base))
+    #[doc = "Get a reference to the value of field `disk` after provisioning.\n"]
+    pub fn disk(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `memory` after provisioning.\n"]
-    pub fn memory(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.memory", self.base))
+    #[doc = "Get a reference to the value of field `memory` after provisioning.\n"]
+    pub fn memory(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.memory", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `price_hourly` after provisioning.\n"]
-    pub fn price_hourly(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.price_hourly", self.base))
+    #[doc = "Get a reference to the value of field `price_hourly` after provisioning.\n"]
+    pub fn price_hourly(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.price_hourly", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `price_monthly` after provisioning.\n"]
-    pub fn price_monthly(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.price_monthly", self.base))
+    #[doc = "Get a reference to the value of field `price_monthly` after provisioning.\n"]
+    pub fn price_monthly(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.price_monthly", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `regions` after provisioning.\n"]
-    pub fn regions(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.regions", self.base))
+    #[doc = "Get a reference to the value of field `regions` after provisioning.\n"]
+    pub fn regions(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.regions", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `slug` after provisioning.\n"]
-    pub fn slug(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.slug", self.base))
+    #[doc = "Get a reference to the value of field `slug` after provisioning.\n"]
+    pub fn slug(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.slug", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `transfer` after provisioning.\n"]
-    pub fn transfer(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.transfer", self.base))
+    #[doc = "Get a reference to the value of field `transfer` after provisioning.\n"]
+    pub fn transfer(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transfer", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vcpus` after provisioning.\n"]
-    pub fn vcpus(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vcpus", self.base))
+    #[doc = "Get a reference to the value of field `vcpus` after provisioning.\n"]
+    pub fn vcpus(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vcpus", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataSizesFilterEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    all: Option<PrimField<bool>>,
-    key: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    match_by: Option<PrimField<String>>,
-    values: ListField<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    all: std::option::Option<terrars::PrimField<bool>>,
+    key: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    match_by: std::option::Option<terrars::PrimField<std::string::String>>,
+    values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl DataSizesFilterEl {
-    #[doc= "Set the field `all`.\n"]
-    pub fn set_all(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.all = Some(v.into());
+    #[doc = "Set the field `all`.\n"]
+    pub fn set_all(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.all = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `match_by`.\n"]
-    pub fn set_match_by(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.match_by = Some(v.into());
+    #[doc = "Set the field `match_by`.\n"]
+    pub fn set_match_by(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.match_by = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataSizesFilterEl {
-    type O = BlockAssignable<DataSizesFilterEl>;
+impl terrars::ToListMappable for DataSizesFilterEl {
+    type O = terrars::BlockAssignable<DataSizesFilterEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -397,10 +429,10 @@ impl ToListMappable for DataSizesFilterEl {
 }
 
 pub struct BuildDataSizesFilterEl {
-    #[doc= ""]
-    pub key: PrimField<String>,
-    #[doc= ""]
-    pub values: ListField<PrimField<String>>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildDataSizesFilterEl {
@@ -415,12 +447,12 @@ impl BuildDataSizesFilterEl {
 }
 
 pub struct DataSizesFilterElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataSizesFilterElRef {
-    fn new(shared: StackShared, base: String) -> DataSizesFilterElRef {
+impl terrars::Ref for DataSizesFilterElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSizesFilterElRef {
         DataSizesFilterElRef {
             shared: shared,
             base: base.to_string(),
@@ -429,51 +461,51 @@ impl Ref for DataSizesFilterElRef {
 }
 
 impl DataSizesFilterElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `all` after provisioning.\n"]
-    pub fn all(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.all", self.base))
+    #[doc = "Get a reference to the value of field `all` after provisioning.\n"]
+    pub fn all(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.all", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `match_by` after provisioning.\n"]
-    pub fn match_by(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.match_by", self.base))
+    #[doc = "Get a reference to the value of field `match_by` after provisioning.\n"]
+    pub fn match_by(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.match_by", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataSizesSortEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    direction: Option<PrimField<String>>,
-    key: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    direction: std::option::Option<terrars::PrimField<std::string::String>>,
+    key: terrars::PrimField<std::string::String>,
 }
 
 impl DataSizesSortEl {
-    #[doc= "Set the field `direction`.\n"]
-    pub fn set_direction(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.direction = Some(v.into());
+    #[doc = "Set the field `direction`.\n"]
+    pub fn set_direction(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.direction = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataSizesSortEl {
-    type O = BlockAssignable<DataSizesSortEl>;
+impl terrars::ToListMappable for DataSizesSortEl {
+    type O = terrars::BlockAssignable<DataSizesSortEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -482,8 +514,8 @@ impl ToListMappable for DataSizesSortEl {
 }
 
 pub struct BuildDataSizesSortEl {
-    #[doc= ""]
-    pub key: PrimField<String>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataSizesSortEl {
@@ -496,12 +528,12 @@ impl BuildDataSizesSortEl {
 }
 
 pub struct DataSizesSortElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataSizesSortElRef {
-    fn new(shared: StackShared, base: String) -> DataSizesSortElRef {
+impl terrars::Ref for DataSizesSortElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSizesSortElRef {
         DataSizesSortElRef {
             shared: shared,
             base: base.to_string(),
@@ -510,23 +542,23 @@ impl Ref for DataSizesSortElRef {
 }
 
 impl DataSizesSortElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `direction` after provisioning.\n"]
-    pub fn direction(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.direction", self.base))
+    #[doc = "Get a reference to the value of field `direction` after provisioning.\n"]
+    pub fn direction(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.direction", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataSizesDynamic {
-    filter: Option<DynamicBlock<DataSizesFilterEl>>,
-    sort: Option<DynamicBlock<DataSizesSortEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<DataSizesFilterEl>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataSizesSortEl>>,
 }

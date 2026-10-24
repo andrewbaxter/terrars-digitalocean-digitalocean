@@ -1,53 +1,57 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
 struct CdnData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    certificate_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    certificate_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_domain: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    origin: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ttl: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    certificate_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    certificate_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_domain: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    origin: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ttl: std::option::Option<terrars::PrimField<f64>>,
 }
 
 struct Cdn_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<CdnData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<CdnData>,
 }
 
 #[derive(Clone)]
-pub struct Cdn(Rc<Cdn_>);
+pub struct Cdn(std::rc::Rc<Cdn_>);
 
 impl Cdn {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderDigitalocean) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -62,135 +66,175 @@ impl Cdn {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `certificate_id`.\nID of a DigitalOcean managed TLS certificate for use with custom domains"]
-    pub fn set_certificate_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().certificate_id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `certificate_name`.\n"]
-    pub fn set_certificate_name(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().certificate_name = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `custom_domain`.\nfully qualified domain name (FQDN) for custom subdomain, (requires certificate_id)"]
-    pub fn set_custom_domain(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().custom_domain = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = "Set the field `certificate_id`.\nID of a DigitalOcean managed TLS certificate for use with custom domains"]
+    pub fn set_certificate_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().certificate_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ttl`.\nThe amount of time the content is cached in the CDN"]
-    pub fn set_ttl(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().ttl = Some(v.into());
+    #[doc = "Set the field `certificate_name`.\n"]
+    pub fn set_certificate_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().certificate_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `certificate_id` after provisioning.\nID of a DigitalOcean managed TLS certificate for use with custom domains"]
-    pub fn certificate_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.certificate_id", self.extract_ref()))
+    #[doc =
+        "Set the field `custom_domain`.\nfully qualified domain name (FQDN) for custom subdomain, (requires certificate_id)"]
+    pub fn set_custom_domain(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().custom_domain = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `certificate_name` after provisioning.\n"]
-    pub fn certificate_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.certificate_name", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `created_at` after provisioning.\nThe date and time (ISO8601) of when the CDN endpoint was created."]
-    pub fn created_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
+    #[doc = "Set the field `ttl`.\nThe amount of time the content is cached in the CDN"]
+    pub fn set_ttl(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().ttl = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `custom_domain` after provisioning.\nfully qualified domain name (FQDN) for custom subdomain, (requires certificate_id)"]
-    pub fn custom_domain(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.custom_domain", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `certificate_id` after provisioning.\nID of a DigitalOcean managed TLS certificate for use with custom domains"]
+    pub fn certificate_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `endpoint` after provisioning.\nfully qualified domain name (FQDN) to serve the CDN content"]
-    pub fn endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `certificate_name` after provisioning.\n"]
+    pub fn certificate_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `created_at` after provisioning.\nThe date and time (ISO8601) of when the CDN endpoint was created."]
+    pub fn created_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `origin` after provisioning.\nfully qualified domain name (FQDN) for the origin server"]
-    pub fn origin(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.origin", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `custom_domain` after provisioning.\nfully qualified domain name (FQDN) for custom subdomain, (requires certificate_id)"]
+    pub fn custom_domain(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_domain", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `ttl` after provisioning.\nThe amount of time the content is cached in the CDN"]
-    pub fn ttl(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ttl", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `endpoint` after provisioning.\nfully qualified domain name (FQDN) to serve the CDN content"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `origin` after provisioning.\nfully qualified domain name (FQDN) for the origin server"]
+    pub fn origin(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.origin", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `ttl` after provisioning.\nThe amount of time the content is cached in the CDN"]
+    pub fn ttl(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ttl", self.extract_ref()))
     }
 }
 
-impl Referable for Cdn {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for Cdn {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for Cdn { }
+impl terrars::Resource for Cdn { }
 
-impl ToListMappable for Cdn {
-    type O = ListRef<CdnRef>;
+impl terrars::ToListMappable for Cdn {
+    type O = terrars::ListRef<CdnRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for Cdn_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for Cdn_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "digitalocean_cdn".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -200,21 +244,22 @@ impl Resource_ for Cdn_ {
 }
 
 pub struct BuildCdn {
-    pub tf_id: String,
-    #[doc= "fully qualified domain name (FQDN) for the origin server"]
-    pub origin: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = "fully qualified domain name (FQDN) for the origin server"]
+    pub origin: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCdn {
-    pub fn build(self, stack: &mut Stack) -> Cdn {
-        let out = Cdn(Rc::new(Cdn_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> Cdn {
+        let out = Cdn(std::rc::Rc::new(Cdn_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(CdnData {
+            data: std::cell::RefCell::new(CdnData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 certificate_id: core::default::Default::default(),
                 certificate_name: core::default::Default::default(),
                 custom_domain: core::default::Default::default(),
@@ -229,12 +274,12 @@ impl BuildCdn {
 }
 
 pub struct CdnRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CdnRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for CdnRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -243,51 +288,57 @@ impl Ref for CdnRef {
 }
 
 impl CdnRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `certificate_id` after provisioning.\nID of a DigitalOcean managed TLS certificate for use with custom domains"]
-    pub fn certificate_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.certificate_id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `certificate_id` after provisioning.\nID of a DigitalOcean managed TLS certificate for use with custom domains"]
+    pub fn certificate_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `certificate_name` after provisioning.\n"]
-    pub fn certificate_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.certificate_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `certificate_name` after provisioning.\n"]
+    pub fn certificate_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `created_at` after provisioning.\nThe date and time (ISO8601) of when the CDN endpoint was created."]
-    pub fn created_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `created_at` after provisioning.\nThe date and time (ISO8601) of when the CDN endpoint was created."]
+    pub fn created_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_domain` after provisioning.\nfully qualified domain name (FQDN) for custom subdomain, (requires certificate_id)"]
-    pub fn custom_domain(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.custom_domain", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `custom_domain` after provisioning.\nfully qualified domain name (FQDN) for custom subdomain, (requires certificate_id)"]
+    pub fn custom_domain(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_domain", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `endpoint` after provisioning.\nfully qualified domain name (FQDN) to serve the CDN content"]
-    pub fn endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `endpoint` after provisioning.\nfully qualified domain name (FQDN) to serve the CDN content"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `origin` after provisioning.\nfully qualified domain name (FQDN) for the origin server"]
-    pub fn origin(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.origin", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `origin` after provisioning.\nfully qualified domain name (FQDN) for the origin server"]
+    pub fn origin(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.origin", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `ttl` after provisioning.\nThe amount of time the content is cached in the CDN"]
-    pub fn ttl(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ttl", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `ttl` after provisioning.\nThe amount of time the content is cached in the CDN"]
+    pub fn ttl(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ttl", self.extract_ref()))
     }
 }
