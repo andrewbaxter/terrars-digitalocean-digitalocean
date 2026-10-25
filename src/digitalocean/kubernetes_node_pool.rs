@@ -460,6 +460,11 @@ impl KubernetesNodePoolRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct KubernetesNodePoolDynamic {
+    taint: std::option::Option<terrars::DynamicBlock<KubernetesNodePool_Taint>>,
+}
+
 #[derive(Serialize)]
 pub struct KubernetesNodePool_Nodes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -745,9 +750,4 @@ impl KubernetesNodePool_TimeoutsRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct KubernetesNodePoolDynamic {
-    taint: std::option::Option<terrars::DynamicBlock<KubernetesNodePool_Taint>>,
 }

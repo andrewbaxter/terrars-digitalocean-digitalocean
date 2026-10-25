@@ -312,6 +312,11 @@ impl DataPartnerAttachmentRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataPartnerAttachmentDynamic {
+    bgp: std::option::Option<terrars::DynamicBlock<DataPartnerAttachment_Bgp>>,
+}
+
 #[derive(Serialize)]
 pub struct DataPartnerAttachment_Bgp {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -401,9 +406,4 @@ impl DataPartnerAttachment_BgpRef {
     pub fn peer_router_ip(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.peer_router_ip", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataPartnerAttachmentDynamic {
-    bgp: std::option::Option<terrars::DynamicBlock<DataPartnerAttachment_Bgp>>,
 }

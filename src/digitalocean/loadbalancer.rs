@@ -812,6 +812,16 @@ impl LoadbalancerRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct LoadbalancerDynamic {
+    domains: std::option::Option<terrars::DynamicBlock<Loadbalancer_Domains>>,
+    firewall: std::option::Option<terrars::DynamicBlock<Loadbalancer_Firewall>>,
+    forwarding_rule: std::option::Option<terrars::DynamicBlock<Loadbalancer_ForwardingRule>>,
+    glb_settings: std::option::Option<terrars::DynamicBlock<Loadbalancer_GlbSettings>>,
+    healthcheck: std::option::Option<terrars::DynamicBlock<Loadbalancer_Healthcheck>>,
+    sticky_sessions: std::option::Option<terrars::DynamicBlock<Loadbalancer_StickySessions>>,
+}
+
 #[derive(Serialize)]
 pub struct Loadbalancer_Domains {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1552,14 +1562,4 @@ impl Loadbalancer_StickySessionsRef {
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LoadbalancerDynamic {
-    domains: std::option::Option<terrars::DynamicBlock<Loadbalancer_Domains>>,
-    firewall: std::option::Option<terrars::DynamicBlock<Loadbalancer_Firewall>>,
-    forwarding_rule: std::option::Option<terrars::DynamicBlock<Loadbalancer_ForwardingRule>>,
-    glb_settings: std::option::Option<terrars::DynamicBlock<Loadbalancer_GlbSettings>>,
-    healthcheck: std::option::Option<terrars::DynamicBlock<Loadbalancer_Healthcheck>>,
-    sticky_sessions: std::option::Option<terrars::DynamicBlock<Loadbalancer_StickySessions>>,
 }

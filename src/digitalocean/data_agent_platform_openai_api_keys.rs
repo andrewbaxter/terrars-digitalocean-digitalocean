@@ -224,6 +224,12 @@ impl DataAgentPlatformOpenaiApiKeysRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataAgentPlatformOpenaiApiKeysDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataAgentPlatformOpenaiApiKeys_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataAgentPlatformOpenaiApiKeys_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataAgentPlatformOpenaiApiKeys_OpenaiApiKeys_Models_Agreement {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -994,10 +1000,4 @@ impl DataAgentPlatformOpenaiApiKeys_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataAgentPlatformOpenaiApiKeysDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataAgentPlatformOpenaiApiKeys_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataAgentPlatformOpenaiApiKeys_Sort>>,
 }

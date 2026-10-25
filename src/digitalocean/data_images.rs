@@ -218,6 +218,12 @@ impl DataImagesRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataImagesDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataImages_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataImages_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataImages_Images {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -650,10 +656,4 @@ impl DataImages_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataImagesDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataImages_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataImages_Sort>>,
 }

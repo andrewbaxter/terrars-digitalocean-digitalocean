@@ -410,6 +410,13 @@ impl SpacesBucketRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct SpacesBucketDynamic {
+    cors_rule: std::option::Option<terrars::DynamicBlock<SpacesBucket_CorsRule>>,
+    lifecycle_rule: std::option::Option<terrars::DynamicBlock<SpacesBucket_LifecycleRule>>,
+    versioning: std::option::Option<terrars::DynamicBlock<SpacesBucket_Versioning>>,
+}
+
 #[derive(Serialize)]
 pub struct SpacesBucket_CorsRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -885,11 +892,4 @@ impl SpacesBucket_VersioningRef {
     pub fn enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SpacesBucketDynamic {
-    cors_rule: std::option::Option<terrars::DynamicBlock<SpacesBucket_CorsRule>>,
-    lifecycle_rule: std::option::Option<terrars::DynamicBlock<SpacesBucket_LifecycleRule>>,
-    versioning: std::option::Option<terrars::DynamicBlock<SpacesBucket_Versioning>>,
 }

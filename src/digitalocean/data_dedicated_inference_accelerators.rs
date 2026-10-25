@@ -240,6 +240,12 @@ impl DataDedicatedInferenceAcceleratorsRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataDedicatedInferenceAcceleratorsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataDedicatedInferenceAccelerators_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataDedicatedInferenceAccelerators_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataDedicatedInferenceAccelerators_Accelerators {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -529,10 +535,4 @@ impl DataDedicatedInferenceAccelerators_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataDedicatedInferenceAcceleratorsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataDedicatedInferenceAccelerators_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataDedicatedInferenceAccelerators_Sort>>,
 }

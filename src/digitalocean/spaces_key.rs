@@ -298,6 +298,11 @@ impl SpacesKeyRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct SpacesKeyDynamic {
+    grant: std::option::Option<terrars::DynamicBlock<SpacesKey_Grant>>,
+}
+
 #[derive(Serialize)]
 pub struct SpacesKey_Grant {
     bucket: terrars::PrimField<std::string::String>,
@@ -366,9 +371,4 @@ impl SpacesKey_GrantRef {
     pub fn permission(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permission", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SpacesKeyDynamic {
-    grant: std::option::Option<terrars::DynamicBlock<SpacesKey_Grant>>,
 }

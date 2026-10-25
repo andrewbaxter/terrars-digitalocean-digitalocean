@@ -309,6 +309,16 @@ impl AgentPlatformKnowledgeBaseDataSourceRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct AgentPlatformKnowledgeBaseDataSourceDynamic {
+    spaces_data_source: std
+    ::option
+    ::Option<terrars::DynamicBlock<AgentPlatformKnowledgeBaseDataSource_SpacesDataSource>>,
+    web_crawler_data_source: std
+    ::option
+    ::Option<terrars::DynamicBlock<AgentPlatformKnowledgeBaseDataSource_WebCrawlerDataSource>>,
+}
+
 #[derive(Serialize)]
 pub struct AgentPlatformKnowledgeBaseDataSource_SpacesDataSource {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -497,14 +507,4 @@ impl AgentPlatformKnowledgeBaseDataSource_WebCrawlerDataSourceRef {
     pub fn embed_media(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.embed_media", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AgentPlatformKnowledgeBaseDataSourceDynamic {
-    spaces_data_source: std
-    ::option
-    ::Option<terrars::DynamicBlock<AgentPlatformKnowledgeBaseDataSource_SpacesDataSource>>,
-    web_crawler_data_source: std
-    ::option
-    ::Option<terrars::DynamicBlock<AgentPlatformKnowledgeBaseDataSource_WebCrawlerDataSource>>,
 }

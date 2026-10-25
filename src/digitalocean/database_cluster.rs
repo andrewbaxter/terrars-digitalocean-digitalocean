@@ -696,6 +696,13 @@ impl DatabaseClusterRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DatabaseClusterDynamic {
+    backup_restore: std::option::Option<terrars::DynamicBlock<DatabaseCluster_BackupRestore>>,
+    maintenance_window: std::option::Option<terrars::DynamicBlock<DatabaseCluster_MaintenanceWindow>>,
+    storage_autoscale: std::option::Option<terrars::DynamicBlock<DatabaseCluster_StorageAutoscale>>,
+}
+
 #[derive(Serialize)]
 pub struct DatabaseCluster_BackupRestore {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1001,11 +1008,4 @@ impl DatabaseCluster_TimeoutsRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DatabaseClusterDynamic {
-    backup_restore: std::option::Option<terrars::DynamicBlock<DatabaseCluster_BackupRestore>>,
-    maintenance_window: std::option::Option<terrars::DynamicBlock<DatabaseCluster_MaintenanceWindow>>,
-    storage_autoscale: std::option::Option<terrars::DynamicBlock<DatabaseCluster_StorageAutoscale>>,
 }

@@ -461,6 +461,12 @@ impl AgentPlatformKnowledgeBaseRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct AgentPlatformKnowledgeBaseDynamic {
+    datasources: std::option::Option<terrars::DynamicBlock<AgentPlatformKnowledgeBase_Datasources>>,
+    last_indexing_job: std::option::Option<terrars::DynamicBlock<AgentPlatformKnowledgeBase_LastIndexingJob>>,
+}
+
 #[derive(Serialize)]
 pub struct AgentPlatformKnowledgeBase_Datasources_FileUploadDataSource {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -561,7 +567,7 @@ impl AgentPlatformKnowledgeBase_Datasources_FileUploadDataSourceRef {
 }
 
 #[derive(Serialize)]
-pub struct AgentPlatformKnowledgeBase_Datasources_LastIndexingJob {
+pub struct AgentPlatformKnowledgeBase_LastIndexingJob {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     completed_datasources: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -576,7 +582,7 @@ pub struct AgentPlatformKnowledgeBase_Datasources_LastIndexingJob {
     uuid: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AgentPlatformKnowledgeBase_Datasources_LastIndexingJob {
+impl AgentPlatformKnowledgeBase_LastIndexingJob {
     #[doc = "Set the field `completed_datasources`.\nNumber of completed datasources in the last indexing job"]
     pub fn set_completed_datasources(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.completed_datasources = std::option::Option::Some(v.into());
@@ -617,8 +623,8 @@ impl AgentPlatformKnowledgeBase_Datasources_LastIndexingJob {
     }
 }
 
-impl terrars::ToListMappable for AgentPlatformKnowledgeBase_Datasources_LastIndexingJob {
-    type O = terrars::BlockAssignable<AgentPlatformKnowledgeBase_Datasources_LastIndexingJob>;
+impl terrars::ToListMappable for AgentPlatformKnowledgeBase_LastIndexingJob {
+    type O = terrars::BlockAssignable<AgentPlatformKnowledgeBase_LastIndexingJob>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -629,11 +635,11 @@ impl terrars::ToListMappable for AgentPlatformKnowledgeBase_Datasources_LastInde
     }
 }
 
-pub struct BuildAgentPlatformKnowledgeBase_Datasources_LastIndexingJob {}
+pub struct BuildAgentPlatformKnowledgeBase_LastIndexingJob {}
 
-impl BuildAgentPlatformKnowledgeBase_Datasources_LastIndexingJob {
-    pub fn build(self) -> AgentPlatformKnowledgeBase_Datasources_LastIndexingJob {
-        AgentPlatformKnowledgeBase_Datasources_LastIndexingJob {
+impl BuildAgentPlatformKnowledgeBase_LastIndexingJob {
+    pub fn build(self) -> AgentPlatformKnowledgeBase_LastIndexingJob {
+        AgentPlatformKnowledgeBase_LastIndexingJob {
             completed_datasources: core::default::Default::default(),
             data_source_uuids: core::default::Default::default(),
             phase: core::default::Default::default(),
@@ -645,24 +651,21 @@ impl BuildAgentPlatformKnowledgeBase_Datasources_LastIndexingJob {
 }
 
 #[allow(dead_code)]
-pub struct AgentPlatformKnowledgeBase_Datasources_LastIndexingJobRef {
+pub struct AgentPlatformKnowledgeBase_LastIndexingJobRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AgentPlatformKnowledgeBase_Datasources_LastIndexingJobRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AgentPlatformKnowledgeBase_Datasources_LastIndexingJobRef {
-        AgentPlatformKnowledgeBase_Datasources_LastIndexingJobRef {
+impl terrars::Ref for AgentPlatformKnowledgeBase_LastIndexingJobRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AgentPlatformKnowledgeBase_LastIndexingJobRef {
+        AgentPlatformKnowledgeBase_LastIndexingJobRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AgentPlatformKnowledgeBase_Datasources_LastIndexingJobRef {
+impl AgentPlatformKnowledgeBase_LastIndexingJobRef {
     #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
@@ -928,9 +931,7 @@ struct AgentPlatformKnowledgeBase_DatasourcesDynamic {
     file_upload_data_source: std
     ::option
     ::Option<terrars::DynamicBlock<AgentPlatformKnowledgeBase_Datasources_FileUploadDataSource>>,
-    last_indexing_job: std
-    ::option
-    ::Option<terrars::DynamicBlock<AgentPlatformKnowledgeBase_Datasources_LastIndexingJob>>,
+    last_indexing_job: std::option::Option<terrars::DynamicBlock<AgentPlatformKnowledgeBase_LastIndexingJob>>,
     spaces_data_source: std
     ::option
     ::Option<terrars::DynamicBlock<AgentPlatformKnowledgeBase_Datasources_SpacesDataSource>>,
@@ -948,7 +949,7 @@ pub struct AgentPlatformKnowledgeBase_Datasources {
     ::option
     ::Option<std::vec::Vec<AgentPlatformKnowledgeBase_Datasources_FileUploadDataSource>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    last_indexing_job: std::option::Option<std::vec::Vec<AgentPlatformKnowledgeBase_Datasources_LastIndexingJob>>,
+    last_indexing_job: std::option::Option<std::vec::Vec<AgentPlatformKnowledgeBase_LastIndexingJob>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     spaces_data_source: std::option::Option<std::vec::Vec<AgentPlatformKnowledgeBase_Datasources_SpacesDataSource>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -989,7 +990,7 @@ impl AgentPlatformKnowledgeBase_Datasources {
     #[doc = "Set the field `last_indexing_job`.\n"]
     pub fn set_last_indexing_job(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AgentPlatformKnowledgeBase_Datasources_LastIndexingJob>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AgentPlatformKnowledgeBase_LastIndexingJob>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1118,7 +1119,7 @@ impl AgentPlatformKnowledgeBase_DatasourcesRef {
     }
 
     #[doc = "Get a reference to the value of field `last_indexing_job` after provisioning.\n"]
-    pub fn last_indexing_job(&self) -> terrars::ListRef<AgentPlatformKnowledgeBase_Datasources_LastIndexingJobRef> {
+    pub fn last_indexing_job(&self) -> terrars::ListRef<AgentPlatformKnowledgeBase_LastIndexingJobRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.last_indexing_job", self.base))
     }
 
@@ -1133,180 +1134,4 @@ impl AgentPlatformKnowledgeBase_DatasourcesRef {
     ) -> terrars::ListRef<AgentPlatformKnowledgeBase_Datasources_WebCrawlerDataSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.web_crawler_data_source", self.base))
     }
-}
-
-#[derive(Serialize)]
-pub struct AgentPlatformKnowledgeBase_LastIndexingJob {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    completed_datasources: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    data_source_uuids: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    phase: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tokens: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    total_datasources: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    uuid: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl AgentPlatformKnowledgeBase_LastIndexingJob {
-    #[doc = "Set the field `completed_datasources`.\nNumber of completed datasources in the last indexing job"]
-    pub fn set_completed_datasources(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.completed_datasources = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `data_source_uuids`.\nDatasource UUIDs for the last indexing job"]
-    pub fn set_data_source_uuids(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.data_source_uuids = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `phase`.\nPhase of the last indexing job"]
-    pub fn set_phase(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.phase = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `tokens`.\nNumber of tokens processed in the last indexing job"]
-    pub fn set_tokens(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.tokens = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `total_datasources`.\nTotal number of datasources in the last indexing job"]
-    pub fn set_total_datasources(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.total_datasources = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `uuid`.\nUUID  of the last indexing job"]
-    pub fn set_uuid(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.uuid = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for AgentPlatformKnowledgeBase_LastIndexingJob {
-    type O = terrars::BlockAssignable<AgentPlatformKnowledgeBase_LastIndexingJob>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAgentPlatformKnowledgeBase_LastIndexingJob {}
-
-impl BuildAgentPlatformKnowledgeBase_LastIndexingJob {
-    pub fn build(self) -> AgentPlatformKnowledgeBase_LastIndexingJob {
-        AgentPlatformKnowledgeBase_LastIndexingJob {
-            completed_datasources: core::default::Default::default(),
-            data_source_uuids: core::default::Default::default(),
-            phase: core::default::Default::default(),
-            tokens: core::default::Default::default(),
-            total_datasources: core::default::Default::default(),
-            uuid: core::default::Default::default(),
-        }
-    }
-}
-
-#[allow(dead_code)]
-pub struct AgentPlatformKnowledgeBase_LastIndexingJobRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AgentPlatformKnowledgeBase_LastIndexingJobRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AgentPlatformKnowledgeBase_LastIndexingJobRef {
-        AgentPlatformKnowledgeBase_LastIndexingJobRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AgentPlatformKnowledgeBase_LastIndexingJobRef {
-    #[allow(dead_code)]
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `completed_datasources` after provisioning.\nNumber of completed datasources in the last indexing job"]
-    pub fn completed_datasources(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.completed_datasources", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `created_at` after provisioning.\nCreated At timestamp for the last indexing job"]
-    pub fn created_at(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `data_source_uuids` after provisioning.\nDatasource UUIDs for the last indexing job"]
-    pub fn data_source_uuids(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.data_source_uuids", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `finished_at` after provisioning.\nTimestamp when the last indexing job finished"]
-    pub fn finished_at(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.finished_at", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `knowledge_base_uuid` after provisioning.\nUUID  of the Knowledge Base for the last indexing job"]
-    pub fn knowledge_base_uuid(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.knowledge_base_uuid", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `phase` after provisioning.\nPhase of the last indexing job"]
-    pub fn phase(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.phase", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `started_at` after provisioning.\nTimestamp when the last indexing job started"]
-    pub fn started_at(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.started_at", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `tokens` after provisioning.\nNumber of tokens processed in the last indexing job"]
-    pub fn tokens(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tokens", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `total_datasources` after provisioning.\nTotal number of datasources in the last indexing job"]
-    pub fn total_datasources(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.total_datasources", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `updated_at` after provisioning.\nTimestamp when the last indexing job updated"]
-    pub fn updated_at(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.updated_at", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `uuid` after provisioning.\nUUID  of the last indexing job"]
-    pub fn uuid(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uuid", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AgentPlatformKnowledgeBaseDynamic {
-    datasources: std::option::Option<terrars::DynamicBlock<AgentPlatformKnowledgeBase_Datasources>>,
-    last_indexing_job: std::option::Option<terrars::DynamicBlock<AgentPlatformKnowledgeBase_LastIndexingJob>>,
 }

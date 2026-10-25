@@ -218,6 +218,12 @@ impl DataSshKeysRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataSshKeysDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataSshKeys_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataSshKeys_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataSshKeys_SshKeys {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -490,10 +496,4 @@ impl DataSshKeys_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataSshKeysDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataSshKeys_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataSshKeys_Sort>>,
 }

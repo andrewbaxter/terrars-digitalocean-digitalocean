@@ -337,6 +337,11 @@ impl DatabaseUserRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DatabaseUserDynamic {
+    settings: std::option::Option<terrars::DynamicBlock<DatabaseUser_Settings>>,
+}
+
 #[derive(Serialize)]
 pub struct DatabaseUser_Settings_Acl {
     permission: terrars::PrimField<std::string::String>,
@@ -578,9 +583,4 @@ impl DatabaseUser_SettingsRef {
     pub fn opensearch_acl(&self) -> terrars::ListRef<DatabaseUser_Settings_OpensearchAclRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.opensearch_acl", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DatabaseUserDynamic {
-    settings: std::option::Option<terrars::DynamicBlock<DatabaseUser_Settings>>,
 }

@@ -740,6 +740,11 @@ impl DropletRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DropletDynamic {
+    backup_policy: std::option::Option<terrars::DynamicBlock<Droplet_BackupPolicy>>,
+}
+
 #[derive(Serialize)]
 pub struct Droplet_BackupPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -920,9 +925,4 @@ impl Droplet_TimeoutsRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DropletDynamic {
-    backup_policy: std::option::Option<terrars::DynamicBlock<Droplet_BackupPolicy>>,
 }

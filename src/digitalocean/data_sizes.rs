@@ -218,6 +218,12 @@ impl DataSizesRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataSizesDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataSizes_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataSizes_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataSizes_Sizes_GpuInfo_Vram {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -762,10 +768,4 @@ impl DataSizes_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataSizesDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataSizes_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataSizes_Sort>>,
 }

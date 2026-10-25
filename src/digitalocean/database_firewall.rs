@@ -254,6 +254,11 @@ impl DatabaseFirewallRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DatabaseFirewallDynamic {
+    rule: std::option::Option<terrars::DynamicBlock<DatabaseFirewall_Rule>>,
+}
+
 #[derive(Serialize)]
 pub struct DatabaseFirewall_Rule {
     #[serde(rename = "type")]
@@ -331,9 +336,4 @@ impl DatabaseFirewall_RuleRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DatabaseFirewallDynamic {
-    rule: std::option::Option<terrars::DynamicBlock<DatabaseFirewall_Rule>>,
 }

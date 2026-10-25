@@ -412,6 +412,11 @@ impl PartnerAttachmentRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct PartnerAttachmentDynamic {
+    bgp: std::option::Option<terrars::DynamicBlock<PartnerAttachment_Bgp>>,
+}
+
 #[derive(Serialize)]
 pub struct PartnerAttachment_Bgp {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -592,9 +597,4 @@ impl PartnerAttachment_TimeoutsRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct PartnerAttachmentDynamic {
-    bgp: std::option::Option<terrars::DynamicBlock<PartnerAttachment_Bgp>>,
 }

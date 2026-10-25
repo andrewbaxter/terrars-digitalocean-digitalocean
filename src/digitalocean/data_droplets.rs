@@ -237,6 +237,12 @@ impl DataDropletsRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataDropletsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataDroplets_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataDroplets_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataDroplets_Droplets {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -832,10 +838,4 @@ impl DataDroplets_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataDropletsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataDroplets_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataDroplets_Sort>>,
 }

@@ -218,6 +218,12 @@ impl DataSpacesBucketsRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataSpacesBucketsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataSpacesBuckets_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataSpacesBuckets_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataSpacesBuckets_Buckets {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -507,10 +513,4 @@ impl DataSpacesBuckets_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataSpacesBucketsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataSpacesBuckets_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataSpacesBuckets_Sort>>,
 }

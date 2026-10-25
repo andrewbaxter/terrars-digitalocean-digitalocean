@@ -420,6 +420,11 @@ impl DataAgentPlatformKnowledgeBaseRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataAgentPlatformKnowledgeBaseDynamic {
+    last_indexing_job: std::option::Option<terrars::DynamicBlock<DataAgentPlatformKnowledgeBase_LastIndexingJob>>,
+}
+
 #[derive(Serialize)]
 pub struct DataAgentPlatformKnowledgeBase_LastIndexingJob {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -591,9 +596,4 @@ impl DataAgentPlatformKnowledgeBase_LastIndexingJobRef {
     pub fn uuid(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.uuid", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataAgentPlatformKnowledgeBaseDynamic {
-    last_indexing_job: std::option::Option<terrars::DynamicBlock<DataAgentPlatformKnowledgeBase_LastIndexingJob>>,
 }

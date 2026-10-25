@@ -357,6 +357,11 @@ impl UptimeAlertRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct UptimeAlertDynamic {
+    notifications: std::option::Option<terrars::DynamicBlock<UptimeAlert_Notifications>>,
+}
+
 #[derive(Serialize)]
 pub struct UptimeAlert_Notifications_Slack {
     channel: terrars::PrimField<std::string::String>,
@@ -521,9 +526,4 @@ impl UptimeAlert_NotificationsRef {
     pub fn slack(&self) -> terrars::ListRef<UptimeAlert_Notifications_SlackRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.slack", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct UptimeAlertDynamic {
-    notifications: std::option::Option<terrars::DynamicBlock<UptimeAlert_Notifications>>,
 }

@@ -218,6 +218,12 @@ impl DataDomainsRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataDomainsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataDomains_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataDomains_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataDomains_Domains {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -476,10 +482,4 @@ impl DataDomains_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataDomainsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataDomains_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataDomains_Sort>>,
 }

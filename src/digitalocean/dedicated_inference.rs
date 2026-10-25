@@ -428,6 +428,11 @@ impl DedicatedInferenceRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DedicatedInferenceDynamic {
+    model_deployments: std::option::Option<terrars::DynamicBlock<DedicatedInference_ModelDeployments>>,
+}
+
 #[derive(Serialize)]
 pub struct DedicatedInference_ModelDeployments_Accelerators {
     accelerator_slug: terrars::PrimField<std::string::String>,
@@ -731,9 +736,4 @@ impl DedicatedInference_TimeoutsRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DedicatedInferenceDynamic {
-    model_deployments: std::option::Option<terrars::DynamicBlock<DedicatedInference_ModelDeployments>>,
 }

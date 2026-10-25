@@ -796,6 +796,30 @@ impl DataKubernetesClusterRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataKubernetesClusterDynamic {
+    amd_gpu_device_metrics_exporter_plugin: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataKubernetesCluster_AmdGpuDeviceMetricsExporterPlugin>>,
+    amd_gpu_device_plugin: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_AmdGpuDevicePlugin>>,
+    amd_gpu_dra_driver: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_AmdGpuDraDriver>>,
+    cluster_autoscaler_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataKubernetesCluster_ClusterAutoscalerConfiguration>>,
+    coredns_autoscaler: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_CorednsAutoscaler>>,
+    nfs_csi_plugin: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_NfsCsiPlugin>>,
+    nvidia_gpu_device_plugin: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataKubernetesCluster_NvidiaGpuDevicePlugin>>,
+    nvidia_gpu_dra_driver: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_NvidiaGpuDraDriver>>,
+    p2p_oci_registry_plugin: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_P2pOciRegistryPlugin>>,
+    rdma_shared_device_plugin: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataKubernetesCluster_RdmaSharedDevicePlugin>>,
+    routing_agent: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_RoutingAgent>>,
+    sso: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_Sso>>,
+}
+
 #[derive(Serialize)]
 pub struct DataKubernetesCluster_ControlPlaneFirewall {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2284,28 +2308,4 @@ impl DataKubernetesCluster_SsoRef {
     pub fn required(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.required", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataKubernetesClusterDynamic {
-    amd_gpu_device_metrics_exporter_plugin: std
-    ::option
-    ::Option<terrars::DynamicBlock<DataKubernetesCluster_AmdGpuDeviceMetricsExporterPlugin>>,
-    amd_gpu_device_plugin: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_AmdGpuDevicePlugin>>,
-    amd_gpu_dra_driver: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_AmdGpuDraDriver>>,
-    cluster_autoscaler_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<DataKubernetesCluster_ClusterAutoscalerConfiguration>>,
-    coredns_autoscaler: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_CorednsAutoscaler>>,
-    nfs_csi_plugin: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_NfsCsiPlugin>>,
-    nvidia_gpu_device_plugin: std
-    ::option
-    ::Option<terrars::DynamicBlock<DataKubernetesCluster_NvidiaGpuDevicePlugin>>,
-    nvidia_gpu_dra_driver: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_NvidiaGpuDraDriver>>,
-    p2p_oci_registry_plugin: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_P2pOciRegistryPlugin>>,
-    rdma_shared_device_plugin: std
-    ::option
-    ::Option<terrars::DynamicBlock<DataKubernetesCluster_RdmaSharedDevicePlugin>>,
-    routing_agent: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_RoutingAgent>>,
-    sso: std::option::Option<terrars::DynamicBlock<DataKubernetesCluster_Sso>>,
 }

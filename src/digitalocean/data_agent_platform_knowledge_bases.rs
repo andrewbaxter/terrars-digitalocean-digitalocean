@@ -224,6 +224,12 @@ impl DataAgentPlatformKnowledgeBasesRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataAgentPlatformKnowledgeBasesDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataAgentPlatformKnowledgeBases_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataAgentPlatformKnowledgeBases_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataAgentPlatformKnowledgeBases_KnowledgeBases_LastIndexingJob {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -855,10 +861,4 @@ impl DataAgentPlatformKnowledgeBases_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataAgentPlatformKnowledgeBasesDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataAgentPlatformKnowledgeBases_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataAgentPlatformKnowledgeBases_Sort>>,
 }

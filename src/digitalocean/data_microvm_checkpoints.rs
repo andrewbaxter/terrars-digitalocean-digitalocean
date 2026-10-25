@@ -243,6 +243,12 @@ impl DataMicrovmCheckpointsRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataMicrovmCheckpointsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataMicrovmCheckpoints_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataMicrovmCheckpoints_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataMicrovmCheckpoints_Checkpoints_Size {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -693,10 +699,4 @@ impl DataMicrovmCheckpoints_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataMicrovmCheckpointsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataMicrovmCheckpoints_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataMicrovmCheckpoints_Sort>>,
 }

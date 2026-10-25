@@ -299,6 +299,12 @@ impl DataFirewallRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataFirewallDynamic {
+    inbound_rule: std::option::Option<terrars::DynamicBlock<DataFirewall_InboundRule>>,
+    outbound_rule: std::option::Option<terrars::DynamicBlock<DataFirewall_OutboundRule>>,
+}
+
 #[derive(Serialize)]
 pub struct DataFirewall_PendingChanges {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -732,10 +738,4 @@ impl DataFirewall_OutboundRuleRef {
     pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataFirewallDynamic {
-    inbound_rule: std::option::Option<terrars::DynamicBlock<DataFirewall_InboundRule>>,
-    outbound_rule: std::option::Option<terrars::DynamicBlock<DataFirewall_OutboundRule>>,
 }

@@ -218,6 +218,12 @@ impl DataProjectsRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataProjectsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataProjects_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataProjects_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataProjects_Projects {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -591,10 +597,4 @@ impl DataProjects_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataProjectsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataProjects_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataProjects_Sort>>,
 }

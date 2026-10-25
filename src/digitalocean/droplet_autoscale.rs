@@ -328,6 +328,12 @@ impl DropletAutoscaleRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DropletAutoscaleDynamic {
+    config: std::option::Option<terrars::DynamicBlock<DropletAutoscale_Config>>,
+    droplet_template: std::option::Option<terrars::DynamicBlock<DropletAutoscale_DropletTemplate>>,
+}
+
 #[derive(Serialize)]
 pub struct DropletAutoscale_CurrentUtilization {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -727,10 +733,4 @@ impl DropletAutoscale_DropletTemplateRef {
     pub fn with_droplet_agent(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.with_droplet_agent", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DropletAutoscaleDynamic {
-    config: std::option::Option<terrars::DynamicBlock<DropletAutoscale_Config>>,
-    droplet_template: std::option::Option<terrars::DynamicBlock<DropletAutoscale_DropletTemplate>>,
 }

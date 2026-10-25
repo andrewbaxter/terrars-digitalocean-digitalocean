@@ -428,6 +428,12 @@ impl VpcNatGatewayRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct VpcNatGatewayDynamic {
+    egresses: std::option::Option<terrars::DynamicBlock<VpcNatGateway_Egresses>>,
+    vpcs: std::option::Option<terrars::DynamicBlock<VpcNatGateway_Vpcs>>,
+}
+
 #[derive(Serialize)]
 pub struct VpcNatGateway_Egresses_PublicGateways {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -658,10 +664,4 @@ impl VpcNatGateway_VpcsRef {
     pub fn vpc_uuid(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_uuid", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct VpcNatGatewayDynamic {
-    egresses: std::option::Option<terrars::DynamicBlock<VpcNatGateway_Egresses>>,
-    vpcs: std::option::Option<terrars::DynamicBlock<VpcNatGateway_Vpcs>>,
 }

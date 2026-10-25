@@ -326,6 +326,11 @@ impl DatabaseKafkaTopicRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DatabaseKafkaTopicDynamic {
+    config: std::option::Option<terrars::DynamicBlock<DatabaseKafkaTopic_Config>>,
+}
+
 #[derive(Serialize)]
 pub struct DatabaseKafkaTopic_Config {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -722,9 +727,4 @@ impl DatabaseKafkaTopic_ConfigRef {
     pub fn segment_ms(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.segment_ms", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DatabaseKafkaTopicDynamic {
-    config: std::option::Option<terrars::DynamicBlock<DatabaseKafkaTopic_Config>>,
 }

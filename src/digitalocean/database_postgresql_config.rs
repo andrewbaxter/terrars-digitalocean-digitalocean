@@ -1272,6 +1272,12 @@ impl DatabasePostgresqlConfigRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DatabasePostgresqlConfigDynamic {
+    pgbouncer: std::option::Option<terrars::DynamicBlock<DatabasePostgresqlConfig_Pgbouncer>>,
+    timescaledb: std::option::Option<terrars::DynamicBlock<DatabasePostgresqlConfig_Timescaledb>>,
+}
+
 #[derive(Serialize)]
 pub struct DatabasePostgresqlConfig_Pgbouncer {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1509,10 +1515,4 @@ impl DatabasePostgresqlConfig_TimescaledbRef {
     pub fn max_background_workers(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_background_workers", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DatabasePostgresqlConfigDynamic {
-    pgbouncer: std::option::Option<terrars::DynamicBlock<DatabasePostgresqlConfig_Pgbouncer>>,
-    timescaledb: std::option::Option<terrars::DynamicBlock<DatabasePostgresqlConfig_Timescaledb>>,
 }

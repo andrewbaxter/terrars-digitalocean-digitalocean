@@ -402,6 +402,11 @@ impl VectorDatabaseRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct VectorDatabaseDynamic {
+    config: std::option::Option<terrars::DynamicBlock<VectorDatabase_Config>>,
+}
+
 #[derive(Serialize)]
 pub struct VectorDatabase_Endpoints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -632,9 +637,4 @@ impl VectorDatabase_TimeoutsRef {
     pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct VectorDatabaseDynamic {
-    config: std::option::Option<terrars::DynamicBlock<VectorDatabase_Config>>,
 }

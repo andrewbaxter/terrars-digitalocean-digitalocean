@@ -218,6 +218,12 @@ impl DataTagsRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataTagsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataTags_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataTags_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataTags_Tags {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -532,10 +538,4 @@ impl DataTags_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataTagsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataTags_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataTags_Sort>>,
 }

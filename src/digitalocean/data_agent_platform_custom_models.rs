@@ -245,6 +245,12 @@ impl DataAgentPlatformCustomModelsRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataAgentPlatformCustomModelsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataAgentPlatformCustomModels_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataAgentPlatformCustomModels_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataAgentPlatformCustomModels_CustomModels_ActiveDeployments_Endpoints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1174,10 +1180,4 @@ impl DataAgentPlatformCustomModels_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataAgentPlatformCustomModelsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataAgentPlatformCustomModels_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataAgentPlatformCustomModels_Sort>>,
 }

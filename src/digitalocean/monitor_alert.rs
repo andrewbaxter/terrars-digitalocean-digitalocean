@@ -398,6 +398,11 @@ impl MonitorAlertRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct MonitorAlertDynamic {
+    alerts: std::option::Option<terrars::DynamicBlock<MonitorAlert_Alerts>>,
+}
+
 #[derive(Serialize)]
 pub struct MonitorAlert_Alerts_Slack {
     channel: terrars::PrimField<std::string::String>,
@@ -559,9 +564,4 @@ impl MonitorAlert_AlertsRef {
     pub fn slack(&self) -> terrars::ListRef<MonitorAlert_Alerts_SlackRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.slack", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MonitorAlertDynamic {
-    alerts: std::option::Option<terrars::DynamicBlock<MonitorAlert_Alerts>>,
 }

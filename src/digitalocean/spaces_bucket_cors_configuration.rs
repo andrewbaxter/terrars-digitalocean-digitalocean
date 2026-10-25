@@ -271,6 +271,11 @@ impl SpacesBucketCorsConfigurationRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct SpacesBucketCorsConfigurationDynamic {
+    cors_rule: std::option::Option<terrars::DynamicBlock<SpacesBucketCorsConfiguration_CorsRule>>,
+}
+
 #[derive(Serialize)]
 pub struct SpacesBucketCorsConfiguration_CorsRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -399,9 +404,4 @@ impl SpacesBucketCorsConfiguration_CorsRuleRef {
     pub fn max_age_seconds(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_age_seconds", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SpacesBucketCorsConfigurationDynamic {
-    cors_rule: std::option::Option<terrars::DynamicBlock<SpacesBucketCorsConfiguration_CorsRule>>,
 }

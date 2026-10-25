@@ -325,6 +325,11 @@ impl DatabaseOnlineMigrationRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DatabaseOnlineMigrationDynamic {
+    source: std::option::Option<terrars::DynamicBlock<DatabaseOnlineMigration_Source>>,
+}
+
 #[derive(Serialize)]
 pub struct DatabaseOnlineMigration_Source {
     db_name: terrars::PrimField<std::string::String>,
@@ -420,9 +425,4 @@ impl DatabaseOnlineMigration_SourceRef {
     pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DatabaseOnlineMigrationDynamic {
-    source: std::option::Option<terrars::DynamicBlock<DatabaseOnlineMigration_Source>>,
 }

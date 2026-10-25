@@ -221,6 +221,12 @@ impl DataAgentPlatformRegionsRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataAgentPlatformRegionsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataAgentPlatformRegions_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataAgentPlatformRegions_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataAgentPlatformRegions_Regions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -510,10 +516,4 @@ impl DataAgentPlatformRegions_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataAgentPlatformRegionsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataAgentPlatformRegions_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataAgentPlatformRegions_Sort>>,
 }

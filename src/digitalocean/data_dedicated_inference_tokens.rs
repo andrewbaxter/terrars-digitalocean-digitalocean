@@ -240,6 +240,12 @@ impl DataDedicatedInferenceTokensRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataDedicatedInferenceTokensDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataDedicatedInferenceTokens_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataDedicatedInferenceTokens_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataDedicatedInferenceTokens_Tokens {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -498,10 +504,4 @@ impl DataDedicatedInferenceTokens_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataDedicatedInferenceTokensDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataDedicatedInferenceTokens_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataDedicatedInferenceTokens_Sort>>,
 }

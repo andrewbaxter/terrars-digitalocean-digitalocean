@@ -637,6 +637,11 @@ impl AgentPlatformCustomModelRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct AgentPlatformCustomModelDynamic {
+    source_ref: std::option::Option<terrars::DynamicBlock<AgentPlatformCustomModel_SourceRef>>,
+}
+
 #[derive(Serialize)]
 pub struct AgentPlatformCustomModel_ActiveDeployments_Endpoints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1118,9 +1123,4 @@ impl AgentPlatformCustomModel_TimeoutsRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AgentPlatformCustomModelDynamic {
-    source_ref: std::option::Option<terrars::DynamicBlock<AgentPlatformCustomModel_SourceRef>>,
 }

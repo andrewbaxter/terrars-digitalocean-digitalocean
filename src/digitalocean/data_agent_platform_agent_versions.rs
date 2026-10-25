@@ -240,6 +240,12 @@ impl DataAgentPlatformAgentVersionsRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataAgentPlatformAgentVersionsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataAgentPlatformAgentVersions_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataAgentPlatformAgentVersions_Sort>>,
+}
+
 #[derive(Serialize)]
 pub struct DataAgentPlatformAgentVersions_AgentVersions_AttachedChildAgents {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1278,10 +1284,4 @@ impl DataAgentPlatformAgentVersions_SortRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataAgentPlatformAgentVersionsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataAgentPlatformAgentVersions_Filter>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataAgentPlatformAgentVersions_Sort>>,
 }

@@ -608,6 +608,13 @@ impl MicrovmRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct MicrovmDynamic {
+    auto_pause: std::option::Option<terrars::DynamicBlock<Microvm_AutoPause>>,
+    size: std::option::Option<terrars::DynamicBlock<Microvm_Size>>,
+    source: std::option::Option<terrars::DynamicBlock<Microvm_Source>>,
+}
+
 #[derive(Serialize)]
 pub struct Microvm_Urls {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1030,11 +1037,4 @@ impl Microvm_TimeoutsRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MicrovmDynamic {
-    auto_pause: std::option::Option<terrars::DynamicBlock<Microvm_AutoPause>>,
-    size: std::option::Option<terrars::DynamicBlock<Microvm_Size>>,
-    source: std::option::Option<terrars::DynamicBlock<Microvm_Source>>,
 }

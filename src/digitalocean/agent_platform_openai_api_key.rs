@@ -333,6 +333,11 @@ impl AgentPlatformOpenaiApiKeyRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct AgentPlatformOpenaiApiKeyDynamic {
+    model: std::option::Option<terrars::DynamicBlock<AgentPlatformOpenaiApiKey_Model>>,
+}
+
 #[derive(Serialize)]
 pub struct AgentPlatformOpenaiApiKey_Model_Agreement {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -776,9 +781,4 @@ impl AgentPlatformOpenaiApiKey_ModelRef {
     pub fn versions(&self) -> terrars::ListRef<AgentPlatformOpenaiApiKey_Model_VersionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.versions", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AgentPlatformOpenaiApiKeyDynamic {
-    model: std::option::Option<terrars::DynamicBlock<AgentPlatformOpenaiApiKey_Model>>,
 }

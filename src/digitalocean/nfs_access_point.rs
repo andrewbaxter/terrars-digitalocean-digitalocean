@@ -349,6 +349,11 @@ impl NfsAccessPointRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct NfsAccessPointDynamic {
+    access_policy: std::option::Option<terrars::DynamicBlock<NfsAccessPoint_AccessPolicy>>,
+}
+
 #[derive(Serialize)]
 pub struct NfsAccessPoint_AccessPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -469,9 +474,4 @@ impl NfsAccessPoint_AccessPolicyRef {
     pub fn squash_config(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.squash_config", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct NfsAccessPointDynamic {
-    access_policy: std::option::Option<terrars::DynamicBlock<NfsAccessPoint_AccessPolicy>>,
 }
