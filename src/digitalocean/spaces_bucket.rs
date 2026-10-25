@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct SpacesBucketData {
+struct SpacesBucketData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,18 +30,18 @@ struct SpacesBucketData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cors_rule: std::option::Option<std::vec::Vec<SpacesBucketCorsRuleEl>>,
+    cors_rule: std::option::Option<std::vec::Vec<SpacesBucket_CorsRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lifecycle_rule: std::option::Option<std::vec::Vec<SpacesBucketLifecycleRuleEl>>,
+    lifecycle_rule: std::option::Option<std::vec::Vec<SpacesBucket_LifecycleRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    versioning: std::option::Option<std::vec::Vec<SpacesBucketVersioningEl>>,
+    versioning: std::option::Option<std::vec::Vec<SpacesBucket_Versioning>>,
     dynamic: SpacesBucketDynamic,
 }
 
 struct SpacesBucket_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SpacesBucketData>,
+    data: std::cell::RefCell<SpacesBucketData_>,
 }
 
 #[derive(Clone)]
@@ -164,7 +166,7 @@ impl SpacesBucket {
     }
 
     #[doc = "Set the field `cors_rule`.\n"]
-    pub fn set_cors_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<SpacesBucketCorsRuleEl>>) -> Self {
+    pub fn set_cors_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<SpacesBucket_CorsRule>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().cors_rule = std::option::Option::Some(v);
@@ -179,7 +181,7 @@ impl SpacesBucket {
     #[doc = "Set the field `lifecycle_rule`.\n"]
     pub fn set_lifecycle_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SpacesBucketLifecycleRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SpacesBucket_LifecycleRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -193,7 +195,7 @@ impl SpacesBucket {
     }
 
     #[doc = "Set the field `versioning`.\n"]
-    pub fn set_versioning(self, v: impl std::convert::Into<terrars::BlockAssignable<SpacesBucketVersioningEl>>) -> Self {
+    pub fn set_versioning(self, v: impl std::convert::Into<terrars::BlockAssignable<SpacesBucket_Versioning>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().versioning = std::option::Option::Some(v);
@@ -248,17 +250,17 @@ impl SpacesBucket {
     }
 
     #[doc = "Get a reference to the value of field `cors_rule` after provisioning.\n"]
-    pub fn cors_rule(&self) -> terrars::ListRef<SpacesBucketCorsRuleElRef> {
+    pub fn cors_rule(&self) -> terrars::ListRef<SpacesBucket_CorsRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors_rule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lifecycle_rule` after provisioning.\n"]
-    pub fn lifecycle_rule(&self) -> terrars::ListRef<SpacesBucketLifecycleRuleElRef> {
+    pub fn lifecycle_rule(&self) -> terrars::ListRef<SpacesBucket_LifecycleRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lifecycle_rule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `versioning` after provisioning.\n"]
-    pub fn versioning(&self) -> terrars::ListRef<SpacesBucketVersioningElRef> {
+    pub fn versioning(&self) -> terrars::ListRef<SpacesBucket_VersioningRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.versioning", self.extract_ref()))
     }
 }
@@ -305,7 +307,7 @@ impl BuildSpacesBucket {
         let out = SpacesBucket(std::rc::Rc::new(SpacesBucket_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SpacesBucketData {
+            data: std::cell::RefCell::new(SpacesBucketData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -393,23 +395,23 @@ impl SpacesBucketRef {
     }
 
     #[doc = "Get a reference to the value of field `cors_rule` after provisioning.\n"]
-    pub fn cors_rule(&self) -> terrars::ListRef<SpacesBucketCorsRuleElRef> {
+    pub fn cors_rule(&self) -> terrars::ListRef<SpacesBucket_CorsRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors_rule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lifecycle_rule` after provisioning.\n"]
-    pub fn lifecycle_rule(&self) -> terrars::ListRef<SpacesBucketLifecycleRuleElRef> {
+    pub fn lifecycle_rule(&self) -> terrars::ListRef<SpacesBucket_LifecycleRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lifecycle_rule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `versioning` after provisioning.\n"]
-    pub fn versioning(&self) -> terrars::ListRef<SpacesBucketVersioningElRef> {
+    pub fn versioning(&self) -> terrars::ListRef<SpacesBucket_VersioningRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.versioning", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct SpacesBucketCorsRuleEl {
+pub struct SpacesBucket_CorsRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_headers: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     allowed_methods: terrars::ListField<terrars::PrimField<std::string::String>>,
@@ -418,7 +420,7 @@ pub struct SpacesBucketCorsRuleEl {
     max_age_seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SpacesBucketCorsRuleEl {
+impl SpacesBucket_CorsRule {
     #[doc =
         "Set the field `allowed_headers`.\nA list of headers that will be included in the CORS preflight request's Access-Control-Request-Headers. A header may contain one wildcard (e.g. x-amz-*)."]
     pub fn set_allowed_headers(
@@ -436,8 +438,8 @@ impl SpacesBucketCorsRuleEl {
     }
 }
 
-impl terrars::ToListMappable for SpacesBucketCorsRuleEl {
-    type O = terrars::BlockAssignable<SpacesBucketCorsRuleEl>;
+impl terrars::ToListMappable for SpacesBucket_CorsRule {
+    type O = terrars::BlockAssignable<SpacesBucket_CorsRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -448,7 +450,7 @@ impl terrars::ToListMappable for SpacesBucketCorsRuleEl {
     }
 }
 
-pub struct BuildSpacesBucketCorsRuleEl {
+pub struct BuildSpacesBucket_CorsRule {
     #[doc = "A list of HTTP methods (e.g. GET) which are allowed from the specified origin."]
     pub allowed_methods: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[doc =
@@ -456,9 +458,9 @@ pub struct BuildSpacesBucketCorsRuleEl {
     pub allowed_origins: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildSpacesBucketCorsRuleEl {
-    pub fn build(self) -> SpacesBucketCorsRuleEl {
-        SpacesBucketCorsRuleEl {
+impl BuildSpacesBucket_CorsRule {
+    pub fn build(self) -> SpacesBucket_CorsRule {
+        SpacesBucket_CorsRule {
             allowed_headers: core::default::Default::default(),
             allowed_methods: self.allowed_methods,
             allowed_origins: self.allowed_origins,
@@ -467,21 +469,23 @@ impl BuildSpacesBucketCorsRuleEl {
     }
 }
 
-pub struct SpacesBucketCorsRuleElRef {
+#[allow(dead_code)]
+pub struct SpacesBucket_CorsRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpacesBucketCorsRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SpacesBucketCorsRuleElRef {
-        SpacesBucketCorsRuleElRef {
+impl terrars::Ref for SpacesBucket_CorsRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SpacesBucket_CorsRuleRef {
+        SpacesBucket_CorsRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpacesBucketCorsRuleElRef {
+impl SpacesBucket_CorsRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -511,7 +515,7 @@ impl SpacesBucketCorsRuleElRef {
 }
 
 #[derive(Serialize)]
-pub struct SpacesBucketLifecycleRuleElExpirationEl {
+pub struct SpacesBucket_LifecycleRule_Expiration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     date: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -520,7 +524,7 @@ pub struct SpacesBucketLifecycleRuleElExpirationEl {
     expired_object_delete_marker: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl SpacesBucketLifecycleRuleElExpirationEl {
+impl SpacesBucket_LifecycleRule_Expiration {
     #[doc = "Set the field `date`.\n"]
     pub fn set_date(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.date = std::option::Option::Some(v.into());
@@ -540,8 +544,8 @@ impl SpacesBucketLifecycleRuleElExpirationEl {
     }
 }
 
-impl terrars::ToListMappable for SpacesBucketLifecycleRuleElExpirationEl {
-    type O = terrars::BlockAssignable<SpacesBucketLifecycleRuleElExpirationEl>;
+impl terrars::ToListMappable for SpacesBucket_LifecycleRule_Expiration {
+    type O = terrars::BlockAssignable<SpacesBucket_LifecycleRule_Expiration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -552,11 +556,11 @@ impl terrars::ToListMappable for SpacesBucketLifecycleRuleElExpirationEl {
     }
 }
 
-pub struct BuildSpacesBucketLifecycleRuleElExpirationEl {}
+pub struct BuildSpacesBucket_LifecycleRule_Expiration {}
 
-impl BuildSpacesBucketLifecycleRuleElExpirationEl {
-    pub fn build(self) -> SpacesBucketLifecycleRuleElExpirationEl {
-        SpacesBucketLifecycleRuleElExpirationEl {
+impl BuildSpacesBucket_LifecycleRule_Expiration {
+    pub fn build(self) -> SpacesBucket_LifecycleRule_Expiration {
+        SpacesBucket_LifecycleRule_Expiration {
             date: core::default::Default::default(),
             days: core::default::Default::default(),
             expired_object_delete_marker: core::default::Default::default(),
@@ -564,21 +568,23 @@ impl BuildSpacesBucketLifecycleRuleElExpirationEl {
     }
 }
 
-pub struct SpacesBucketLifecycleRuleElExpirationElRef {
+#[allow(dead_code)]
+pub struct SpacesBucket_LifecycleRule_ExpirationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpacesBucketLifecycleRuleElExpirationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SpacesBucketLifecycleRuleElExpirationElRef {
-        SpacesBucketLifecycleRuleElExpirationElRef {
+impl terrars::Ref for SpacesBucket_LifecycleRule_ExpirationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SpacesBucket_LifecycleRule_ExpirationRef {
+        SpacesBucket_LifecycleRule_ExpirationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpacesBucketLifecycleRuleElExpirationElRef {
+impl SpacesBucket_LifecycleRule_ExpirationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -600,12 +606,12 @@ impl SpacesBucketLifecycleRuleElExpirationElRef {
 }
 
 #[derive(Serialize)]
-pub struct SpacesBucketLifecycleRuleElNoncurrentVersionExpirationEl {
+pub struct SpacesBucket_LifecycleRule_NoncurrentVersionExpiration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     days: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SpacesBucketLifecycleRuleElNoncurrentVersionExpirationEl {
+impl SpacesBucket_LifecycleRule_NoncurrentVersionExpiration {
     #[doc = "Set the field `days`.\n"]
     pub fn set_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.days = std::option::Option::Some(v.into());
@@ -613,8 +619,8 @@ impl SpacesBucketLifecycleRuleElNoncurrentVersionExpirationEl {
     }
 }
 
-impl terrars::ToListMappable for SpacesBucketLifecycleRuleElNoncurrentVersionExpirationEl {
-    type O = terrars::BlockAssignable<SpacesBucketLifecycleRuleElNoncurrentVersionExpirationEl>;
+impl terrars::ToListMappable for SpacesBucket_LifecycleRule_NoncurrentVersionExpiration {
+    type O = terrars::BlockAssignable<SpacesBucket_LifecycleRule_NoncurrentVersionExpiration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -625,32 +631,34 @@ impl terrars::ToListMappable for SpacesBucketLifecycleRuleElNoncurrentVersionExp
     }
 }
 
-pub struct BuildSpacesBucketLifecycleRuleElNoncurrentVersionExpirationEl {}
+pub struct BuildSpacesBucket_LifecycleRule_NoncurrentVersionExpiration {}
 
-impl BuildSpacesBucketLifecycleRuleElNoncurrentVersionExpirationEl {
-    pub fn build(self) -> SpacesBucketLifecycleRuleElNoncurrentVersionExpirationEl {
-        SpacesBucketLifecycleRuleElNoncurrentVersionExpirationEl { days: core::default::Default::default() }
+impl BuildSpacesBucket_LifecycleRule_NoncurrentVersionExpiration {
+    pub fn build(self) -> SpacesBucket_LifecycleRule_NoncurrentVersionExpiration {
+        SpacesBucket_LifecycleRule_NoncurrentVersionExpiration { days: core::default::Default::default() }
     }
 }
 
-pub struct SpacesBucketLifecycleRuleElNoncurrentVersionExpirationElRef {
+#[allow(dead_code)]
+pub struct SpacesBucket_LifecycleRule_NoncurrentVersionExpirationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpacesBucketLifecycleRuleElNoncurrentVersionExpirationElRef {
+impl terrars::Ref for SpacesBucket_LifecycleRule_NoncurrentVersionExpirationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpacesBucketLifecycleRuleElNoncurrentVersionExpirationElRef {
-        SpacesBucketLifecycleRuleElNoncurrentVersionExpirationElRef {
+    ) -> SpacesBucket_LifecycleRule_NoncurrentVersionExpirationRef {
+        SpacesBucket_LifecycleRule_NoncurrentVersionExpirationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpacesBucketLifecycleRuleElNoncurrentVersionExpirationElRef {
+impl SpacesBucket_LifecycleRule_NoncurrentVersionExpirationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -662,15 +670,15 @@ impl SpacesBucketLifecycleRuleElNoncurrentVersionExpirationElRef {
 }
 
 #[derive(Serialize, Default)]
-struct SpacesBucketLifecycleRuleElDynamic {
-    expiration: std::option::Option<terrars::DynamicBlock<SpacesBucketLifecycleRuleElExpirationEl>>,
+struct SpacesBucket_LifecycleRuleDynamic {
+    expiration: std::option::Option<terrars::DynamicBlock<SpacesBucket_LifecycleRule_Expiration>>,
     noncurrent_version_expiration: std
     ::option
-    ::Option<terrars::DynamicBlock<SpacesBucketLifecycleRuleElNoncurrentVersionExpirationEl>>,
+    ::Option<terrars::DynamicBlock<SpacesBucket_LifecycleRule_NoncurrentVersionExpiration>>,
 }
 
 #[derive(Serialize)]
-pub struct SpacesBucketLifecycleRuleEl {
+pub struct SpacesBucket_LifecycleRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     abort_incomplete_multipart_upload_days: std::option::Option<terrars::PrimField<f64>>,
     enabled: terrars::PrimField<bool>,
@@ -679,15 +687,15 @@ pub struct SpacesBucketLifecycleRuleEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    expiration: std::option::Option<std::vec::Vec<SpacesBucketLifecycleRuleElExpirationEl>>,
+    expiration: std::option::Option<std::vec::Vec<SpacesBucket_LifecycleRule_Expiration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     noncurrent_version_expiration: std
     ::option
-    ::Option<std::vec::Vec<SpacesBucketLifecycleRuleElNoncurrentVersionExpirationEl>>,
-    dynamic: SpacesBucketLifecycleRuleElDynamic,
+    ::Option<std::vec::Vec<SpacesBucket_LifecycleRule_NoncurrentVersionExpiration>>,
+    dynamic: SpacesBucket_LifecycleRuleDynamic,
 }
 
-impl SpacesBucketLifecycleRuleEl {
+impl SpacesBucket_LifecycleRule {
     #[doc = "Set the field `abort_incomplete_multipart_upload_days`.\n"]
     pub fn set_abort_incomplete_multipart_upload_days(
         mut self,
@@ -712,7 +720,7 @@ impl SpacesBucketLifecycleRuleEl {
     #[doc = "Set the field `expiration`.\n"]
     pub fn set_expiration(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SpacesBucketLifecycleRuleElExpirationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SpacesBucket_LifecycleRule_Expiration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -728,12 +736,7 @@ impl SpacesBucketLifecycleRuleEl {
     #[doc = "Set the field `noncurrent_version_expiration`.\n"]
     pub fn set_noncurrent_version_expiration(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<SpacesBucketLifecycleRuleElNoncurrentVersionExpirationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SpacesBucket_LifecycleRule_NoncurrentVersionExpiration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -747,8 +750,8 @@ impl SpacesBucketLifecycleRuleEl {
     }
 }
 
-impl terrars::ToListMappable for SpacesBucketLifecycleRuleEl {
-    type O = terrars::BlockAssignable<SpacesBucketLifecycleRuleEl>;
+impl terrars::ToListMappable for SpacesBucket_LifecycleRule {
+    type O = terrars::BlockAssignable<SpacesBucket_LifecycleRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -759,14 +762,14 @@ impl terrars::ToListMappable for SpacesBucketLifecycleRuleEl {
     }
 }
 
-pub struct BuildSpacesBucketLifecycleRuleEl {
+pub struct BuildSpacesBucket_LifecycleRule {
     #[doc = ""]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildSpacesBucketLifecycleRuleEl {
-    pub fn build(self) -> SpacesBucketLifecycleRuleEl {
-        SpacesBucketLifecycleRuleEl {
+impl BuildSpacesBucket_LifecycleRule {
+    pub fn build(self) -> SpacesBucket_LifecycleRule {
+        SpacesBucket_LifecycleRule {
             abort_incomplete_multipart_upload_days: core::default::Default::default(),
             enabled: self.enabled,
             id: core::default::Default::default(),
@@ -778,21 +781,23 @@ impl BuildSpacesBucketLifecycleRuleEl {
     }
 }
 
-pub struct SpacesBucketLifecycleRuleElRef {
+#[allow(dead_code)]
+pub struct SpacesBucket_LifecycleRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpacesBucketLifecycleRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SpacesBucketLifecycleRuleElRef {
-        SpacesBucketLifecycleRuleElRef {
+impl terrars::Ref for SpacesBucket_LifecycleRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SpacesBucket_LifecycleRuleRef {
+        SpacesBucket_LifecycleRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpacesBucketLifecycleRuleElRef {
+impl SpacesBucket_LifecycleRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -822,12 +827,12 @@ impl SpacesBucketLifecycleRuleElRef {
 }
 
 #[derive(Serialize)]
-pub struct SpacesBucketVersioningEl {
+pub struct SpacesBucket_Versioning {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl SpacesBucketVersioningEl {
+impl SpacesBucket_Versioning {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -835,8 +840,8 @@ impl SpacesBucketVersioningEl {
     }
 }
 
-impl terrars::ToListMappable for SpacesBucketVersioningEl {
-    type O = terrars::BlockAssignable<SpacesBucketVersioningEl>;
+impl terrars::ToListMappable for SpacesBucket_Versioning {
+    type O = terrars::BlockAssignable<SpacesBucket_Versioning>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -847,29 +852,31 @@ impl terrars::ToListMappable for SpacesBucketVersioningEl {
     }
 }
 
-pub struct BuildSpacesBucketVersioningEl {}
+pub struct BuildSpacesBucket_Versioning {}
 
-impl BuildSpacesBucketVersioningEl {
-    pub fn build(self) -> SpacesBucketVersioningEl {
-        SpacesBucketVersioningEl { enabled: core::default::Default::default() }
+impl BuildSpacesBucket_Versioning {
+    pub fn build(self) -> SpacesBucket_Versioning {
+        SpacesBucket_Versioning { enabled: core::default::Default::default() }
     }
 }
 
-pub struct SpacesBucketVersioningElRef {
+#[allow(dead_code)]
+pub struct SpacesBucket_VersioningRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpacesBucketVersioningElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SpacesBucketVersioningElRef {
-        SpacesBucketVersioningElRef {
+impl terrars::Ref for SpacesBucket_VersioningRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SpacesBucket_VersioningRef {
+        SpacesBucket_VersioningRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpacesBucketVersioningElRef {
+impl SpacesBucket_VersioningRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -882,7 +889,7 @@ impl SpacesBucketVersioningElRef {
 
 #[derive(Serialize, Default)]
 struct SpacesBucketDynamic {
-    cors_rule: std::option::Option<terrars::DynamicBlock<SpacesBucketCorsRuleEl>>,
-    lifecycle_rule: std::option::Option<terrars::DynamicBlock<SpacesBucketLifecycleRuleEl>>,
-    versioning: std::option::Option<terrars::DynamicBlock<SpacesBucketVersioningEl>>,
+    cors_rule: std::option::Option<terrars::DynamicBlock<SpacesBucket_CorsRule>>,
+    lifecycle_rule: std::option::Option<terrars::DynamicBlock<SpacesBucket_LifecycleRule>>,
+    versioning: std::option::Option<terrars::DynamicBlock<SpacesBucket_Versioning>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct ContainerRegistryData {
+struct ContainerRegistryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,7 +31,7 @@ struct ContainerRegistryData {
 struct ContainerRegistry_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ContainerRegistryData>,
+    data: std::cell::RefCell<ContainerRegistryData_>,
 }
 
 #[derive(Clone)]
@@ -226,7 +228,7 @@ impl BuildContainerRegistry {
         let out = ContainerRegistry(std::rc::Rc::new(ContainerRegistry_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ContainerRegistryData {
+            data: std::cell::RefCell::new(ContainerRegistryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

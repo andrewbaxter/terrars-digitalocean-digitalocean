@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DatabaseRedisConfigData {
+struct DatabaseRedisConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -48,7 +50,7 @@ struct DatabaseRedisConfigData {
 struct DatabaseRedisConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DatabaseRedisConfigData>,
+    data: std::cell::RefCell<DatabaseRedisConfigData_>,
 }
 
 #[derive(Clone)]
@@ -334,7 +336,7 @@ impl BuildDatabaseRedisConfig {
         let out = DatabaseRedisConfig(std::rc::Rc::new(DatabaseRedisConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DatabaseRedisConfigData {
+            data: std::cell::RefCell::new(DatabaseRedisConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

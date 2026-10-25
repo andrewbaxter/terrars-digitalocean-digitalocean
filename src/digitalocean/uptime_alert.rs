@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct UptimeAlertData {
+struct UptimeAlertData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,14 +31,14 @@ struct UptimeAlertData {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    notifications: std::option::Option<std::vec::Vec<UptimeAlertNotificationsEl>>,
+    notifications: std::option::Option<std::vec::Vec<UptimeAlert_Notifications>>,
     dynamic: UptimeAlertDynamic,
 }
 
 struct UptimeAlert_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<UptimeAlertData>,
+    data: std::cell::RefCell<UptimeAlertData_>,
 }
 
 #[derive(Clone)]
@@ -160,7 +162,7 @@ impl UptimeAlert {
     #[doc = "Set the field `notifications`.\n"]
     pub fn set_notifications(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<UptimeAlertNotificationsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<UptimeAlert_Notifications>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -214,7 +216,7 @@ impl UptimeAlert {
     }
 
     #[doc = "Get a reference to the value of field `notifications` after provisioning.\n"]
-    pub fn notifications(&self) -> terrars::ListRef<UptimeAlertNotificationsElRef> {
+    pub fn notifications(&self) -> terrars::ListRef<UptimeAlert_NotificationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notifications", self.extract_ref()))
     }
 }
@@ -265,7 +267,7 @@ impl BuildUptimeAlert {
         let out = UptimeAlert(std::rc::Rc::new(UptimeAlert_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(UptimeAlertData {
+            data: std::cell::RefCell::new(UptimeAlertData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -350,21 +352,21 @@ impl UptimeAlertRef {
     }
 
     #[doc = "Get a reference to the value of field `notifications` after provisioning.\n"]
-    pub fn notifications(&self) -> terrars::ListRef<UptimeAlertNotificationsElRef> {
+    pub fn notifications(&self) -> terrars::ListRef<UptimeAlert_NotificationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notifications", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct UptimeAlertNotificationsElSlackEl {
+pub struct UptimeAlert_Notifications_Slack {
     channel: terrars::PrimField<std::string::String>,
     url: terrars::PrimField<std::string::String>,
 }
 
-impl UptimeAlertNotificationsElSlackEl { }
+impl UptimeAlert_Notifications_Slack { }
 
-impl terrars::ToListMappable for UptimeAlertNotificationsElSlackEl {
-    type O = terrars::BlockAssignable<UptimeAlertNotificationsElSlackEl>;
+impl terrars::ToListMappable for UptimeAlert_Notifications_Slack {
+    type O = terrars::BlockAssignable<UptimeAlert_Notifications_Slack>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -375,37 +377,39 @@ impl terrars::ToListMappable for UptimeAlertNotificationsElSlackEl {
     }
 }
 
-pub struct BuildUptimeAlertNotificationsElSlackEl {
+pub struct BuildUptimeAlert_Notifications_Slack {
     #[doc = "The Slack channel to send alerts to"]
     pub channel: terrars::PrimField<std::string::String>,
     #[doc = "The webhook URL for Slack"]
     pub url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildUptimeAlertNotificationsElSlackEl {
-    pub fn build(self) -> UptimeAlertNotificationsElSlackEl {
-        UptimeAlertNotificationsElSlackEl {
+impl BuildUptimeAlert_Notifications_Slack {
+    pub fn build(self) -> UptimeAlert_Notifications_Slack {
+        UptimeAlert_Notifications_Slack {
             channel: self.channel,
             url: self.url,
         }
     }
 }
 
-pub struct UptimeAlertNotificationsElSlackElRef {
+#[allow(dead_code)]
+pub struct UptimeAlert_Notifications_SlackRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for UptimeAlertNotificationsElSlackElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> UptimeAlertNotificationsElSlackElRef {
-        UptimeAlertNotificationsElSlackElRef {
+impl terrars::Ref for UptimeAlert_Notifications_SlackRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> UptimeAlert_Notifications_SlackRef {
+        UptimeAlert_Notifications_SlackRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl UptimeAlertNotificationsElSlackElRef {
+impl UptimeAlert_Notifications_SlackRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,20 +426,20 @@ impl UptimeAlertNotificationsElSlackElRef {
 }
 
 #[derive(Serialize, Default)]
-struct UptimeAlertNotificationsElDynamic {
-    slack: std::option::Option<terrars::DynamicBlock<UptimeAlertNotificationsElSlackEl>>,
+struct UptimeAlert_NotificationsDynamic {
+    slack: std::option::Option<terrars::DynamicBlock<UptimeAlert_Notifications_Slack>>,
 }
 
 #[derive(Serialize)]
-pub struct UptimeAlertNotificationsEl {
+pub struct UptimeAlert_Notifications {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     email: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    slack: std::option::Option<std::vec::Vec<UptimeAlertNotificationsElSlackEl>>,
-    dynamic: UptimeAlertNotificationsElDynamic,
+    slack: std::option::Option<std::vec::Vec<UptimeAlert_Notifications_Slack>>,
+    dynamic: UptimeAlert_NotificationsDynamic,
 }
 
-impl UptimeAlertNotificationsEl {
+impl UptimeAlert_Notifications {
     #[doc = "Set the field `email`.\nList of email addresses to sent notifications to"]
     pub fn set_email(
         mut self,
@@ -448,7 +452,7 @@ impl UptimeAlertNotificationsEl {
     #[doc = "Set the field `slack`.\n"]
     pub fn set_slack(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<UptimeAlertNotificationsElSlackEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<UptimeAlert_Notifications_Slack>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -462,8 +466,8 @@ impl UptimeAlertNotificationsEl {
     }
 }
 
-impl terrars::ToListMappable for UptimeAlertNotificationsEl {
-    type O = terrars::BlockAssignable<UptimeAlertNotificationsEl>;
+impl terrars::ToListMappable for UptimeAlert_Notifications {
+    type O = terrars::BlockAssignable<UptimeAlert_Notifications>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -474,11 +478,11 @@ impl terrars::ToListMappable for UptimeAlertNotificationsEl {
     }
 }
 
-pub struct BuildUptimeAlertNotificationsEl {}
+pub struct BuildUptimeAlert_Notifications {}
 
-impl BuildUptimeAlertNotificationsEl {
-    pub fn build(self) -> UptimeAlertNotificationsEl {
-        UptimeAlertNotificationsEl {
+impl BuildUptimeAlert_Notifications {
+    pub fn build(self) -> UptimeAlert_Notifications {
+        UptimeAlert_Notifications {
             email: core::default::Default::default(),
             slack: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -486,21 +490,23 @@ impl BuildUptimeAlertNotificationsEl {
     }
 }
 
-pub struct UptimeAlertNotificationsElRef {
+#[allow(dead_code)]
+pub struct UptimeAlert_NotificationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for UptimeAlertNotificationsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> UptimeAlertNotificationsElRef {
-        UptimeAlertNotificationsElRef {
+impl terrars::Ref for UptimeAlert_NotificationsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> UptimeAlert_NotificationsRef {
+        UptimeAlert_NotificationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl UptimeAlertNotificationsElRef {
+impl UptimeAlert_NotificationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -512,12 +518,12 @@ impl UptimeAlertNotificationsElRef {
     }
 
     #[doc = "Get a reference to the value of field `slack` after provisioning.\n"]
-    pub fn slack(&self) -> terrars::ListRef<UptimeAlertNotificationsElSlackElRef> {
+    pub fn slack(&self) -> terrars::ListRef<UptimeAlert_Notifications_SlackRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.slack", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct UptimeAlertDynamic {
-    notifications: std::option::Option<terrars::DynamicBlock<UptimeAlertNotificationsEl>>,
+    notifications: std::option::Option<terrars::DynamicBlock<UptimeAlert_Notifications>>,
 }

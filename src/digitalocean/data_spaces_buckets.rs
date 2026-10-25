@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DataSpacesBucketsData {
+struct DataSpacesBucketsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,16 +21,16 @@ struct DataSpacesBucketsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataSpacesBucketsFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataSpacesBuckets_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sort: std::option::Option<std::vec::Vec<DataSpacesBucketsSortEl>>,
+    sort: std::option::Option<std::vec::Vec<DataSpacesBuckets_Sort>>,
     dynamic: DataSpacesBucketsDynamic,
 }
 
 struct DataSpacesBuckets_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSpacesBucketsData>,
+    data: std::cell::RefCell<DataSpacesBucketsData_>,
 }
 
 #[derive(Clone)]
@@ -80,7 +82,7 @@ impl DataSpacesBuckets {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataSpacesBucketsFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataSpacesBuckets_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -93,7 +95,7 @@ impl DataSpacesBuckets {
     }
 
     #[doc = "Set the field `sort`.\n"]
-    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataSpacesBucketsSortEl>>) -> Self {
+    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataSpacesBuckets_Sort>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().sort = std::option::Option::Some(v);
@@ -106,7 +108,7 @@ impl DataSpacesBuckets {
     }
 
     #[doc = "Get a reference to the value of field `buckets` after provisioning.\n"]
-    pub fn buckets(&self) -> terrars::ListRef<DataSpacesBucketsBucketsElRef> {
+    pub fn buckets(&self) -> terrars::ListRef<DataSpacesBuckets_BucketsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.buckets", self.extract_ref()))
     }
 
@@ -116,7 +118,7 @@ impl DataSpacesBuckets {
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataSpacesBucketsSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataSpacesBuckets_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
@@ -161,7 +163,7 @@ impl BuildDataSpacesBuckets {
         let out = DataSpacesBuckets(std::rc::Rc::new(DataSpacesBuckets_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataSpacesBucketsData {
+            data: std::cell::RefCell::new(DataSpacesBucketsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -201,7 +203,7 @@ impl DataSpacesBucketsRef {
     }
 
     #[doc = "Get a reference to the value of field `buckets` after provisioning.\n"]
-    pub fn buckets(&self) -> terrars::ListRef<DataSpacesBucketsBucketsElRef> {
+    pub fn buckets(&self) -> terrars::ListRef<DataSpacesBuckets_BucketsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.buckets", self.extract_ref()))
     }
 
@@ -211,13 +213,13 @@ impl DataSpacesBucketsRef {
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataSpacesBucketsSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataSpacesBuckets_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataSpacesBucketsBucketsEl {
+pub struct DataSpacesBuckets_Buckets {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_domain_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -230,7 +232,7 @@ pub struct DataSpacesBucketsBucketsEl {
     urn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSpacesBucketsBucketsEl {
+impl DataSpacesBuckets_Buckets {
     #[doc = "Set the field `bucket_domain_name`.\n"]
     pub fn set_bucket_domain_name(
         mut self,
@@ -265,8 +267,8 @@ impl DataSpacesBucketsBucketsEl {
     }
 }
 
-impl terrars::ToListMappable for DataSpacesBucketsBucketsEl {
-    type O = terrars::BlockAssignable<DataSpacesBucketsBucketsEl>;
+impl terrars::ToListMappable for DataSpacesBuckets_Buckets {
+    type O = terrars::BlockAssignable<DataSpacesBuckets_Buckets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -277,11 +279,11 @@ impl terrars::ToListMappable for DataSpacesBucketsBucketsEl {
     }
 }
 
-pub struct BuildDataSpacesBucketsBucketsEl {}
+pub struct BuildDataSpacesBuckets_Buckets {}
 
-impl BuildDataSpacesBucketsBucketsEl {
-    pub fn build(self) -> DataSpacesBucketsBucketsEl {
-        DataSpacesBucketsBucketsEl {
+impl BuildDataSpacesBuckets_Buckets {
+    pub fn build(self) -> DataSpacesBuckets_Buckets {
+        DataSpacesBuckets_Buckets {
             bucket_domain_name: core::default::Default::default(),
             endpoint: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -291,21 +293,23 @@ impl BuildDataSpacesBucketsBucketsEl {
     }
 }
 
-pub struct DataSpacesBucketsBucketsElRef {
+#[allow(dead_code)]
+pub struct DataSpacesBuckets_BucketsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSpacesBucketsBucketsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSpacesBucketsBucketsElRef {
-        DataSpacesBucketsBucketsElRef {
+impl terrars::Ref for DataSpacesBuckets_BucketsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSpacesBuckets_BucketsRef {
+        DataSpacesBuckets_BucketsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSpacesBucketsBucketsElRef {
+impl DataSpacesBuckets_BucketsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -337,7 +341,7 @@ impl DataSpacesBucketsBucketsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSpacesBucketsFilterEl {
+pub struct DataSpacesBuckets_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all: std::option::Option<terrars::PrimField<bool>>,
     key: terrars::PrimField<std::string::String>,
@@ -346,7 +350,7 @@ pub struct DataSpacesBucketsFilterEl {
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSpacesBucketsFilterEl {
+impl DataSpacesBuckets_Filter {
     #[doc = "Set the field `all`.\n"]
     pub fn set_all(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.all = std::option::Option::Some(v.into());
@@ -360,8 +364,8 @@ impl DataSpacesBucketsFilterEl {
     }
 }
 
-impl terrars::ToListMappable for DataSpacesBucketsFilterEl {
-    type O = terrars::BlockAssignable<DataSpacesBucketsFilterEl>;
+impl terrars::ToListMappable for DataSpacesBuckets_Filter {
+    type O = terrars::BlockAssignable<DataSpacesBuckets_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -372,16 +376,16 @@ impl terrars::ToListMappable for DataSpacesBucketsFilterEl {
     }
 }
 
-pub struct BuildDataSpacesBucketsFilterEl {
+pub struct BuildDataSpacesBuckets_Filter {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataSpacesBucketsFilterEl {
-    pub fn build(self) -> DataSpacesBucketsFilterEl {
-        DataSpacesBucketsFilterEl {
+impl BuildDataSpacesBuckets_Filter {
+    pub fn build(self) -> DataSpacesBuckets_Filter {
+        DataSpacesBuckets_Filter {
             all: core::default::Default::default(),
             key: self.key,
             match_by: core::default::Default::default(),
@@ -390,21 +394,23 @@ impl BuildDataSpacesBucketsFilterEl {
     }
 }
 
-pub struct DataSpacesBucketsFilterElRef {
+#[allow(dead_code)]
+pub struct DataSpacesBuckets_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSpacesBucketsFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSpacesBucketsFilterElRef {
-        DataSpacesBucketsFilterElRef {
+impl terrars::Ref for DataSpacesBuckets_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSpacesBuckets_FilterRef {
+        DataSpacesBuckets_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSpacesBucketsFilterElRef {
+impl DataSpacesBuckets_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -431,13 +437,13 @@ impl DataSpacesBucketsFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSpacesBucketsSortEl {
+pub struct DataSpacesBuckets_Sort {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     direction: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<std::string::String>,
 }
 
-impl DataSpacesBucketsSortEl {
+impl DataSpacesBuckets_Sort {
     #[doc = "Set the field `direction`.\n"]
     pub fn set_direction(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.direction = std::option::Option::Some(v.into());
@@ -445,8 +451,8 @@ impl DataSpacesBucketsSortEl {
     }
 }
 
-impl terrars::ToListMappable for DataSpacesBucketsSortEl {
-    type O = terrars::BlockAssignable<DataSpacesBucketsSortEl>;
+impl terrars::ToListMappable for DataSpacesBuckets_Sort {
+    type O = terrars::BlockAssignable<DataSpacesBuckets_Sort>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -457,35 +463,37 @@ impl terrars::ToListMappable for DataSpacesBucketsSortEl {
     }
 }
 
-pub struct BuildDataSpacesBucketsSortEl {
+pub struct BuildDataSpacesBuckets_Sort {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataSpacesBucketsSortEl {
-    pub fn build(self) -> DataSpacesBucketsSortEl {
-        DataSpacesBucketsSortEl {
+impl BuildDataSpacesBuckets_Sort {
+    pub fn build(self) -> DataSpacesBuckets_Sort {
+        DataSpacesBuckets_Sort {
             direction: core::default::Default::default(),
             key: self.key,
         }
     }
 }
 
-pub struct DataSpacesBucketsSortElRef {
+#[allow(dead_code)]
+pub struct DataSpacesBuckets_SortRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSpacesBucketsSortElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSpacesBucketsSortElRef {
-        DataSpacesBucketsSortElRef {
+impl terrars::Ref for DataSpacesBuckets_SortRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSpacesBuckets_SortRef {
+        DataSpacesBuckets_SortRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSpacesBucketsSortElRef {
+impl DataSpacesBuckets_SortRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -503,6 +511,6 @@ impl DataSpacesBucketsSortElRef {
 
 #[derive(Serialize, Default)]
 struct DataSpacesBucketsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataSpacesBucketsFilterEl>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataSpacesBucketsSortEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<DataSpacesBuckets_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataSpacesBuckets_Sort>>,
 }

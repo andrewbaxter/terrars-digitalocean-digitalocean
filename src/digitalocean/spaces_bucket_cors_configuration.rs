@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct SpacesBucketCorsConfigurationData {
+struct SpacesBucketCorsConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,14 +25,14 @@ struct SpacesBucketCorsConfigurationData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     region: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cors_rule: std::option::Option<std::vec::Vec<SpacesBucketCorsConfigurationCorsRuleEl>>,
+    cors_rule: std::option::Option<std::vec::Vec<SpacesBucketCorsConfiguration_CorsRule>>,
     dynamic: SpacesBucketCorsConfigurationDynamic,
 }
 
 struct SpacesBucketCorsConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SpacesBucketCorsConfigurationData>,
+    data: std::cell::RefCell<SpacesBucketCorsConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -139,7 +141,7 @@ impl SpacesBucketCorsConfiguration {
     #[doc = "Set the field `cors_rule`.\n"]
     pub fn set_cors_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SpacesBucketCorsConfigurationCorsRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SpacesBucketCorsConfiguration_CorsRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -212,7 +214,7 @@ impl BuildSpacesBucketCorsConfiguration {
         let out = SpacesBucketCorsConfiguration(std::rc::Rc::new(SpacesBucketCorsConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SpacesBucketCorsConfigurationData {
+            data: std::cell::RefCell::new(SpacesBucketCorsConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -270,7 +272,7 @@ impl SpacesBucketCorsConfigurationRef {
 }
 
 #[derive(Serialize)]
-pub struct SpacesBucketCorsConfigurationCorsRuleEl {
+pub struct SpacesBucketCorsConfiguration_CorsRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_headers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     allowed_methods: terrars::SetField<terrars::PrimField<std::string::String>>,
@@ -283,7 +285,7 @@ pub struct SpacesBucketCorsConfigurationCorsRuleEl {
     max_age_seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SpacesBucketCorsConfigurationCorsRuleEl {
+impl SpacesBucketCorsConfiguration_CorsRule {
     #[doc = "Set the field `allowed_headers`.\n"]
     pub fn set_allowed_headers(
         mut self,
@@ -315,8 +317,8 @@ impl SpacesBucketCorsConfigurationCorsRuleEl {
     }
 }
 
-impl terrars::ToListMappable for SpacesBucketCorsConfigurationCorsRuleEl {
-    type O = terrars::BlockAssignable<SpacesBucketCorsConfigurationCorsRuleEl>;
+impl terrars::ToListMappable for SpacesBucketCorsConfiguration_CorsRule {
+    type O = terrars::BlockAssignable<SpacesBucketCorsConfiguration_CorsRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -327,16 +329,16 @@ impl terrars::ToListMappable for SpacesBucketCorsConfigurationCorsRuleEl {
     }
 }
 
-pub struct BuildSpacesBucketCorsConfigurationCorsRuleEl {
+pub struct BuildSpacesBucketCorsConfiguration_CorsRule {
     #[doc = ""]
     pub allowed_methods: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub allowed_origins: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildSpacesBucketCorsConfigurationCorsRuleEl {
-    pub fn build(self) -> SpacesBucketCorsConfigurationCorsRuleEl {
-        SpacesBucketCorsConfigurationCorsRuleEl {
+impl BuildSpacesBucketCorsConfiguration_CorsRule {
+    pub fn build(self) -> SpacesBucketCorsConfiguration_CorsRule {
+        SpacesBucketCorsConfiguration_CorsRule {
             allowed_headers: core::default::Default::default(),
             allowed_methods: self.allowed_methods,
             allowed_origins: self.allowed_origins,
@@ -347,21 +349,23 @@ impl BuildSpacesBucketCorsConfigurationCorsRuleEl {
     }
 }
 
-pub struct SpacesBucketCorsConfigurationCorsRuleElRef {
+#[allow(dead_code)]
+pub struct SpacesBucketCorsConfiguration_CorsRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpacesBucketCorsConfigurationCorsRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SpacesBucketCorsConfigurationCorsRuleElRef {
-        SpacesBucketCorsConfigurationCorsRuleElRef {
+impl terrars::Ref for SpacesBucketCorsConfiguration_CorsRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SpacesBucketCorsConfiguration_CorsRuleRef {
+        SpacesBucketCorsConfiguration_CorsRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpacesBucketCorsConfigurationCorsRuleElRef {
+impl SpacesBucketCorsConfiguration_CorsRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -399,5 +403,5 @@ impl SpacesBucketCorsConfigurationCorsRuleElRef {
 
 #[derive(Serialize, Default)]
 struct SpacesBucketCorsConfigurationDynamic {
-    cors_rule: std::option::Option<terrars::DynamicBlock<SpacesBucketCorsConfigurationCorsRuleEl>>,
+    cors_rule: std::option::Option<terrars::DynamicBlock<SpacesBucketCorsConfiguration_CorsRule>>,
 }

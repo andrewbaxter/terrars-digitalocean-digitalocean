@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct MonitorAlertData {
+struct MonitorAlertData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -33,14 +35,14 @@ struct MonitorAlertData {
     value: terrars::PrimField<f64>,
     window: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    alerts: std::option::Option<std::vec::Vec<MonitorAlertAlertsEl>>,
+    alerts: std::option::Option<std::vec::Vec<MonitorAlert_Alerts>>,
     dynamic: MonitorAlertDynamic,
 }
 
 struct MonitorAlert_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MonitorAlertData>,
+    data: std::cell::RefCell<MonitorAlertData_>,
 }
 
 #[derive(Clone)]
@@ -171,7 +173,7 @@ impl MonitorAlert {
     }
 
     #[doc = "Set the field `alerts`.\n"]
-    pub fn set_alerts(self, v: impl std::convert::Into<terrars::BlockAssignable<MonitorAlertAlertsEl>>) -> Self {
+    pub fn set_alerts(self, v: impl std::convert::Into<terrars::BlockAssignable<MonitorAlert_Alerts>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().alerts = std::option::Option::Some(v);
@@ -236,7 +238,7 @@ impl MonitorAlert {
     }
 
     #[doc = "Get a reference to the value of field `alerts` after provisioning.\n"]
-    pub fn alerts(&self) -> terrars::ListRef<MonitorAlertAlertsElRef> {
+    pub fn alerts(&self) -> terrars::ListRef<MonitorAlert_AlertsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.alerts", self.extract_ref()))
     }
 }
@@ -291,7 +293,7 @@ impl BuildMonitorAlert {
         let out = MonitorAlert(std::rc::Rc::new(MonitorAlert_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MonitorAlertData {
+            data: std::cell::RefCell::new(MonitorAlertData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -391,21 +393,21 @@ impl MonitorAlertRef {
     }
 
     #[doc = "Get a reference to the value of field `alerts` after provisioning.\n"]
-    pub fn alerts(&self) -> terrars::ListRef<MonitorAlertAlertsElRef> {
+    pub fn alerts(&self) -> terrars::ListRef<MonitorAlert_AlertsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.alerts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct MonitorAlertAlertsElSlackEl {
+pub struct MonitorAlert_Alerts_Slack {
     channel: terrars::PrimField<std::string::String>,
     url: terrars::PrimField<std::string::String>,
 }
 
-impl MonitorAlertAlertsElSlackEl { }
+impl MonitorAlert_Alerts_Slack { }
 
-impl terrars::ToListMappable for MonitorAlertAlertsElSlackEl {
-    type O = terrars::BlockAssignable<MonitorAlertAlertsElSlackEl>;
+impl terrars::ToListMappable for MonitorAlert_Alerts_Slack {
+    type O = terrars::BlockAssignable<MonitorAlert_Alerts_Slack>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -416,37 +418,39 @@ impl terrars::ToListMappable for MonitorAlertAlertsElSlackEl {
     }
 }
 
-pub struct BuildMonitorAlertAlertsElSlackEl {
+pub struct BuildMonitorAlert_Alerts_Slack {
     #[doc = "The Slack channel to send alerts to"]
     pub channel: terrars::PrimField<std::string::String>,
     #[doc = "The webhook URL for Slack"]
     pub url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMonitorAlertAlertsElSlackEl {
-    pub fn build(self) -> MonitorAlertAlertsElSlackEl {
-        MonitorAlertAlertsElSlackEl {
+impl BuildMonitorAlert_Alerts_Slack {
+    pub fn build(self) -> MonitorAlert_Alerts_Slack {
+        MonitorAlert_Alerts_Slack {
             channel: self.channel,
             url: self.url,
         }
     }
 }
 
-pub struct MonitorAlertAlertsElSlackElRef {
+#[allow(dead_code)]
+pub struct MonitorAlert_Alerts_SlackRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitorAlertAlertsElSlackElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitorAlertAlertsElSlackElRef {
-        MonitorAlertAlertsElSlackElRef {
+impl terrars::Ref for MonitorAlert_Alerts_SlackRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitorAlert_Alerts_SlackRef {
+        MonitorAlert_Alerts_SlackRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitorAlertAlertsElSlackElRef {
+impl MonitorAlert_Alerts_SlackRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -463,20 +467,20 @@ impl MonitorAlertAlertsElSlackElRef {
 }
 
 #[derive(Serialize, Default)]
-struct MonitorAlertAlertsElDynamic {
-    slack: std::option::Option<terrars::DynamicBlock<MonitorAlertAlertsElSlackEl>>,
+struct MonitorAlert_AlertsDynamic {
+    slack: std::option::Option<terrars::DynamicBlock<MonitorAlert_Alerts_Slack>>,
 }
 
 #[derive(Serialize)]
-pub struct MonitorAlertAlertsEl {
+pub struct MonitorAlert_Alerts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     email: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    slack: std::option::Option<std::vec::Vec<MonitorAlertAlertsElSlackEl>>,
-    dynamic: MonitorAlertAlertsElDynamic,
+    slack: std::option::Option<std::vec::Vec<MonitorAlert_Alerts_Slack>>,
+    dynamic: MonitorAlert_AlertsDynamic,
 }
 
-impl MonitorAlertAlertsEl {
+impl MonitorAlert_Alerts {
     #[doc = "Set the field `email`.\nList of email addresses to sent notifications to"]
     pub fn set_email(
         mut self,
@@ -487,10 +491,7 @@ impl MonitorAlertAlertsEl {
     }
 
     #[doc = "Set the field `slack`.\n"]
-    pub fn set_slack(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitorAlertAlertsElSlackEl>>,
-    ) -> Self {
+    pub fn set_slack(mut self, v: impl std::convert::Into<terrars::BlockAssignable<MonitorAlert_Alerts_Slack>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.slack = std::option::Option::Some(v);
@@ -503,8 +504,8 @@ impl MonitorAlertAlertsEl {
     }
 }
 
-impl terrars::ToListMappable for MonitorAlertAlertsEl {
-    type O = terrars::BlockAssignable<MonitorAlertAlertsEl>;
+impl terrars::ToListMappable for MonitorAlert_Alerts {
+    type O = terrars::BlockAssignable<MonitorAlert_Alerts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -515,11 +516,11 @@ impl terrars::ToListMappable for MonitorAlertAlertsEl {
     }
 }
 
-pub struct BuildMonitorAlertAlertsEl {}
+pub struct BuildMonitorAlert_Alerts {}
 
-impl BuildMonitorAlertAlertsEl {
-    pub fn build(self) -> MonitorAlertAlertsEl {
-        MonitorAlertAlertsEl {
+impl BuildMonitorAlert_Alerts {
+    pub fn build(self) -> MonitorAlert_Alerts {
+        MonitorAlert_Alerts {
             email: core::default::Default::default(),
             slack: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -527,21 +528,23 @@ impl BuildMonitorAlertAlertsEl {
     }
 }
 
-pub struct MonitorAlertAlertsElRef {
+#[allow(dead_code)]
+pub struct MonitorAlert_AlertsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitorAlertAlertsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitorAlertAlertsElRef {
-        MonitorAlertAlertsElRef {
+impl terrars::Ref for MonitorAlert_AlertsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitorAlert_AlertsRef {
+        MonitorAlert_AlertsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitorAlertAlertsElRef {
+impl MonitorAlert_AlertsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -553,12 +556,12 @@ impl MonitorAlertAlertsElRef {
     }
 
     #[doc = "Get a reference to the value of field `slack` after provisioning.\n"]
-    pub fn slack(&self) -> terrars::ListRef<MonitorAlertAlertsElSlackElRef> {
+    pub fn slack(&self) -> terrars::ListRef<MonitorAlert_Alerts_SlackRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.slack", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MonitorAlertDynamic {
-    alerts: std::option::Option<terrars::DynamicBlock<MonitorAlertAlertsEl>>,
+    alerts: std::option::Option<terrars::DynamicBlock<MonitorAlert_Alerts>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DataDropletsData {
+struct DataDropletsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -17,18 +19,20 @@ struct DataDropletsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpus: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataDropletsFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataDroplets_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sort: std::option::Option<std::vec::Vec<DataDropletsSortEl>>,
+    sort: std::option::Option<std::vec::Vec<DataDroplets_Sort>>,
     dynamic: DataDropletsDynamic,
 }
 
 struct DataDroplets_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataDropletsData>,
+    data: std::cell::RefCell<DataDropletsData_>,
 }
 
 #[derive(Clone)]
@@ -73,6 +77,12 @@ impl DataDroplets {
         self
     }
 
+    #[doc = "Set the field `gpus`.\n"]
+    pub fn set_gpus(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().gpus = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -80,7 +90,7 @@ impl DataDroplets {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataDropletsFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataDroplets_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -93,7 +103,7 @@ impl DataDroplets {
     }
 
     #[doc = "Set the field `sort`.\n"]
-    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataDropletsSortEl>>) -> Self {
+    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataDroplets_Sort>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().sort = std::option::Option::Some(v);
@@ -106,8 +116,13 @@ impl DataDroplets {
     }
 
     #[doc = "Get a reference to the value of field `droplets` after provisioning.\n"]
-    pub fn droplets(&self) -> terrars::ListRef<DataDropletsDropletsElRef> {
+    pub fn droplets(&self) -> terrars::ListRef<DataDroplets_DropletsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.droplets", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `gpus` after provisioning.\n"]
+    pub fn gpus(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpus", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -116,7 +131,7 @@ impl DataDroplets {
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataDropletsSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataDroplets_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
@@ -161,11 +176,12 @@ impl BuildDataDroplets {
         let out = DataDroplets(std::rc::Rc::new(DataDroplets_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataDropletsData {
+            data: std::cell::RefCell::new(DataDropletsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
+                gpus: core::default::Default::default(),
                 id: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 sort: core::default::Default::default(),
@@ -201,8 +217,13 @@ impl DataDropletsRef {
     }
 
     #[doc = "Get a reference to the value of field `droplets` after provisioning.\n"]
-    pub fn droplets(&self) -> terrars::ListRef<DataDropletsDropletsElRef> {
+    pub fn droplets(&self) -> terrars::ListRef<DataDroplets_DropletsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.droplets", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `gpus` after provisioning.\n"]
+    pub fn gpus(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpus", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -211,19 +232,21 @@ impl DataDropletsRef {
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataDropletsSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataDroplets_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataDropletsDropletsEl {
+pub struct DataDroplets_Droplets {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     backups: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     created_at: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disk: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpu_partition_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -270,7 +293,7 @@ pub struct DataDropletsDropletsEl {
     vpc_uuid: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDropletsDropletsEl {
+impl DataDroplets_Droplets {
     #[doc = "Set the field `backups`.\n"]
     pub fn set_backups(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.backups = std::option::Option::Some(v.into());
@@ -286,6 +309,15 @@ impl DataDropletsDropletsEl {
     #[doc = "Set the field `disk`.\n"]
     pub fn set_disk(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.disk = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `gpu_partition_mode`.\n"]
+    pub fn set_gpu_partition_mode(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.gpu_partition_mode = std::option::Option::Some(v.into());
         self
     }
 
@@ -434,8 +466,8 @@ impl DataDropletsDropletsEl {
     }
 }
 
-impl terrars::ToListMappable for DataDropletsDropletsEl {
-    type O = terrars::BlockAssignable<DataDropletsDropletsEl>;
+impl terrars::ToListMappable for DataDroplets_Droplets {
+    type O = terrars::BlockAssignable<DataDroplets_Droplets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -446,14 +478,15 @@ impl terrars::ToListMappable for DataDropletsDropletsEl {
     }
 }
 
-pub struct BuildDataDropletsDropletsEl {}
+pub struct BuildDataDroplets_Droplets {}
 
-impl BuildDataDropletsDropletsEl {
-    pub fn build(self) -> DataDropletsDropletsEl {
-        DataDropletsDropletsEl {
+impl BuildDataDroplets_Droplets {
+    pub fn build(self) -> DataDroplets_Droplets {
+        DataDroplets_Droplets {
             backups: core::default::Default::default(),
             created_at: core::default::Default::default(),
             disk: core::default::Default::default(),
+            gpu_partition_mode: core::default::Default::default(),
             id: core::default::Default::default(),
             image: core::default::Default::default(),
             ipv4_address: core::default::Default::default(),
@@ -480,21 +513,23 @@ impl BuildDataDropletsDropletsEl {
     }
 }
 
-pub struct DataDropletsDropletsElRef {
+#[allow(dead_code)]
+pub struct DataDroplets_DropletsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDropletsDropletsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDropletsDropletsElRef {
-        DataDropletsDropletsElRef {
+impl terrars::Ref for DataDroplets_DropletsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDroplets_DropletsRef {
+        DataDroplets_DropletsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDropletsDropletsElRef {
+impl DataDroplets_DropletsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -512,6 +547,11 @@ impl DataDropletsDropletsElRef {
     #[doc = "Get a reference to the value of field `disk` after provisioning.\n"]
     pub fn disk(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `gpu_partition_mode` after provisioning.\n"]
+    pub fn gpu_partition_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpu_partition_mode", self.base))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -626,7 +666,7 @@ impl DataDropletsDropletsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataDropletsFilterEl {
+pub struct DataDroplets_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all: std::option::Option<terrars::PrimField<bool>>,
     key: terrars::PrimField<std::string::String>,
@@ -635,7 +675,7 @@ pub struct DataDropletsFilterEl {
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDropletsFilterEl {
+impl DataDroplets_Filter {
     #[doc = "Set the field `all`.\n"]
     pub fn set_all(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.all = std::option::Option::Some(v.into());
@@ -649,8 +689,8 @@ impl DataDropletsFilterEl {
     }
 }
 
-impl terrars::ToListMappable for DataDropletsFilterEl {
-    type O = terrars::BlockAssignable<DataDropletsFilterEl>;
+impl terrars::ToListMappable for DataDroplets_Filter {
+    type O = terrars::BlockAssignable<DataDroplets_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -661,16 +701,16 @@ impl terrars::ToListMappable for DataDropletsFilterEl {
     }
 }
 
-pub struct BuildDataDropletsFilterEl {
+pub struct BuildDataDroplets_Filter {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataDropletsFilterEl {
-    pub fn build(self) -> DataDropletsFilterEl {
-        DataDropletsFilterEl {
+impl BuildDataDroplets_Filter {
+    pub fn build(self) -> DataDroplets_Filter {
+        DataDroplets_Filter {
             all: core::default::Default::default(),
             key: self.key,
             match_by: core::default::Default::default(),
@@ -679,21 +719,23 @@ impl BuildDataDropletsFilterEl {
     }
 }
 
-pub struct DataDropletsFilterElRef {
+#[allow(dead_code)]
+pub struct DataDroplets_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDropletsFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDropletsFilterElRef {
-        DataDropletsFilterElRef {
+impl terrars::Ref for DataDroplets_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDroplets_FilterRef {
+        DataDroplets_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDropletsFilterElRef {
+impl DataDroplets_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -720,13 +762,13 @@ impl DataDropletsFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataDropletsSortEl {
+pub struct DataDroplets_Sort {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     direction: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<std::string::String>,
 }
 
-impl DataDropletsSortEl {
+impl DataDroplets_Sort {
     #[doc = "Set the field `direction`.\n"]
     pub fn set_direction(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.direction = std::option::Option::Some(v.into());
@@ -734,8 +776,8 @@ impl DataDropletsSortEl {
     }
 }
 
-impl terrars::ToListMappable for DataDropletsSortEl {
-    type O = terrars::BlockAssignable<DataDropletsSortEl>;
+impl terrars::ToListMappable for DataDroplets_Sort {
+    type O = terrars::BlockAssignable<DataDroplets_Sort>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -746,35 +788,37 @@ impl terrars::ToListMappable for DataDropletsSortEl {
     }
 }
 
-pub struct BuildDataDropletsSortEl {
+pub struct BuildDataDroplets_Sort {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataDropletsSortEl {
-    pub fn build(self) -> DataDropletsSortEl {
-        DataDropletsSortEl {
+impl BuildDataDroplets_Sort {
+    pub fn build(self) -> DataDroplets_Sort {
+        DataDroplets_Sort {
             direction: core::default::Default::default(),
             key: self.key,
         }
     }
 }
 
-pub struct DataDropletsSortElRef {
+#[allow(dead_code)]
+pub struct DataDroplets_SortRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDropletsSortElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDropletsSortElRef {
-        DataDropletsSortElRef {
+impl terrars::Ref for DataDroplets_SortRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDroplets_SortRef {
+        DataDroplets_SortRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDropletsSortElRef {
+impl DataDroplets_SortRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -792,6 +836,6 @@ impl DataDropletsSortElRef {
 
 #[derive(Serialize, Default)]
 struct DataDropletsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataDropletsFilterEl>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataDropletsSortEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<DataDroplets_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataDroplets_Sort>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct SpacesBucketPolicyData {
+struct SpacesBucketPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,7 +30,7 @@ struct SpacesBucketPolicyData {
 struct SpacesBucketPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SpacesBucketPolicyData>,
+    data: std::cell::RefCell<SpacesBucketPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -201,7 +203,7 @@ impl BuildSpacesBucketPolicy {
         let out = SpacesBucketPolicy(std::rc::Rc::new(SpacesBucketPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SpacesBucketPolicyData {
+            data: std::cell::RefCell::new(SpacesBucketPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

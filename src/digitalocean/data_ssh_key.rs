@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DataSshKeyData {
+struct DataSshKeyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -22,7 +24,7 @@ struct DataSshKeyData {
 struct DataSshKey_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSshKeyData>,
+    data: std::cell::RefCell<DataSshKeyData_>,
 }
 
 #[derive(Clone)]
@@ -130,7 +132,7 @@ impl BuildDataSshKey {
         let out = DataSshKey(std::rc::Rc::new(DataSshKey_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataSshKeyData {
+            data: std::cell::RefCell::new(DataSshKeyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

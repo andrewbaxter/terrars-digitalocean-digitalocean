@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DataTagsData {
+struct DataTagsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,16 +21,16 @@ struct DataTagsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataTagsFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataTags_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sort: std::option::Option<std::vec::Vec<DataTagsSortEl>>,
+    sort: std::option::Option<std::vec::Vec<DataTags_Sort>>,
     dynamic: DataTagsDynamic,
 }
 
 struct DataTags_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataTagsData>,
+    data: std::cell::RefCell<DataTagsData_>,
 }
 
 #[derive(Clone)]
@@ -80,7 +82,7 @@ impl DataTags {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataTagsFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataTags_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -93,7 +95,7 @@ impl DataTags {
     }
 
     #[doc = "Set the field `sort`.\n"]
-    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataTagsSortEl>>) -> Self {
+    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataTags_Sort>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().sort = std::option::Option::Some(v);
@@ -111,12 +113,12 @@ impl DataTags {
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> terrars::ListRef<DataTagsTagsElRef> {
+    pub fn tags(&self) -> terrars::ListRef<DataTags_TagsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataTagsSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataTags_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
@@ -161,7 +163,7 @@ impl BuildDataTags {
         let out = DataTags(std::rc::Rc::new(DataTags_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataTagsData {
+            data: std::cell::RefCell::new(DataTagsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -206,18 +208,18 @@ impl DataTagsRef {
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> terrars::ListRef<DataTagsTagsElRef> {
+    pub fn tags(&self) -> terrars::ListRef<DataTags_TagsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataTagsSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataTags_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataTagsTagsEl {
+pub struct DataTags_Tags {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     databases_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -234,7 +236,7 @@ pub struct DataTagsTagsEl {
     volumes_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataTagsTagsEl {
+impl DataTags_Tags {
     #[doc = "Set the field `databases_count`.\n"]
     pub fn set_databases_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.databases_count = std::option::Option::Some(v.into());
@@ -278,8 +280,8 @@ impl DataTagsTagsEl {
     }
 }
 
-impl terrars::ToListMappable for DataTagsTagsEl {
-    type O = terrars::BlockAssignable<DataTagsTagsEl>;
+impl terrars::ToListMappable for DataTags_Tags {
+    type O = terrars::BlockAssignable<DataTags_Tags>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -290,11 +292,11 @@ impl terrars::ToListMappable for DataTagsTagsEl {
     }
 }
 
-pub struct BuildDataTagsTagsEl {}
+pub struct BuildDataTags_Tags {}
 
-impl BuildDataTagsTagsEl {
-    pub fn build(self) -> DataTagsTagsEl {
-        DataTagsTagsEl {
+impl BuildDataTags_Tags {
+    pub fn build(self) -> DataTags_Tags {
+        DataTags_Tags {
             databases_count: core::default::Default::default(),
             droplets_count: core::default::Default::default(),
             images_count: core::default::Default::default(),
@@ -306,21 +308,23 @@ impl BuildDataTagsTagsEl {
     }
 }
 
-pub struct DataTagsTagsElRef {
+#[allow(dead_code)]
+pub struct DataTags_TagsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataTagsTagsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataTagsTagsElRef {
-        DataTagsTagsElRef {
+impl terrars::Ref for DataTags_TagsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataTags_TagsRef {
+        DataTags_TagsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataTagsTagsElRef {
+impl DataTags_TagsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -362,7 +366,7 @@ impl DataTagsTagsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataTagsFilterEl {
+pub struct DataTags_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all: std::option::Option<terrars::PrimField<bool>>,
     key: terrars::PrimField<std::string::String>,
@@ -371,7 +375,7 @@ pub struct DataTagsFilterEl {
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataTagsFilterEl {
+impl DataTags_Filter {
     #[doc = "Set the field `all`.\n"]
     pub fn set_all(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.all = std::option::Option::Some(v.into());
@@ -385,8 +389,8 @@ impl DataTagsFilterEl {
     }
 }
 
-impl terrars::ToListMappable for DataTagsFilterEl {
-    type O = terrars::BlockAssignable<DataTagsFilterEl>;
+impl terrars::ToListMappable for DataTags_Filter {
+    type O = terrars::BlockAssignable<DataTags_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -397,16 +401,16 @@ impl terrars::ToListMappable for DataTagsFilterEl {
     }
 }
 
-pub struct BuildDataTagsFilterEl {
+pub struct BuildDataTags_Filter {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataTagsFilterEl {
-    pub fn build(self) -> DataTagsFilterEl {
-        DataTagsFilterEl {
+impl BuildDataTags_Filter {
+    pub fn build(self) -> DataTags_Filter {
+        DataTags_Filter {
             all: core::default::Default::default(),
             key: self.key,
             match_by: core::default::Default::default(),
@@ -415,21 +419,23 @@ impl BuildDataTagsFilterEl {
     }
 }
 
-pub struct DataTagsFilterElRef {
+#[allow(dead_code)]
+pub struct DataTags_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataTagsFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataTagsFilterElRef {
-        DataTagsFilterElRef {
+impl terrars::Ref for DataTags_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataTags_FilterRef {
+        DataTags_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataTagsFilterElRef {
+impl DataTags_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -456,13 +462,13 @@ impl DataTagsFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataTagsSortEl {
+pub struct DataTags_Sort {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     direction: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<std::string::String>,
 }
 
-impl DataTagsSortEl {
+impl DataTags_Sort {
     #[doc = "Set the field `direction`.\n"]
     pub fn set_direction(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.direction = std::option::Option::Some(v.into());
@@ -470,8 +476,8 @@ impl DataTagsSortEl {
     }
 }
 
-impl terrars::ToListMappable for DataTagsSortEl {
-    type O = terrars::BlockAssignable<DataTagsSortEl>;
+impl terrars::ToListMappable for DataTags_Sort {
+    type O = terrars::BlockAssignable<DataTags_Sort>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -482,35 +488,37 @@ impl terrars::ToListMappable for DataTagsSortEl {
     }
 }
 
-pub struct BuildDataTagsSortEl {
+pub struct BuildDataTags_Sort {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataTagsSortEl {
-    pub fn build(self) -> DataTagsSortEl {
-        DataTagsSortEl {
+impl BuildDataTags_Sort {
+    pub fn build(self) -> DataTags_Sort {
+        DataTags_Sort {
             direction: core::default::Default::default(),
             key: self.key,
         }
     }
 }
 
-pub struct DataTagsSortElRef {
+#[allow(dead_code)]
+pub struct DataTags_SortRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataTagsSortElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataTagsSortElRef {
-        DataTagsSortElRef {
+impl terrars::Ref for DataTags_SortRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataTags_SortRef {
+        DataTags_SortRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataTagsSortElRef {
+impl DataTags_SortRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -528,6 +536,6 @@ impl DataTagsSortElRef {
 
 #[derive(Serialize, Default)]
 struct DataTagsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataTagsFilterEl>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataTagsSortEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<DataTags_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataTags_Sort>>,
 }

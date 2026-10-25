@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DataImagesData {
+struct DataImagesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,16 +21,16 @@ struct DataImagesData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataImagesFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataImages_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sort: std::option::Option<std::vec::Vec<DataImagesSortEl>>,
+    sort: std::option::Option<std::vec::Vec<DataImages_Sort>>,
     dynamic: DataImagesDynamic,
 }
 
 struct DataImages_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataImagesData>,
+    data: std::cell::RefCell<DataImagesData_>,
 }
 
 #[derive(Clone)]
@@ -80,7 +82,7 @@ impl DataImages {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataImagesFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataImages_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -93,7 +95,7 @@ impl DataImages {
     }
 
     #[doc = "Set the field `sort`.\n"]
-    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataImagesSortEl>>) -> Self {
+    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataImages_Sort>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().sort = std::option::Option::Some(v);
@@ -111,12 +113,12 @@ impl DataImages {
     }
 
     #[doc = "Get a reference to the value of field `images` after provisioning.\n"]
-    pub fn images(&self) -> terrars::ListRef<DataImagesImagesElRef> {
+    pub fn images(&self) -> terrars::ListRef<DataImages_ImagesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.images", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataImagesSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataImages_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
@@ -161,7 +163,7 @@ impl BuildDataImages {
         let out = DataImages(std::rc::Rc::new(DataImages_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataImagesData {
+            data: std::cell::RefCell::new(DataImagesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -206,18 +208,18 @@ impl DataImagesRef {
     }
 
     #[doc = "Get a reference to the value of field `images` after provisioning.\n"]
-    pub fn images(&self) -> terrars::ListRef<DataImagesImagesElRef> {
+    pub fn images(&self) -> terrars::ListRef<DataImages_ImagesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.images", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataImagesSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataImages_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataImagesImagesEl {
+pub struct DataImages_Images {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     created: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -250,7 +252,7 @@ pub struct DataImagesImagesEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataImagesImagesEl {
+impl DataImages_Images {
     #[doc = "Set the field `created`.\n"]
     pub fn set_created(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.created = std::option::Option::Some(v.into());
@@ -348,8 +350,8 @@ impl DataImagesImagesEl {
     }
 }
 
-impl terrars::ToListMappable for DataImagesImagesEl {
-    type O = terrars::BlockAssignable<DataImagesImagesEl>;
+impl terrars::ToListMappable for DataImages_Images {
+    type O = terrars::BlockAssignable<DataImages_Images>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -360,11 +362,11 @@ impl terrars::ToListMappable for DataImagesImagesEl {
     }
 }
 
-pub struct BuildDataImagesImagesEl {}
+pub struct BuildDataImages_Images {}
 
-impl BuildDataImagesImagesEl {
-    pub fn build(self) -> DataImagesImagesEl {
-        DataImagesImagesEl {
+impl BuildDataImages_Images {
+    pub fn build(self) -> DataImages_Images {
+        DataImages_Images {
             created: core::default::Default::default(),
             description: core::default::Default::default(),
             distribution: core::default::Default::default(),
@@ -384,21 +386,23 @@ impl BuildDataImagesImagesEl {
     }
 }
 
-pub struct DataImagesImagesElRef {
+#[allow(dead_code)]
+pub struct DataImages_ImagesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataImagesImagesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataImagesImagesElRef {
-        DataImagesImagesElRef {
+impl terrars::Ref for DataImages_ImagesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataImages_ImagesRef {
+        DataImages_ImagesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataImagesImagesElRef {
+impl DataImages_ImagesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -480,7 +484,7 @@ impl DataImagesImagesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataImagesFilterEl {
+pub struct DataImages_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all: std::option::Option<terrars::PrimField<bool>>,
     key: terrars::PrimField<std::string::String>,
@@ -489,7 +493,7 @@ pub struct DataImagesFilterEl {
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataImagesFilterEl {
+impl DataImages_Filter {
     #[doc = "Set the field `all`.\n"]
     pub fn set_all(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.all = std::option::Option::Some(v.into());
@@ -503,8 +507,8 @@ impl DataImagesFilterEl {
     }
 }
 
-impl terrars::ToListMappable for DataImagesFilterEl {
-    type O = terrars::BlockAssignable<DataImagesFilterEl>;
+impl terrars::ToListMappable for DataImages_Filter {
+    type O = terrars::BlockAssignable<DataImages_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -515,16 +519,16 @@ impl terrars::ToListMappable for DataImagesFilterEl {
     }
 }
 
-pub struct BuildDataImagesFilterEl {
+pub struct BuildDataImages_Filter {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataImagesFilterEl {
-    pub fn build(self) -> DataImagesFilterEl {
-        DataImagesFilterEl {
+impl BuildDataImages_Filter {
+    pub fn build(self) -> DataImages_Filter {
+        DataImages_Filter {
             all: core::default::Default::default(),
             key: self.key,
             match_by: core::default::Default::default(),
@@ -533,21 +537,23 @@ impl BuildDataImagesFilterEl {
     }
 }
 
-pub struct DataImagesFilterElRef {
+#[allow(dead_code)]
+pub struct DataImages_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataImagesFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataImagesFilterElRef {
-        DataImagesFilterElRef {
+impl terrars::Ref for DataImages_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataImages_FilterRef {
+        DataImages_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataImagesFilterElRef {
+impl DataImages_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -574,13 +580,13 @@ impl DataImagesFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataImagesSortEl {
+pub struct DataImages_Sort {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     direction: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<std::string::String>,
 }
 
-impl DataImagesSortEl {
+impl DataImages_Sort {
     #[doc = "Set the field `direction`.\n"]
     pub fn set_direction(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.direction = std::option::Option::Some(v.into());
@@ -588,8 +594,8 @@ impl DataImagesSortEl {
     }
 }
 
-impl terrars::ToListMappable for DataImagesSortEl {
-    type O = terrars::BlockAssignable<DataImagesSortEl>;
+impl terrars::ToListMappable for DataImages_Sort {
+    type O = terrars::BlockAssignable<DataImages_Sort>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -600,35 +606,37 @@ impl terrars::ToListMappable for DataImagesSortEl {
     }
 }
 
-pub struct BuildDataImagesSortEl {
+pub struct BuildDataImages_Sort {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataImagesSortEl {
-    pub fn build(self) -> DataImagesSortEl {
-        DataImagesSortEl {
+impl BuildDataImages_Sort {
+    pub fn build(self) -> DataImages_Sort {
+        DataImages_Sort {
             direction: core::default::Default::default(),
             key: self.key,
         }
     }
 }
 
-pub struct DataImagesSortElRef {
+#[allow(dead_code)]
+pub struct DataImages_SortRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataImagesSortElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataImagesSortElRef {
-        DataImagesSortElRef {
+impl terrars::Ref for DataImages_SortRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataImages_SortRef {
+        DataImages_SortRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataImagesSortElRef {
+impl DataImages_SortRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -646,6 +654,6 @@ impl DataImagesSortElRef {
 
 #[derive(Serialize, Default)]
 struct DataImagesDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataImagesFilterEl>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataImagesSortEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<DataImages_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataImages_Sort>>,
 }

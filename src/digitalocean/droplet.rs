@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DropletData {
+struct DropletData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct DropletData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     droplet_agent: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpu_partition_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     graceful_shutdown: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -36,6 +40,8 @@ struct DropletData {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_networking: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    public_networking: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -52,13 +58,16 @@ struct DropletData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_uuid: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DropletTimeoutsEl>,
+    backup_policy: std::option::Option<std::vec::Vec<Droplet_BackupPolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Droplet_Timeouts>,
+    dynamic: DropletDynamic,
 }
 
 struct Droplet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DropletData>,
+    data: std::cell::RefCell<DropletData_>,
 }
 
 #[derive(Clone)]
@@ -170,6 +179,13 @@ impl Droplet {
         self
     }
 
+    #[doc =
+        "Set the field `gpu_partition_mode`.\nThe partition mode for a GPU Droplet. Omit to create a full GPU (equivalent to PARTITION_MODE_SPX_NPS1). Only supported on GPU sizes that advertise the mode in their supported_partition_modes."]
+    pub fn set_gpu_partition_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().gpu_partition_mode = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `graceful_shutdown`.\n"]
     pub fn set_graceful_shutdown(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().graceful_shutdown = std::option::Option::Some(v.into());
@@ -203,6 +219,13 @@ impl Droplet {
     #[doc = "Set the field `private_networking`.\n"]
     pub fn set_private_networking(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().private_networking = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `public_networking`.\nEnables public networking for the Droplet. By default, this is always enabled on new droplets, but by explicitly setting it to false, you can create a droplet with public networking entirely disabled."]
+    pub fn set_public_networking(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().public_networking = std::option::Option::Some(v.into());
         self
     }
 
@@ -257,8 +280,21 @@ impl Droplet {
         self
     }
 
+    #[doc = "Set the field `backup_policy`.\n"]
+    pub fn set_backup_policy(self, v: impl std::convert::Into<terrars::BlockAssignable<Droplet_BackupPolicy>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().backup_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.backup_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DropletTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Droplet_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -281,6 +317,12 @@ impl Droplet {
     #[doc = "Get a reference to the value of field `droplet_agent` after provisioning.\n"]
     pub fn droplet_agent(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.droplet_agent", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `gpu_partition_mode` after provisioning.\nThe partition mode for a GPU Droplet. Omit to create a full GPU (equivalent to PARTITION_MODE_SPX_NPS1). Only supported on GPU sizes that advertise the mode in their supported_partition_modes."]
+    pub fn gpu_partition_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpu_partition_mode", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `graceful_shutdown` after provisioning.\n"]
@@ -353,6 +395,12 @@ impl Droplet {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_networking", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `public_networking` after provisioning.\nEnables public networking for the Droplet. By default, this is always enabled on new droplets, but by explicitly setting it to false, you can create a droplet with public networking entirely disabled."]
+    pub fn public_networking(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_networking", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
     pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
@@ -408,9 +456,14 @@ impl Droplet {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_uuid", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `backup_policy` after provisioning.\n"]
+    pub fn backup_policy(&self) -> terrars::ListRef<Droplet_BackupPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.backup_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DropletTimeoutsElRef {
-        DropletTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Droplet_TimeoutsRef {
+        Droplet_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -460,7 +513,7 @@ impl BuildDroplet {
         let out = Droplet(std::rc::Rc::new(Droplet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DropletData {
+            data: std::cell::RefCell::new(DropletData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -468,6 +521,7 @@ impl BuildDroplet {
                 provisioner: core::default::Default::default(),
                 backups: core::default::Default::default(),
                 droplet_agent: core::default::Default::default(),
+                gpu_partition_mode: core::default::Default::default(),
                 graceful_shutdown: core::default::Default::default(),
                 id: core::default::Default::default(),
                 image: self.image,
@@ -476,6 +530,7 @@ impl BuildDroplet {
                 monitoring: core::default::Default::default(),
                 name: self.name,
                 private_networking: core::default::Default::default(),
+                public_networking: core::default::Default::default(),
                 region: core::default::Default::default(),
                 resize_disk: core::default::Default::default(),
                 size: self.size,
@@ -484,7 +539,9 @@ impl BuildDroplet {
                 user_data: core::default::Default::default(),
                 volume_ids: core::default::Default::default(),
                 vpc_uuid: core::default::Default::default(),
+                backup_policy: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -535,6 +592,12 @@ impl DropletRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.droplet_agent", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `gpu_partition_mode` after provisioning.\nThe partition mode for a GPU Droplet. Omit to create a full GPU (equivalent to PARTITION_MODE_SPX_NPS1). Only supported on GPU sizes that advertise the mode in their supported_partition_modes."]
+    pub fn gpu_partition_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpu_partition_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `graceful_shutdown` after provisioning.\n"]
     pub fn graceful_shutdown(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.graceful_shutdown", self.extract_ref()))
@@ -605,6 +668,12 @@ impl DropletRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_networking", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `public_networking` after provisioning.\nEnables public networking for the Droplet. By default, this is always enabled on new droplets, but by explicitly setting it to false, you can create a droplet with public networking entirely disabled."]
+    pub fn public_networking(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_networking", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
     pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
@@ -660,14 +729,110 @@ impl DropletRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_uuid", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `backup_policy` after provisioning.\n"]
+    pub fn backup_policy(&self) -> terrars::ListRef<Droplet_BackupPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.backup_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DropletTimeoutsElRef {
-        DropletTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Droplet_TimeoutsRef {
+        Droplet_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DropletTimeoutsEl {
+pub struct Droplet_BackupPolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    hour: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    plan: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    weekday: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl Droplet_BackupPolicy {
+    #[doc = "Set the field `hour`.\n"]
+    pub fn set_hour(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.hour = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `plan`.\n"]
+    pub fn set_plan(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.plan = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `weekday`.\n"]
+    pub fn set_weekday(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.weekday = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Droplet_BackupPolicy {
+    type O = terrars::BlockAssignable<Droplet_BackupPolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDroplet_BackupPolicy {}
+
+impl BuildDroplet_BackupPolicy {
+    pub fn build(self) -> Droplet_BackupPolicy {
+        Droplet_BackupPolicy {
+            hour: core::default::Default::default(),
+            plan: core::default::Default::default(),
+            weekday: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Droplet_BackupPolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Droplet_BackupPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Droplet_BackupPolicyRef {
+        Droplet_BackupPolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Droplet_BackupPolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `hour` after provisioning.\n"]
+    pub fn hour(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hour", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `plan` after provisioning.\n"]
+    pub fn plan(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.plan", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `weekday` after provisioning.\n"]
+    pub fn weekday(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.weekday", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Droplet_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -676,7 +841,7 @@ pub struct DropletTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DropletTimeoutsEl {
+impl Droplet_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -696,8 +861,8 @@ impl DropletTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DropletTimeoutsEl {
-    type O = terrars::BlockAssignable<DropletTimeoutsEl>;
+impl terrars::ToListMappable for Droplet_Timeouts {
+    type O = terrars::BlockAssignable<Droplet_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -708,11 +873,11 @@ impl terrars::ToListMappable for DropletTimeoutsEl {
     }
 }
 
-pub struct BuildDropletTimeoutsEl {}
+pub struct BuildDroplet_Timeouts {}
 
-impl BuildDropletTimeoutsEl {
-    pub fn build(self) -> DropletTimeoutsEl {
-        DropletTimeoutsEl {
+impl BuildDroplet_Timeouts {
+    pub fn build(self) -> Droplet_Timeouts {
+        Droplet_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -720,21 +885,23 @@ impl BuildDropletTimeoutsEl {
     }
 }
 
-pub struct DropletTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Droplet_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DropletTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DropletTimeoutsElRef {
-        DropletTimeoutsElRef {
+impl terrars::Ref for Droplet_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Droplet_TimeoutsRef {
+        Droplet_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DropletTimeoutsElRef {
+impl Droplet_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -753,4 +920,9 @@ impl DropletTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
+}
+
+#[derive(Serialize, Default)]
+struct DropletDynamic {
+    backup_policy: std::option::Option<terrars::DynamicBlock<Droplet_BackupPolicy>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DatabaseKafkaTopicData {
+struct DatabaseKafkaTopicData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,14 +29,14 @@ struct DatabaseKafkaTopicData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replication_factor: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    config: std::option::Option<std::vec::Vec<DatabaseKafkaTopicConfigEl>>,
+    config: std::option::Option<std::vec::Vec<DatabaseKafkaTopic_Config>>,
     dynamic: DatabaseKafkaTopicDynamic,
 }
 
 struct DatabaseKafkaTopic_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DatabaseKafkaTopicData>,
+    data: std::cell::RefCell<DatabaseKafkaTopicData_>,
 }
 
 #[derive(Clone)]
@@ -153,7 +155,7 @@ impl DatabaseKafkaTopic {
     }
 
     #[doc = "Set the field `config`.\n"]
-    pub fn set_config(self, v: impl std::convert::Into<terrars::BlockAssignable<DatabaseKafkaTopicConfigEl>>) -> Self {
+    pub fn set_config(self, v: impl std::convert::Into<terrars::BlockAssignable<DatabaseKafkaTopic_Config>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().config = std::option::Option::Some(v);
@@ -196,7 +198,7 @@ impl DatabaseKafkaTopic {
     }
 
     #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> terrars::ListRef<DatabaseKafkaTopicConfigElRef> {
+    pub fn config(&self) -> terrars::ListRef<DatabaseKafkaTopic_ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 }
@@ -245,7 +247,7 @@ impl BuildDatabaseKafkaTopic {
         let out = DatabaseKafkaTopic(std::rc::Rc::new(DatabaseKafkaTopic_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DatabaseKafkaTopicData {
+            data: std::cell::RefCell::new(DatabaseKafkaTopicData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -319,13 +321,13 @@ impl DatabaseKafkaTopicRef {
     }
 
     #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> terrars::ListRef<DatabaseKafkaTopicConfigElRef> {
+    pub fn config(&self) -> terrars::ListRef<DatabaseKafkaTopic_ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DatabaseKafkaTopicConfigEl {
+pub struct DatabaseKafkaTopic_Config {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cleanup_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -374,7 +376,7 @@ pub struct DatabaseKafkaTopicConfigEl {
     segment_ms: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DatabaseKafkaTopicConfigEl {
+impl DatabaseKafkaTopic_Config {
     #[doc = "Set the field `cleanup_policy`.\n"]
     pub fn set_cleanup_policy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cleanup_policy = std::option::Option::Some(v.into());
@@ -541,8 +543,8 @@ impl DatabaseKafkaTopicConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DatabaseKafkaTopicConfigEl {
-    type O = terrars::BlockAssignable<DatabaseKafkaTopicConfigEl>;
+impl terrars::ToListMappable for DatabaseKafkaTopic_Config {
+    type O = terrars::BlockAssignable<DatabaseKafkaTopic_Config>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -553,11 +555,11 @@ impl terrars::ToListMappable for DatabaseKafkaTopicConfigEl {
     }
 }
 
-pub struct BuildDatabaseKafkaTopicConfigEl {}
+pub struct BuildDatabaseKafkaTopic_Config {}
 
-impl BuildDatabaseKafkaTopicConfigEl {
-    pub fn build(self) -> DatabaseKafkaTopicConfigEl {
-        DatabaseKafkaTopicConfigEl {
+impl BuildDatabaseKafkaTopic_Config {
+    pub fn build(self) -> DatabaseKafkaTopic_Config {
+        DatabaseKafkaTopic_Config {
             cleanup_policy: core::default::Default::default(),
             compression_type: core::default::Default::default(),
             delete_retention_ms: core::default::Default::default(),
@@ -585,21 +587,23 @@ impl BuildDatabaseKafkaTopicConfigEl {
     }
 }
 
-pub struct DatabaseKafkaTopicConfigElRef {
+#[allow(dead_code)]
+pub struct DatabaseKafkaTopic_ConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatabaseKafkaTopicConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatabaseKafkaTopicConfigElRef {
-        DatabaseKafkaTopicConfigElRef {
+impl terrars::Ref for DatabaseKafkaTopic_ConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatabaseKafkaTopic_ConfigRef {
+        DatabaseKafkaTopic_ConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatabaseKafkaTopicConfigElRef {
+impl DatabaseKafkaTopic_ConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -722,5 +726,5 @@ impl DatabaseKafkaTopicConfigElRef {
 
 #[derive(Serialize, Default)]
 struct DatabaseKafkaTopicDynamic {
-    config: std::option::Option<terrars::DynamicBlock<DatabaseKafkaTopicConfigEl>>,
+    config: std::option::Option<terrars::DynamicBlock<DatabaseKafkaTopic_Config>>,
 }

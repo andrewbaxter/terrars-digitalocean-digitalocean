@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DataDropletData {
+struct DataDropletData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -16,6 +18,8 @@ struct DataDropletData {
     lifecycle: terrars::DatasourceLifecycle,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpu: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,7 +31,7 @@ struct DataDropletData {
 struct DataDroplet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataDropletData>,
+    data: std::cell::RefCell<DataDropletData_>,
 }
 
 #[derive(Clone)]
@@ -72,6 +76,12 @@ impl DataDroplet {
         self
     }
 
+    #[doc = "Set the field `gpu`.\n"]
+    pub fn set_gpu(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().gpu = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\nid of the Droplet"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -105,6 +115,17 @@ impl DataDroplet {
         "Get a reference to the value of field `disk` after provisioning.\nthe size of the Droplets disk in gigabytes"]
     pub fn disk(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `gpu` after provisioning.\n"]
+    pub fn gpu(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpu", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `gpu_partition_mode` after provisioning.\nthe GPU partition mode the Droplet was created with"]
+    pub fn gpu_partition_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpu_partition_mode", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\nid of the Droplet"]
@@ -273,11 +294,12 @@ impl BuildDataDroplet {
         let out = DataDroplet(std::rc::Rc::new(DataDroplet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataDropletData {
+            data: std::cell::RefCell::new(DataDropletData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
+                gpu: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
                 tag: core::default::Default::default(),
@@ -326,6 +348,17 @@ impl DataDropletRef {
         "Get a reference to the value of field `disk` after provisioning.\nthe size of the Droplets disk in gigabytes"]
     pub fn disk(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `gpu` after provisioning.\n"]
+    pub fn gpu(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpu", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `gpu_partition_mode` after provisioning.\nthe GPU partition mode the Droplet was created with"]
+    pub fn gpu_partition_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpu_partition_mode", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\nid of the Droplet"]

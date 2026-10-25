@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DataRegionsData {
+struct DataRegionsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,16 +21,16 @@ struct DataRegionsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataRegionsFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataRegions_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sort: std::option::Option<std::vec::Vec<DataRegionsSortEl>>,
+    sort: std::option::Option<std::vec::Vec<DataRegions_Sort>>,
     dynamic: DataRegionsDynamic,
 }
 
 struct DataRegions_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataRegionsData>,
+    data: std::cell::RefCell<DataRegionsData_>,
 }
 
 #[derive(Clone)]
@@ -80,7 +82,7 @@ impl DataRegions {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataRegionsFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataRegions_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -93,7 +95,7 @@ impl DataRegions {
     }
 
     #[doc = "Set the field `sort`.\n"]
-    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataRegionsSortEl>>) -> Self {
+    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataRegions_Sort>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().sort = std::option::Option::Some(v);
@@ -111,12 +113,12 @@ impl DataRegions {
     }
 
     #[doc = "Get a reference to the value of field `regions` after provisioning.\n"]
-    pub fn regions(&self) -> terrars::ListRef<DataRegionsRegionsElRef> {
+    pub fn regions(&self) -> terrars::ListRef<DataRegions_RegionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.regions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataRegionsSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataRegions_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
@@ -161,7 +163,7 @@ impl BuildDataRegions {
         let out = DataRegions(std::rc::Rc::new(DataRegions_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataRegionsData {
+            data: std::cell::RefCell::new(DataRegionsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -206,18 +208,18 @@ impl DataRegionsRef {
     }
 
     #[doc = "Get a reference to the value of field `regions` after provisioning.\n"]
-    pub fn regions(&self) -> terrars::ListRef<DataRegionsRegionsElRef> {
+    pub fn regions(&self) -> terrars::ListRef<DataRegions_RegionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.regions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataRegionsSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataRegions_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataRegionsRegionsEl {
+pub struct DataRegions_Regions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     available: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -230,7 +232,7 @@ pub struct DataRegionsRegionsEl {
     slug: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRegionsRegionsEl {
+impl DataRegions_Regions {
     #[doc = "Set the field `available`.\n"]
     pub fn set_available(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.available = std::option::Option::Some(v.into());
@@ -268,8 +270,8 @@ impl DataRegionsRegionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataRegionsRegionsEl {
-    type O = terrars::BlockAssignable<DataRegionsRegionsEl>;
+impl terrars::ToListMappable for DataRegions_Regions {
+    type O = terrars::BlockAssignable<DataRegions_Regions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -280,11 +282,11 @@ impl terrars::ToListMappable for DataRegionsRegionsEl {
     }
 }
 
-pub struct BuildDataRegionsRegionsEl {}
+pub struct BuildDataRegions_Regions {}
 
-impl BuildDataRegionsRegionsEl {
-    pub fn build(self) -> DataRegionsRegionsEl {
-        DataRegionsRegionsEl {
+impl BuildDataRegions_Regions {
+    pub fn build(self) -> DataRegions_Regions {
+        DataRegions_Regions {
             available: core::default::Default::default(),
             features: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -294,21 +296,23 @@ impl BuildDataRegionsRegionsEl {
     }
 }
 
-pub struct DataRegionsRegionsElRef {
+#[allow(dead_code)]
+pub struct DataRegions_RegionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRegionsRegionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRegionsRegionsElRef {
-        DataRegionsRegionsElRef {
+impl terrars::Ref for DataRegions_RegionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRegions_RegionsRef {
+        DataRegions_RegionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRegionsRegionsElRef {
+impl DataRegions_RegionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -340,7 +344,7 @@ impl DataRegionsRegionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataRegionsFilterEl {
+pub struct DataRegions_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all: std::option::Option<terrars::PrimField<bool>>,
     key: terrars::PrimField<std::string::String>,
@@ -349,7 +353,7 @@ pub struct DataRegionsFilterEl {
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRegionsFilterEl {
+impl DataRegions_Filter {
     #[doc = "Set the field `all`.\n"]
     pub fn set_all(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.all = std::option::Option::Some(v.into());
@@ -363,8 +367,8 @@ impl DataRegionsFilterEl {
     }
 }
 
-impl terrars::ToListMappable for DataRegionsFilterEl {
-    type O = terrars::BlockAssignable<DataRegionsFilterEl>;
+impl terrars::ToListMappable for DataRegions_Filter {
+    type O = terrars::BlockAssignable<DataRegions_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -375,16 +379,16 @@ impl terrars::ToListMappable for DataRegionsFilterEl {
     }
 }
 
-pub struct BuildDataRegionsFilterEl {
+pub struct BuildDataRegions_Filter {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataRegionsFilterEl {
-    pub fn build(self) -> DataRegionsFilterEl {
-        DataRegionsFilterEl {
+impl BuildDataRegions_Filter {
+    pub fn build(self) -> DataRegions_Filter {
+        DataRegions_Filter {
             all: core::default::Default::default(),
             key: self.key,
             match_by: core::default::Default::default(),
@@ -393,21 +397,23 @@ impl BuildDataRegionsFilterEl {
     }
 }
 
-pub struct DataRegionsFilterElRef {
+#[allow(dead_code)]
+pub struct DataRegions_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRegionsFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRegionsFilterElRef {
-        DataRegionsFilterElRef {
+impl terrars::Ref for DataRegions_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRegions_FilterRef {
+        DataRegions_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRegionsFilterElRef {
+impl DataRegions_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -434,13 +440,13 @@ impl DataRegionsFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataRegionsSortEl {
+pub struct DataRegions_Sort {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     direction: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<std::string::String>,
 }
 
-impl DataRegionsSortEl {
+impl DataRegions_Sort {
     #[doc = "Set the field `direction`.\n"]
     pub fn set_direction(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.direction = std::option::Option::Some(v.into());
@@ -448,8 +454,8 @@ impl DataRegionsSortEl {
     }
 }
 
-impl terrars::ToListMappable for DataRegionsSortEl {
-    type O = terrars::BlockAssignable<DataRegionsSortEl>;
+impl terrars::ToListMappable for DataRegions_Sort {
+    type O = terrars::BlockAssignable<DataRegions_Sort>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -460,35 +466,37 @@ impl terrars::ToListMappable for DataRegionsSortEl {
     }
 }
 
-pub struct BuildDataRegionsSortEl {
+pub struct BuildDataRegions_Sort {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataRegionsSortEl {
-    pub fn build(self) -> DataRegionsSortEl {
-        DataRegionsSortEl {
+impl BuildDataRegions_Sort {
+    pub fn build(self) -> DataRegions_Sort {
+        DataRegions_Sort {
             direction: core::default::Default::default(),
             key: self.key,
         }
     }
 }
 
-pub struct DataRegionsSortElRef {
+#[allow(dead_code)]
+pub struct DataRegions_SortRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRegionsSortElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRegionsSortElRef {
-        DataRegionsSortElRef {
+impl terrars::Ref for DataRegions_SortRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRegions_SortRef {
+        DataRegions_SortRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRegionsSortElRef {
+impl DataRegions_SortRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -506,6 +514,6 @@ impl DataRegionsSortElRef {
 
 #[derive(Serialize, Default)]
 struct DataRegionsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataRegionsFilterEl>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataRegionsSortEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<DataRegions_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataRegions_Sort>>,
 }

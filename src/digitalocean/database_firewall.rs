@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DatabaseFirewallData {
+struct DatabaseFirewallData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,14 @@ struct DatabaseFirewallData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule: std::option::Option<std::vec::Vec<DatabaseFirewallRuleEl>>,
+    rule: std::option::Option<std::vec::Vec<DatabaseFirewall_Rule>>,
     dynamic: DatabaseFirewallDynamic,
 }
 
 struct DatabaseFirewall_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DatabaseFirewallData>,
+    data: std::cell::RefCell<DatabaseFirewallData_>,
 }
 
 #[derive(Clone)]
@@ -136,7 +138,7 @@ impl DatabaseFirewall {
     }
 
     #[doc = "Set the field `rule`.\n"]
-    pub fn set_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<DatabaseFirewallRuleEl>>) -> Self {
+    pub fn set_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<DatabaseFirewall_Rule>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().rule = std::option::Option::Some(v);
@@ -201,7 +203,7 @@ impl BuildDatabaseFirewall {
         let out = DatabaseFirewall(std::rc::Rc::new(DatabaseFirewall_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DatabaseFirewallData {
+            data: std::cell::RefCell::new(DatabaseFirewallData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -253,16 +255,16 @@ impl DatabaseFirewallRef {
 }
 
 #[derive(Serialize)]
-pub struct DatabaseFirewallRuleEl {
+pub struct DatabaseFirewall_Rule {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl DatabaseFirewallRuleEl { }
+impl DatabaseFirewall_Rule { }
 
-impl terrars::ToListMappable for DatabaseFirewallRuleEl {
-    type O = terrars::BlockAssignable<DatabaseFirewallRuleEl>;
+impl terrars::ToListMappable for DatabaseFirewall_Rule {
+    type O = terrars::BlockAssignable<DatabaseFirewall_Rule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -273,37 +275,39 @@ impl terrars::ToListMappable for DatabaseFirewallRuleEl {
     }
 }
 
-pub struct BuildDatabaseFirewallRuleEl {
+pub struct BuildDatabaseFirewall_Rule {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDatabaseFirewallRuleEl {
-    pub fn build(self) -> DatabaseFirewallRuleEl {
-        DatabaseFirewallRuleEl {
+impl BuildDatabaseFirewall_Rule {
+    pub fn build(self) -> DatabaseFirewall_Rule {
+        DatabaseFirewall_Rule {
             type_: self.type_,
             value: self.value,
         }
     }
 }
 
-pub struct DatabaseFirewallRuleElRef {
+#[allow(dead_code)]
+pub struct DatabaseFirewall_RuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatabaseFirewallRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatabaseFirewallRuleElRef {
-        DatabaseFirewallRuleElRef {
+impl terrars::Ref for DatabaseFirewall_RuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatabaseFirewall_RuleRef {
+        DatabaseFirewall_RuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatabaseFirewallRuleElRef {
+impl DatabaseFirewall_RuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -331,5 +335,5 @@ impl DatabaseFirewallRuleElRef {
 
 #[derive(Serialize, Default)]
 struct DatabaseFirewallDynamic {
-    rule: std::option::Option<terrars::DynamicBlock<DatabaseFirewallRuleEl>>,
+    rule: std::option::Option<terrars::DynamicBlock<DatabaseFirewall_Rule>>,
 }

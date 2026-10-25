@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DatabaseReplicaData {
+struct DatabaseReplicaData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,13 +31,15 @@ struct DatabaseReplicaData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     size: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    storage_size_mib: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DatabaseReplica_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DatabaseReplicaData>,
+    data: std::cell::RefCell<DatabaseReplicaData_>,
 }
 
 #[derive(Clone)]
@@ -159,6 +163,12 @@ impl DatabaseReplica {
         self
     }
 
+    #[doc = "Set the field `storage_size_mib`.\n"]
+    pub fn set_storage_size_mib(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().storage_size_mib = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -228,6 +238,11 @@ impl DatabaseReplica {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.size", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `storage_size_mib` after provisioning.\n"]
+    pub fn storage_size_mib(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_size_mib", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -294,7 +309,7 @@ impl BuildDatabaseReplica {
         let out = DatabaseReplica(std::rc::Rc::new(DatabaseReplica_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DatabaseReplicaData {
+            data: std::cell::RefCell::new(DatabaseReplicaData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -306,6 +321,7 @@ impl BuildDatabaseReplica {
                 private_network_uuid: core::default::Default::default(),
                 region: core::default::Default::default(),
                 size: core::default::Default::default(),
+                storage_size_mib: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -395,6 +411,11 @@ impl DatabaseReplicaRef {
     #[doc = "Get a reference to the value of field `size` after provisioning.\n"]
     pub fn size(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.size", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `storage_size_mib` after provisioning.\n"]
+    pub fn storage_size_mib(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_size_mib", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DataRecordsData {
+struct DataRecordsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,16 +22,16 @@ struct DataRecordsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataRecordsFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataRecords_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sort: std::option::Option<std::vec::Vec<DataRecordsSortEl>>,
+    sort: std::option::Option<std::vec::Vec<DataRecords_Sort>>,
     dynamic: DataRecordsDynamic,
 }
 
 struct DataRecords_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataRecordsData>,
+    data: std::cell::RefCell<DataRecordsData_>,
 }
 
 #[derive(Clone)]
@@ -81,7 +83,7 @@ impl DataRecords {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataRecordsFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataRecords_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -94,7 +96,7 @@ impl DataRecords {
     }
 
     #[doc = "Set the field `sort`.\n"]
-    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataRecordsSortEl>>) -> Self {
+    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataRecords_Sort>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().sort = std::option::Option::Some(v);
@@ -117,12 +119,12 @@ impl DataRecords {
     }
 
     #[doc = "Get a reference to the value of field `records` after provisioning.\n"]
-    pub fn records(&self) -> terrars::ListRef<DataRecordsRecordsElRef> {
+    pub fn records(&self) -> terrars::ListRef<DataRecords_RecordsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.records", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataRecordsSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataRecords_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
@@ -169,7 +171,7 @@ impl BuildDataRecords {
         let out = DataRecords(std::rc::Rc::new(DataRecords_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataRecordsData {
+            data: std::cell::RefCell::new(DataRecordsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -220,18 +222,18 @@ impl DataRecordsRef {
     }
 
     #[doc = "Get a reference to the value of field `records` after provisioning.\n"]
-    pub fn records(&self) -> terrars::ListRef<DataRecordsRecordsElRef> {
+    pub fn records(&self) -> terrars::ListRef<DataRecords_RecordsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.records", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataRecordsSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataRecords_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataRecordsRecordsEl {
+pub struct DataRecords_Records {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     domain: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -256,7 +258,7 @@ pub struct DataRecordsRecordsEl {
     weight: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataRecordsRecordsEl {
+impl DataRecords_Records {
     #[doc = "Set the field `domain`.\n"]
     pub fn set_domain(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.domain = std::option::Option::Some(v.into());
@@ -324,8 +326,8 @@ impl DataRecordsRecordsEl {
     }
 }
 
-impl terrars::ToListMappable for DataRecordsRecordsEl {
-    type O = terrars::BlockAssignable<DataRecordsRecordsEl>;
+impl terrars::ToListMappable for DataRecords_Records {
+    type O = terrars::BlockAssignable<DataRecords_Records>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -336,11 +338,11 @@ impl terrars::ToListMappable for DataRecordsRecordsEl {
     }
 }
 
-pub struct BuildDataRecordsRecordsEl {}
+pub struct BuildDataRecords_Records {}
 
-impl BuildDataRecordsRecordsEl {
-    pub fn build(self) -> DataRecordsRecordsEl {
-        DataRecordsRecordsEl {
+impl BuildDataRecords_Records {
+    pub fn build(self) -> DataRecords_Records {
+        DataRecords_Records {
             domain: core::default::Default::default(),
             flags: core::default::Default::default(),
             id: core::default::Default::default(),
@@ -356,21 +358,23 @@ impl BuildDataRecordsRecordsEl {
     }
 }
 
-pub struct DataRecordsRecordsElRef {
+#[allow(dead_code)]
+pub struct DataRecords_RecordsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRecordsRecordsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRecordsRecordsElRef {
-        DataRecordsRecordsElRef {
+impl terrars::Ref for DataRecords_RecordsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRecords_RecordsRef {
+        DataRecords_RecordsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRecordsRecordsElRef {
+impl DataRecords_RecordsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -432,7 +436,7 @@ impl DataRecordsRecordsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataRecordsFilterEl {
+pub struct DataRecords_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all: std::option::Option<terrars::PrimField<bool>>,
     key: terrars::PrimField<std::string::String>,
@@ -441,7 +445,7 @@ pub struct DataRecordsFilterEl {
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRecordsFilterEl {
+impl DataRecords_Filter {
     #[doc = "Set the field `all`.\n"]
     pub fn set_all(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.all = std::option::Option::Some(v.into());
@@ -455,8 +459,8 @@ impl DataRecordsFilterEl {
     }
 }
 
-impl terrars::ToListMappable for DataRecordsFilterEl {
-    type O = terrars::BlockAssignable<DataRecordsFilterEl>;
+impl terrars::ToListMappable for DataRecords_Filter {
+    type O = terrars::BlockAssignable<DataRecords_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -467,16 +471,16 @@ impl terrars::ToListMappable for DataRecordsFilterEl {
     }
 }
 
-pub struct BuildDataRecordsFilterEl {
+pub struct BuildDataRecords_Filter {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataRecordsFilterEl {
-    pub fn build(self) -> DataRecordsFilterEl {
-        DataRecordsFilterEl {
+impl BuildDataRecords_Filter {
+    pub fn build(self) -> DataRecords_Filter {
+        DataRecords_Filter {
             all: core::default::Default::default(),
             key: self.key,
             match_by: core::default::Default::default(),
@@ -485,21 +489,23 @@ impl BuildDataRecordsFilterEl {
     }
 }
 
-pub struct DataRecordsFilterElRef {
+#[allow(dead_code)]
+pub struct DataRecords_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRecordsFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRecordsFilterElRef {
-        DataRecordsFilterElRef {
+impl terrars::Ref for DataRecords_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRecords_FilterRef {
+        DataRecords_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRecordsFilterElRef {
+impl DataRecords_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -526,13 +532,13 @@ impl DataRecordsFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataRecordsSortEl {
+pub struct DataRecords_Sort {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     direction: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<std::string::String>,
 }
 
-impl DataRecordsSortEl {
+impl DataRecords_Sort {
     #[doc = "Set the field `direction`.\n"]
     pub fn set_direction(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.direction = std::option::Option::Some(v.into());
@@ -540,8 +546,8 @@ impl DataRecordsSortEl {
     }
 }
 
-impl terrars::ToListMappable for DataRecordsSortEl {
-    type O = terrars::BlockAssignable<DataRecordsSortEl>;
+impl terrars::ToListMappable for DataRecords_Sort {
+    type O = terrars::BlockAssignable<DataRecords_Sort>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -552,35 +558,37 @@ impl terrars::ToListMappable for DataRecordsSortEl {
     }
 }
 
-pub struct BuildDataRecordsSortEl {
+pub struct BuildDataRecords_Sort {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataRecordsSortEl {
-    pub fn build(self) -> DataRecordsSortEl {
-        DataRecordsSortEl {
+impl BuildDataRecords_Sort {
+    pub fn build(self) -> DataRecords_Sort {
+        DataRecords_Sort {
             direction: core::default::Default::default(),
             key: self.key,
         }
     }
 }
 
-pub struct DataRecordsSortElRef {
+#[allow(dead_code)]
+pub struct DataRecords_SortRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRecordsSortElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRecordsSortElRef {
-        DataRecordsSortElRef {
+impl terrars::Ref for DataRecords_SortRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRecords_SortRef {
+        DataRecords_SortRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRecordsSortElRef {
+impl DataRecords_SortRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -598,6 +606,6 @@ impl DataRecordsSortElRef {
 
 #[derive(Serialize, Default)]
 struct DataRecordsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataRecordsFilterEl>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataRecordsSortEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<DataRecords_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataRecords_Sort>>,
 }

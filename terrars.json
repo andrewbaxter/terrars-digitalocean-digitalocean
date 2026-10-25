@@ -1,6 +1,6 @@
 {
   "provider": "digitalocean/digitalocean",
-  "version": "2.34.1",
+  "version": "2.106.0",
   "dest": "src/digitalocean",
   "feature_gate": "Cargo.toml"
 }

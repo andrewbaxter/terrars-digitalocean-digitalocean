@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DataDatabaseClusterData {
+struct DataDatabaseClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataDatabaseClusterData {
 struct DataDatabaseCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataDatabaseClusterData>,
+    data: std::cell::RefCell<DataDatabaseClusterData_>,
 }
 
 #[derive(Clone)]
@@ -107,8 +109,13 @@ impl DataDatabaseCluster {
     }
 
     #[doc = "Get a reference to the value of field `maintenance_window` after provisioning.\n"]
-    pub fn maintenance_window(&self) -> terrars::ListRef<DataDatabaseClusterMaintenanceWindowElRef> {
+    pub fn maintenance_window(&self) -> terrars::ListRef<DataDatabaseCluster_MaintenanceWindowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_window", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `metrics_endpoints` after provisioning.\n"]
+    pub fn metrics_endpoints(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metrics_endpoints", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
@@ -161,6 +168,11 @@ impl DataDatabaseCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.size", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `storage_autoscale` after provisioning.\n"]
+    pub fn storage_autoscale(&self) -> terrars::ListRef<DataDatabaseCluster_StorageAutoscaleRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.storage_autoscale", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `storage_size_mib` after provisioning.\n"]
     pub fn storage_size_mib(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_size_mib", self.extract_ref()))
@@ -169,6 +181,36 @@ impl DataDatabaseCluster {
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ui_database` after provisioning.\n"]
+    pub fn ui_database(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ui_database", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ui_host` after provisioning.\n"]
+    pub fn ui_host(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ui_host", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ui_password` after provisioning.\n"]
+    pub fn ui_password(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ui_password", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ui_port` after provisioning.\n"]
+    pub fn ui_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ui_port", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ui_uri` after provisioning.\n"]
+    pub fn ui_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ui_uri", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ui_user` after provisioning.\n"]
+    pub fn ui_user(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ui_user", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `uri` after provisioning.\n"]
@@ -234,7 +276,7 @@ impl BuildDataDatabaseCluster {
         let out = DataDatabaseCluster(std::rc::Rc::new(DataDatabaseCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataDatabaseClusterData {
+            data: std::cell::RefCell::new(DataDatabaseClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -293,8 +335,13 @@ impl DataDatabaseClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `maintenance_window` after provisioning.\n"]
-    pub fn maintenance_window(&self) -> terrars::ListRef<DataDatabaseClusterMaintenanceWindowElRef> {
+    pub fn maintenance_window(&self) -> terrars::ListRef<DataDatabaseCluster_MaintenanceWindowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_window", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `metrics_endpoints` after provisioning.\n"]
+    pub fn metrics_endpoints(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metrics_endpoints", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
@@ -347,6 +394,11 @@ impl DataDatabaseClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.size", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `storage_autoscale` after provisioning.\n"]
+    pub fn storage_autoscale(&self) -> terrars::ListRef<DataDatabaseCluster_StorageAutoscaleRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.storage_autoscale", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `storage_size_mib` after provisioning.\n"]
     pub fn storage_size_mib(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_size_mib", self.extract_ref()))
@@ -355,6 +407,36 @@ impl DataDatabaseClusterRef {
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ui_database` after provisioning.\n"]
+    pub fn ui_database(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ui_database", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ui_host` after provisioning.\n"]
+    pub fn ui_host(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ui_host", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ui_password` after provisioning.\n"]
+    pub fn ui_password(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ui_password", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ui_port` after provisioning.\n"]
+    pub fn ui_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ui_port", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ui_uri` after provisioning.\n"]
+    pub fn ui_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ui_uri", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ui_user` after provisioning.\n"]
+    pub fn ui_user(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ui_user", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `uri` after provisioning.\n"]
@@ -379,14 +461,14 @@ impl DataDatabaseClusterRef {
 }
 
 #[derive(Serialize)]
-pub struct DataDatabaseClusterMaintenanceWindowEl {
+pub struct DataDatabaseCluster_MaintenanceWindow {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     day: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hour: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDatabaseClusterMaintenanceWindowEl {
+impl DataDatabaseCluster_MaintenanceWindow {
     #[doc = "Set the field `day`.\n"]
     pub fn set_day(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.day = std::option::Option::Some(v.into());
@@ -400,8 +482,8 @@ impl DataDatabaseClusterMaintenanceWindowEl {
     }
 }
 
-impl terrars::ToListMappable for DataDatabaseClusterMaintenanceWindowEl {
-    type O = terrars::BlockAssignable<DataDatabaseClusterMaintenanceWindowEl>;
+impl terrars::ToListMappable for DataDatabaseCluster_MaintenanceWindow {
+    type O = terrars::BlockAssignable<DataDatabaseCluster_MaintenanceWindow>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -412,32 +494,34 @@ impl terrars::ToListMappable for DataDatabaseClusterMaintenanceWindowEl {
     }
 }
 
-pub struct BuildDataDatabaseClusterMaintenanceWindowEl {}
+pub struct BuildDataDatabaseCluster_MaintenanceWindow {}
 
-impl BuildDataDatabaseClusterMaintenanceWindowEl {
-    pub fn build(self) -> DataDatabaseClusterMaintenanceWindowEl {
-        DataDatabaseClusterMaintenanceWindowEl {
+impl BuildDataDatabaseCluster_MaintenanceWindow {
+    pub fn build(self) -> DataDatabaseCluster_MaintenanceWindow {
+        DataDatabaseCluster_MaintenanceWindow {
             day: core::default::Default::default(),
             hour: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataDatabaseClusterMaintenanceWindowElRef {
+#[allow(dead_code)]
+pub struct DataDatabaseCluster_MaintenanceWindowRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDatabaseClusterMaintenanceWindowElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDatabaseClusterMaintenanceWindowElRef {
-        DataDatabaseClusterMaintenanceWindowElRef {
+impl terrars::Ref for DataDatabaseCluster_MaintenanceWindowRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDatabaseCluster_MaintenanceWindowRef {
+        DataDatabaseCluster_MaintenanceWindowRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDatabaseClusterMaintenanceWindowElRef {
+impl DataDatabaseCluster_MaintenanceWindowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -450,5 +534,96 @@ impl DataDatabaseClusterMaintenanceWindowElRef {
     #[doc = "Get a reference to the value of field `hour` after provisioning.\n"]
     pub fn hour(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.hour", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataDatabaseCluster_StorageAutoscale {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    increment_gib: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    threshold_percent: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataDatabaseCluster_StorageAutoscale {
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `increment_gib`.\n"]
+    pub fn set_increment_gib(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.increment_gib = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `threshold_percent`.\n"]
+    pub fn set_threshold_percent(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.threshold_percent = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataDatabaseCluster_StorageAutoscale {
+    type O = terrars::BlockAssignable<DataDatabaseCluster_StorageAutoscale>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataDatabaseCluster_StorageAutoscale {}
+
+impl BuildDataDatabaseCluster_StorageAutoscale {
+    pub fn build(self) -> DataDatabaseCluster_StorageAutoscale {
+        DataDatabaseCluster_StorageAutoscale {
+            enabled: core::default::Default::default(),
+            increment_gib: core::default::Default::default(),
+            threshold_percent: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataDatabaseCluster_StorageAutoscaleRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataDatabaseCluster_StorageAutoscaleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDatabaseCluster_StorageAutoscaleRef {
+        DataDatabaseCluster_StorageAutoscaleRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataDatabaseCluster_StorageAutoscaleRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `increment_gib` after provisioning.\n"]
+    pub fn increment_gib(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.increment_gib", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `threshold_percent` after provisioning.\n"]
+    pub fn threshold_percent(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.threshold_percent", self.base))
     }
 }

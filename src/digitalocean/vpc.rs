@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct VpcData {
+struct VpcData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,13 +29,13 @@ struct VpcData {
     name: terrars::PrimField<std::string::String>,
     region: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<VpcTimeoutsEl>,
+    timeouts: std::option::Option<Vpc_Timeouts>,
 }
 
 struct Vpc_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VpcData>,
+    data: std::cell::RefCell<VpcData_>,
 }
 
 #[derive(Clone)]
@@ -152,7 +154,7 @@ impl Vpc {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<VpcTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Vpc_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -204,8 +206,8 @@ impl Vpc {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VpcTimeoutsElRef {
-        VpcTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Vpc_TimeoutsRef {
+        Vpc_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -253,7 +255,7 @@ impl BuildVpc {
         let out = Vpc(std::rc::Rc::new(Vpc_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VpcData {
+            data: std::cell::RefCell::new(VpcData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -342,18 +344,18 @@ impl VpcRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VpcTimeoutsElRef {
-        VpcTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Vpc_TimeoutsRef {
+        Vpc_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct VpcTimeoutsEl {
+pub struct Vpc_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VpcTimeoutsEl {
+impl Vpc_Timeouts {
     #[doc = "Set the field `delete`.\n"]
     pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete = std::option::Option::Some(v.into());
@@ -361,8 +363,8 @@ impl VpcTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for VpcTimeoutsEl {
-    type O = terrars::BlockAssignable<VpcTimeoutsEl>;
+impl terrars::ToListMappable for Vpc_Timeouts {
+    type O = terrars::BlockAssignable<Vpc_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -373,29 +375,31 @@ impl terrars::ToListMappable for VpcTimeoutsEl {
     }
 }
 
-pub struct BuildVpcTimeoutsEl {}
+pub struct BuildVpc_Timeouts {}
 
-impl BuildVpcTimeoutsEl {
-    pub fn build(self) -> VpcTimeoutsEl {
-        VpcTimeoutsEl { delete: core::default::Default::default() }
+impl BuildVpc_Timeouts {
+    pub fn build(self) -> Vpc_Timeouts {
+        Vpc_Timeouts { delete: core::default::Default::default() }
     }
 }
 
-pub struct VpcTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Vpc_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VpcTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcTimeoutsElRef {
-        VpcTimeoutsElRef {
+impl terrars::Ref for Vpc_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Vpc_TimeoutsRef {
+        Vpc_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VpcTimeoutsElRef {
+impl Vpc_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DataProjectsData {
+struct DataProjectsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,16 +21,16 @@ struct DataProjectsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataProjectsFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataProjects_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sort: std::option::Option<std::vec::Vec<DataProjectsSortEl>>,
+    sort: std::option::Option<std::vec::Vec<DataProjects_Sort>>,
     dynamic: DataProjectsDynamic,
 }
 
 struct DataProjects_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataProjectsData>,
+    data: std::cell::RefCell<DataProjectsData_>,
 }
 
 #[derive(Clone)]
@@ -80,7 +82,7 @@ impl DataProjects {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataProjectsFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataProjects_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -93,7 +95,7 @@ impl DataProjects {
     }
 
     #[doc = "Set the field `sort`.\n"]
-    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataProjectsSortEl>>) -> Self {
+    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataProjects_Sort>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().sort = std::option::Option::Some(v);
@@ -111,12 +113,12 @@ impl DataProjects {
     }
 
     #[doc = "Get a reference to the value of field `projects` after provisioning.\n"]
-    pub fn projects(&self) -> terrars::ListRef<DataProjectsProjectsElRef> {
+    pub fn projects(&self) -> terrars::ListRef<DataProjects_ProjectsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.projects", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataProjectsSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataProjects_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
@@ -161,7 +163,7 @@ impl BuildDataProjects {
         let out = DataProjects(std::rc::Rc::new(DataProjects_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataProjectsData {
+            data: std::cell::RefCell::new(DataProjectsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -206,18 +208,18 @@ impl DataProjectsRef {
     }
 
     #[doc = "Get a reference to the value of field `projects` after provisioning.\n"]
-    pub fn projects(&self) -> terrars::ListRef<DataProjectsProjectsElRef> {
+    pub fn projects(&self) -> terrars::ListRef<DataProjects_ProjectsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.projects", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataProjectsSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataProjects_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataProjectsProjectsEl {
+pub struct DataProjects_Projects {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     created_at: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -242,7 +244,7 @@ pub struct DataProjectsProjectsEl {
     updated_at: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataProjectsProjectsEl {
+impl DataProjects_Projects {
     #[doc = "Set the field `created_at`.\n"]
     pub fn set_created_at(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.created_at = std::option::Option::Some(v.into());
@@ -313,8 +315,8 @@ impl DataProjectsProjectsEl {
     }
 }
 
-impl terrars::ToListMappable for DataProjectsProjectsEl {
-    type O = terrars::BlockAssignable<DataProjectsProjectsEl>;
+impl terrars::ToListMappable for DataProjects_Projects {
+    type O = terrars::BlockAssignable<DataProjects_Projects>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -325,11 +327,11 @@ impl terrars::ToListMappable for DataProjectsProjectsEl {
     }
 }
 
-pub struct BuildDataProjectsProjectsEl {}
+pub struct BuildDataProjects_Projects {}
 
-impl BuildDataProjectsProjectsEl {
-    pub fn build(self) -> DataProjectsProjectsEl {
-        DataProjectsProjectsEl {
+impl BuildDataProjects_Projects {
+    pub fn build(self) -> DataProjects_Projects {
+        DataProjects_Projects {
             created_at: core::default::Default::default(),
             description: core::default::Default::default(),
             environment: core::default::Default::default(),
@@ -345,21 +347,23 @@ impl BuildDataProjectsProjectsEl {
     }
 }
 
-pub struct DataProjectsProjectsElRef {
+#[allow(dead_code)]
+pub struct DataProjects_ProjectsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataProjectsProjectsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataProjectsProjectsElRef {
-        DataProjectsProjectsElRef {
+impl terrars::Ref for DataProjects_ProjectsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataProjects_ProjectsRef {
+        DataProjects_ProjectsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataProjectsProjectsElRef {
+impl DataProjects_ProjectsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -421,7 +425,7 @@ impl DataProjectsProjectsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataProjectsFilterEl {
+pub struct DataProjects_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all: std::option::Option<terrars::PrimField<bool>>,
     key: terrars::PrimField<std::string::String>,
@@ -430,7 +434,7 @@ pub struct DataProjectsFilterEl {
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataProjectsFilterEl {
+impl DataProjects_Filter {
     #[doc = "Set the field `all`.\n"]
     pub fn set_all(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.all = std::option::Option::Some(v.into());
@@ -444,8 +448,8 @@ impl DataProjectsFilterEl {
     }
 }
 
-impl terrars::ToListMappable for DataProjectsFilterEl {
-    type O = terrars::BlockAssignable<DataProjectsFilterEl>;
+impl terrars::ToListMappable for DataProjects_Filter {
+    type O = terrars::BlockAssignable<DataProjects_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -456,16 +460,16 @@ impl terrars::ToListMappable for DataProjectsFilterEl {
     }
 }
 
-pub struct BuildDataProjectsFilterEl {
+pub struct BuildDataProjects_Filter {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataProjectsFilterEl {
-    pub fn build(self) -> DataProjectsFilterEl {
-        DataProjectsFilterEl {
+impl BuildDataProjects_Filter {
+    pub fn build(self) -> DataProjects_Filter {
+        DataProjects_Filter {
             all: core::default::Default::default(),
             key: self.key,
             match_by: core::default::Default::default(),
@@ -474,21 +478,23 @@ impl BuildDataProjectsFilterEl {
     }
 }
 
-pub struct DataProjectsFilterElRef {
+#[allow(dead_code)]
+pub struct DataProjects_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataProjectsFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataProjectsFilterElRef {
-        DataProjectsFilterElRef {
+impl terrars::Ref for DataProjects_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataProjects_FilterRef {
+        DataProjects_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataProjectsFilterElRef {
+impl DataProjects_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -515,13 +521,13 @@ impl DataProjectsFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataProjectsSortEl {
+pub struct DataProjects_Sort {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     direction: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<std::string::String>,
 }
 
-impl DataProjectsSortEl {
+impl DataProjects_Sort {
     #[doc = "Set the field `direction`.\n"]
     pub fn set_direction(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.direction = std::option::Option::Some(v.into());
@@ -529,8 +535,8 @@ impl DataProjectsSortEl {
     }
 }
 
-impl terrars::ToListMappable for DataProjectsSortEl {
-    type O = terrars::BlockAssignable<DataProjectsSortEl>;
+impl terrars::ToListMappable for DataProjects_Sort {
+    type O = terrars::BlockAssignable<DataProjects_Sort>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -541,35 +547,37 @@ impl terrars::ToListMappable for DataProjectsSortEl {
     }
 }
 
-pub struct BuildDataProjectsSortEl {
+pub struct BuildDataProjects_Sort {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataProjectsSortEl {
-    pub fn build(self) -> DataProjectsSortEl {
-        DataProjectsSortEl {
+impl BuildDataProjects_Sort {
+    pub fn build(self) -> DataProjects_Sort {
+        DataProjects_Sort {
             direction: core::default::Default::default(),
             key: self.key,
         }
     }
 }
 
-pub struct DataProjectsSortElRef {
+#[allow(dead_code)]
+pub struct DataProjects_SortRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataProjectsSortElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataProjectsSortElRef {
-        DataProjectsSortElRef {
+impl terrars::Ref for DataProjects_SortRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataProjects_SortRef {
+        DataProjects_SortRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataProjectsSortElRef {
+impl DataProjects_SortRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -587,6 +595,6 @@ impl DataProjectsSortElRef {
 
 #[derive(Serialize, Default)]
 struct DataProjectsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataProjectsFilterEl>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataProjectsSortEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<DataProjects_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataProjects_Sort>>,
 }

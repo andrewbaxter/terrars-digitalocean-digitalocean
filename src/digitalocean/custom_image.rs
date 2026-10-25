@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct CustomImageData {
+struct CustomImageData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,13 +32,13 @@ struct CustomImageData {
     tags: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     url: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CustomImageTimeoutsEl>,
+    timeouts: std::option::Option<CustomImage_Timeouts>,
 }
 
 struct CustomImage_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CustomImageData>,
+    data: std::cell::RefCell<CustomImageData_>,
 }
 
 #[derive(Clone)]
@@ -164,7 +166,7 @@ impl CustomImage {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CustomImageTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CustomImage_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -245,8 +247,8 @@ impl CustomImage {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CustomImageTimeoutsElRef {
-        CustomImageTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CustomImage_TimeoutsRef {
+        CustomImage_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -296,7 +298,7 @@ impl BuildCustomImage {
         let out = CustomImage(std::rc::Rc::new(CustomImage_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CustomImageData {
+            data: std::cell::RefCell::new(CustomImageData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -416,18 +418,18 @@ impl CustomImageRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CustomImageTimeoutsElRef {
-        CustomImageTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CustomImage_TimeoutsRef {
+        CustomImage_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct CustomImageTimeoutsEl {
+pub struct CustomImage_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CustomImageTimeoutsEl {
+impl CustomImage_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -435,8 +437,8 @@ impl CustomImageTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CustomImageTimeoutsEl {
-    type O = terrars::BlockAssignable<CustomImageTimeoutsEl>;
+impl terrars::ToListMappable for CustomImage_Timeouts {
+    type O = terrars::BlockAssignable<CustomImage_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -447,29 +449,31 @@ impl terrars::ToListMappable for CustomImageTimeoutsEl {
     }
 }
 
-pub struct BuildCustomImageTimeoutsEl {}
+pub struct BuildCustomImage_Timeouts {}
 
-impl BuildCustomImageTimeoutsEl {
-    pub fn build(self) -> CustomImageTimeoutsEl {
-        CustomImageTimeoutsEl { create: core::default::Default::default() }
+impl BuildCustomImage_Timeouts {
+    pub fn build(self) -> CustomImage_Timeouts {
+        CustomImage_Timeouts { create: core::default::Default::default() }
     }
 }
 
-pub struct CustomImageTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CustomImage_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CustomImageTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CustomImageTimeoutsElRef {
-        CustomImageTimeoutsElRef {
+impl terrars::Ref for CustomImage_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CustomImage_TimeoutsRef {
+        CustomImage_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CustomImageTimeoutsElRef {
+impl CustomImage_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

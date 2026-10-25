@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DataSshKeysData {
+struct DataSshKeysData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,16 +21,16 @@ struct DataSshKeysData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataSshKeysFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataSshKeys_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sort: std::option::Option<std::vec::Vec<DataSshKeysSortEl>>,
+    sort: std::option::Option<std::vec::Vec<DataSshKeys_Sort>>,
     dynamic: DataSshKeysDynamic,
 }
 
 struct DataSshKeys_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSshKeysData>,
+    data: std::cell::RefCell<DataSshKeysData_>,
 }
 
 #[derive(Clone)]
@@ -80,7 +82,7 @@ impl DataSshKeys {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataSshKeysFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataSshKeys_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -93,7 +95,7 @@ impl DataSshKeys {
     }
 
     #[doc = "Set the field `sort`.\n"]
-    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataSshKeysSortEl>>) -> Self {
+    pub fn set_sort(self, v: impl std::convert::Into<terrars::BlockAssignable<DataSshKeys_Sort>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().sort = std::option::Option::Some(v);
@@ -111,12 +113,12 @@ impl DataSshKeys {
     }
 
     #[doc = "Get a reference to the value of field `ssh_keys` after provisioning.\n"]
-    pub fn ssh_keys(&self) -> terrars::ListRef<DataSshKeysSshKeysElRef> {
+    pub fn ssh_keys(&self) -> terrars::ListRef<DataSshKeys_SshKeysRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssh_keys", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataSshKeysSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataSshKeys_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
@@ -161,7 +163,7 @@ impl BuildDataSshKeys {
         let out = DataSshKeys(std::rc::Rc::new(DataSshKeys_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataSshKeysData {
+            data: std::cell::RefCell::new(DataSshKeysData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -206,18 +208,18 @@ impl DataSshKeysRef {
     }
 
     #[doc = "Get a reference to the value of field `ssh_keys` after provisioning.\n"]
-    pub fn ssh_keys(&self) -> terrars::ListRef<DataSshKeysSshKeysElRef> {
+    pub fn ssh_keys(&self) -> terrars::ListRef<DataSshKeys_SshKeysRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssh_keys", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sort` after provisioning.\n"]
-    pub fn sort(&self) -> terrars::ListRef<DataSshKeysSortElRef> {
+    pub fn sort(&self) -> terrars::ListRef<DataSshKeys_SortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataSshKeysSshKeysEl {
+pub struct DataSshKeys_SshKeys {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fingerprint: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -228,7 +230,7 @@ pub struct DataSshKeysSshKeysEl {
     public_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSshKeysSshKeysEl {
+impl DataSshKeys_SshKeys {
     #[doc = "Set the field `fingerprint`.\n"]
     pub fn set_fingerprint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.fingerprint = std::option::Option::Some(v.into());
@@ -254,8 +256,8 @@ impl DataSshKeysSshKeysEl {
     }
 }
 
-impl terrars::ToListMappable for DataSshKeysSshKeysEl {
-    type O = terrars::BlockAssignable<DataSshKeysSshKeysEl>;
+impl terrars::ToListMappable for DataSshKeys_SshKeys {
+    type O = terrars::BlockAssignable<DataSshKeys_SshKeys>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -266,11 +268,11 @@ impl terrars::ToListMappable for DataSshKeysSshKeysEl {
     }
 }
 
-pub struct BuildDataSshKeysSshKeysEl {}
+pub struct BuildDataSshKeys_SshKeys {}
 
-impl BuildDataSshKeysSshKeysEl {
-    pub fn build(self) -> DataSshKeysSshKeysEl {
-        DataSshKeysSshKeysEl {
+impl BuildDataSshKeys_SshKeys {
+    pub fn build(self) -> DataSshKeys_SshKeys {
+        DataSshKeys_SshKeys {
             fingerprint: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -279,21 +281,23 @@ impl BuildDataSshKeysSshKeysEl {
     }
 }
 
-pub struct DataSshKeysSshKeysElRef {
+#[allow(dead_code)]
+pub struct DataSshKeys_SshKeysRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSshKeysSshKeysElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSshKeysSshKeysElRef {
-        DataSshKeysSshKeysElRef {
+impl terrars::Ref for DataSshKeys_SshKeysRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSshKeys_SshKeysRef {
+        DataSshKeys_SshKeysRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSshKeysSshKeysElRef {
+impl DataSshKeys_SshKeysRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -320,7 +324,7 @@ impl DataSshKeysSshKeysElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSshKeysFilterEl {
+pub struct DataSshKeys_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all: std::option::Option<terrars::PrimField<bool>>,
     key: terrars::PrimField<std::string::String>,
@@ -329,7 +333,7 @@ pub struct DataSshKeysFilterEl {
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSshKeysFilterEl {
+impl DataSshKeys_Filter {
     #[doc = "Set the field `all`.\n"]
     pub fn set_all(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.all = std::option::Option::Some(v.into());
@@ -343,8 +347,8 @@ impl DataSshKeysFilterEl {
     }
 }
 
-impl terrars::ToListMappable for DataSshKeysFilterEl {
-    type O = terrars::BlockAssignable<DataSshKeysFilterEl>;
+impl terrars::ToListMappable for DataSshKeys_Filter {
+    type O = terrars::BlockAssignable<DataSshKeys_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -355,16 +359,16 @@ impl terrars::ToListMappable for DataSshKeysFilterEl {
     }
 }
 
-pub struct BuildDataSshKeysFilterEl {
+pub struct BuildDataSshKeys_Filter {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataSshKeysFilterEl {
-    pub fn build(self) -> DataSshKeysFilterEl {
-        DataSshKeysFilterEl {
+impl BuildDataSshKeys_Filter {
+    pub fn build(self) -> DataSshKeys_Filter {
+        DataSshKeys_Filter {
             all: core::default::Default::default(),
             key: self.key,
             match_by: core::default::Default::default(),
@@ -373,21 +377,23 @@ impl BuildDataSshKeysFilterEl {
     }
 }
 
-pub struct DataSshKeysFilterElRef {
+#[allow(dead_code)]
+pub struct DataSshKeys_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSshKeysFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSshKeysFilterElRef {
-        DataSshKeysFilterElRef {
+impl terrars::Ref for DataSshKeys_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSshKeys_FilterRef {
+        DataSshKeys_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSshKeysFilterElRef {
+impl DataSshKeys_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -414,13 +420,13 @@ impl DataSshKeysFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSshKeysSortEl {
+pub struct DataSshKeys_Sort {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     direction: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<std::string::String>,
 }
 
-impl DataSshKeysSortEl {
+impl DataSshKeys_Sort {
     #[doc = "Set the field `direction`.\n"]
     pub fn set_direction(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.direction = std::option::Option::Some(v.into());
@@ -428,8 +434,8 @@ impl DataSshKeysSortEl {
     }
 }
 
-impl terrars::ToListMappable for DataSshKeysSortEl {
-    type O = terrars::BlockAssignable<DataSshKeysSortEl>;
+impl terrars::ToListMappable for DataSshKeys_Sort {
+    type O = terrars::BlockAssignable<DataSshKeys_Sort>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -440,35 +446,37 @@ impl terrars::ToListMappable for DataSshKeysSortEl {
     }
 }
 
-pub struct BuildDataSshKeysSortEl {
+pub struct BuildDataSshKeys_Sort {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataSshKeysSortEl {
-    pub fn build(self) -> DataSshKeysSortEl {
-        DataSshKeysSortEl {
+impl BuildDataSshKeys_Sort {
+    pub fn build(self) -> DataSshKeys_Sort {
+        DataSshKeys_Sort {
             direction: core::default::Default::default(),
             key: self.key,
         }
     }
 }
 
-pub struct DataSshKeysSortElRef {
+#[allow(dead_code)]
+pub struct DataSshKeys_SortRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSshKeysSortElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSshKeysSortElRef {
-        DataSshKeysSortElRef {
+impl terrars::Ref for DataSshKeys_SortRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSshKeys_SortRef {
+        DataSshKeys_SortRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSshKeysSortElRef {
+impl DataSshKeys_SortRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -486,6 +494,6 @@ impl DataSshKeysSortElRef {
 
 #[derive(Serialize, Default)]
 struct DataSshKeysDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataSshKeysFilterEl>>,
-    sort: std::option::Option<terrars::DynamicBlock<DataSshKeysSortEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<DataSshKeys_Filter>>,
+    sort: std::option::Option<terrars::DynamicBlock<DataSshKeys_Sort>>,
 }

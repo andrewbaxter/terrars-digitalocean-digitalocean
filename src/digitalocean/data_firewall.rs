@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DataFirewallData {
+struct DataFirewallData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,16 +26,16 @@ struct DataFirewallData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    inbound_rule: std::option::Option<std::vec::Vec<DataFirewallInboundRuleEl>>,
+    inbound_rule: std::option::Option<std::vec::Vec<DataFirewall_InboundRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    outbound_rule: std::option::Option<std::vec::Vec<DataFirewallOutboundRuleEl>>,
+    outbound_rule: std::option::Option<std::vec::Vec<DataFirewall_OutboundRule>>,
     dynamic: DataFirewallDynamic,
 }
 
 struct DataFirewall_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataFirewallData>,
+    data: std::cell::RefCell<DataFirewallData_>,
 }
 
 #[derive(Clone)]
@@ -102,7 +104,7 @@ impl DataFirewall {
     #[doc = "Set the field `inbound_rule`.\n"]
     pub fn set_inbound_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataFirewallInboundRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataFirewall_InboundRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -118,7 +120,7 @@ impl DataFirewall {
     #[doc = "Set the field `outbound_rule`.\n"]
     pub fn set_outbound_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataFirewallOutboundRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataFirewall_OutboundRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -157,7 +159,7 @@ impl DataFirewall {
     }
 
     #[doc = "Get a reference to the value of field `pending_changes` after provisioning.\n"]
-    pub fn pending_changes(&self) -> terrars::ListRef<DataFirewallPendingChangesElRef> {
+    pub fn pending_changes(&self) -> terrars::ListRef<DataFirewall_PendingChangesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pending_changes", self.extract_ref()))
     }
 
@@ -214,7 +216,7 @@ impl BuildDataFirewall {
         let out = DataFirewall(std::rc::Rc::new(DataFirewall_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataFirewallData {
+            data: std::cell::RefCell::new(DataFirewallData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -282,7 +284,7 @@ impl DataFirewallRef {
     }
 
     #[doc = "Get a reference to the value of field `pending_changes` after provisioning.\n"]
-    pub fn pending_changes(&self) -> terrars::ListRef<DataFirewallPendingChangesElRef> {
+    pub fn pending_changes(&self) -> terrars::ListRef<DataFirewall_PendingChangesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pending_changes", self.extract_ref()))
     }
 
@@ -298,7 +300,7 @@ impl DataFirewallRef {
 }
 
 #[derive(Serialize)]
-pub struct DataFirewallPendingChangesEl {
+pub struct DataFirewall_PendingChanges {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     droplet_id: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -307,7 +309,7 @@ pub struct DataFirewallPendingChangesEl {
     status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataFirewallPendingChangesEl {
+impl DataFirewall_PendingChanges {
     #[doc = "Set the field `droplet_id`.\n"]
     pub fn set_droplet_id(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.droplet_id = std::option::Option::Some(v.into());
@@ -327,8 +329,8 @@ impl DataFirewallPendingChangesEl {
     }
 }
 
-impl terrars::ToListMappable for DataFirewallPendingChangesEl {
-    type O = terrars::BlockAssignable<DataFirewallPendingChangesEl>;
+impl terrars::ToListMappable for DataFirewall_PendingChanges {
+    type O = terrars::BlockAssignable<DataFirewall_PendingChanges>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -339,11 +341,11 @@ impl terrars::ToListMappable for DataFirewallPendingChangesEl {
     }
 }
 
-pub struct BuildDataFirewallPendingChangesEl {}
+pub struct BuildDataFirewall_PendingChanges {}
 
-impl BuildDataFirewallPendingChangesEl {
-    pub fn build(self) -> DataFirewallPendingChangesEl {
-        DataFirewallPendingChangesEl {
+impl BuildDataFirewall_PendingChanges {
+    pub fn build(self) -> DataFirewall_PendingChanges {
+        DataFirewall_PendingChanges {
             droplet_id: core::default::Default::default(),
             removing: core::default::Default::default(),
             status: core::default::Default::default(),
@@ -351,21 +353,23 @@ impl BuildDataFirewallPendingChangesEl {
     }
 }
 
-pub struct DataFirewallPendingChangesElRef {
+#[allow(dead_code)]
+pub struct DataFirewall_PendingChangesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataFirewallPendingChangesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFirewallPendingChangesElRef {
-        DataFirewallPendingChangesElRef {
+impl terrars::Ref for DataFirewall_PendingChangesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFirewall_PendingChangesRef {
+        DataFirewall_PendingChangesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataFirewallPendingChangesElRef {
+impl DataFirewall_PendingChangesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -387,7 +391,9 @@ impl DataFirewallPendingChangesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataFirewallInboundRuleEl {
+pub struct DataFirewall_InboundRule {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    action: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port_range: std::option::Option<terrars::PrimField<std::string::String>>,
     protocol: terrars::PrimField<std::string::String>,
@@ -403,7 +409,13 @@ pub struct DataFirewallInboundRuleEl {
     source_tags: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataFirewallInboundRuleEl {
+impl DataFirewall_InboundRule {
+    #[doc = "Set the field `action`.\n"]
+    pub fn set_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.action = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `port_range`.\n"]
     pub fn set_port_range(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.port_range = std::option::Option::Some(v.into());
@@ -456,8 +468,8 @@ impl DataFirewallInboundRuleEl {
     }
 }
 
-impl terrars::ToListMappable for DataFirewallInboundRuleEl {
-    type O = terrars::BlockAssignable<DataFirewallInboundRuleEl>;
+impl terrars::ToListMappable for DataFirewall_InboundRule {
+    type O = terrars::BlockAssignable<DataFirewall_InboundRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -468,14 +480,15 @@ impl terrars::ToListMappable for DataFirewallInboundRuleEl {
     }
 }
 
-pub struct BuildDataFirewallInboundRuleEl {
+pub struct BuildDataFirewall_InboundRule {
     #[doc = ""]
     pub protocol: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataFirewallInboundRuleEl {
-    pub fn build(self) -> DataFirewallInboundRuleEl {
-        DataFirewallInboundRuleEl {
+impl BuildDataFirewall_InboundRule {
+    pub fn build(self) -> DataFirewall_InboundRule {
+        DataFirewall_InboundRule {
+            action: core::default::Default::default(),
             port_range: core::default::Default::default(),
             protocol: self.protocol,
             source_addresses: core::default::Default::default(),
@@ -487,23 +500,30 @@ impl BuildDataFirewallInboundRuleEl {
     }
 }
 
-pub struct DataFirewallInboundRuleElRef {
+#[allow(dead_code)]
+pub struct DataFirewall_InboundRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataFirewallInboundRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFirewallInboundRuleElRef {
-        DataFirewallInboundRuleElRef {
+impl terrars::Ref for DataFirewall_InboundRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFirewall_InboundRuleRef {
+        DataFirewall_InboundRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataFirewallInboundRuleElRef {
+impl DataFirewall_InboundRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
+    pub fn action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `port_range` after provisioning.\n"]
@@ -543,7 +563,9 @@ impl DataFirewallInboundRuleElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataFirewallOutboundRuleEl {
+pub struct DataFirewall_OutboundRule {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    action: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination_addresses: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -559,7 +581,13 @@ pub struct DataFirewallOutboundRuleEl {
     protocol: terrars::PrimField<std::string::String>,
 }
 
-impl DataFirewallOutboundRuleEl {
+impl DataFirewall_OutboundRule {
+    #[doc = "Set the field `action`.\n"]
+    pub fn set_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.action = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `destination_addresses`.\n"]
     pub fn set_destination_addresses(
         mut self,
@@ -612,8 +640,8 @@ impl DataFirewallOutboundRuleEl {
     }
 }
 
-impl terrars::ToListMappable for DataFirewallOutboundRuleEl {
-    type O = terrars::BlockAssignable<DataFirewallOutboundRuleEl>;
+impl terrars::ToListMappable for DataFirewall_OutboundRule {
+    type O = terrars::BlockAssignable<DataFirewall_OutboundRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -624,14 +652,15 @@ impl terrars::ToListMappable for DataFirewallOutboundRuleEl {
     }
 }
 
-pub struct BuildDataFirewallOutboundRuleEl {
+pub struct BuildDataFirewall_OutboundRule {
     #[doc = ""]
     pub protocol: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataFirewallOutboundRuleEl {
-    pub fn build(self) -> DataFirewallOutboundRuleEl {
-        DataFirewallOutboundRuleEl {
+impl BuildDataFirewall_OutboundRule {
+    pub fn build(self) -> DataFirewall_OutboundRule {
+        DataFirewall_OutboundRule {
+            action: core::default::Default::default(),
             destination_addresses: core::default::Default::default(),
             destination_droplet_ids: core::default::Default::default(),
             destination_kubernetes_ids: core::default::Default::default(),
@@ -643,23 +672,30 @@ impl BuildDataFirewallOutboundRuleEl {
     }
 }
 
-pub struct DataFirewallOutboundRuleElRef {
+#[allow(dead_code)]
+pub struct DataFirewall_OutboundRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataFirewallOutboundRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFirewallOutboundRuleElRef {
-        DataFirewallOutboundRuleElRef {
+impl terrars::Ref for DataFirewall_OutboundRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFirewall_OutboundRuleRef {
+        DataFirewall_OutboundRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataFirewallOutboundRuleElRef {
+impl DataFirewall_OutboundRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
+    pub fn action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `destination_addresses` after provisioning.\n"]
@@ -700,6 +736,6 @@ impl DataFirewallOutboundRuleElRef {
 
 #[derive(Serialize, Default)]
 struct DataFirewallDynamic {
-    inbound_rule: std::option::Option<terrars::DynamicBlock<DataFirewallInboundRuleEl>>,
-    outbound_rule: std::option::Option<terrars::DynamicBlock<DataFirewallOutboundRuleEl>>,
+    inbound_rule: std::option::Option<terrars::DynamicBlock<DataFirewall_InboundRule>>,
+    outbound_rule: std::option::Option<terrars::DynamicBlock<DataFirewall_OutboundRule>>,
 }

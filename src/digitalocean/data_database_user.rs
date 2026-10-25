@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DataDatabaseUserData {
+struct DataDatabaseUserData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -25,7 +27,7 @@ struct DataDatabaseUserData {
 struct DataDatabaseUser_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataDatabaseUserData>,
+    data: std::cell::RefCell<DataDatabaseUserData_>,
 }
 
 #[derive(Clone)]
@@ -76,6 +78,16 @@ impl DataDatabaseUser {
         self
     }
 
+    #[doc = "Get a reference to the value of field `access_cert` after provisioning.\n"]
+    pub fn access_cert(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_cert", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `access_key` after provisioning.\n"]
+    pub fn access_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_key", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `cluster_id` after provisioning.\n"]
     pub fn cluster_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_id", self.extract_ref()))
@@ -107,7 +119,7 @@ impl DataDatabaseUser {
     }
 
     #[doc = "Get a reference to the value of field `settings` after provisioning.\n"]
-    pub fn settings(&self) -> terrars::ListRef<DataDatabaseUserSettingsElRef> {
+    pub fn settings(&self) -> terrars::ListRef<DataDatabaseUser_SettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.settings", self.extract_ref()))
     }
 }
@@ -156,7 +168,7 @@ impl BuildDataDatabaseUser {
         let out = DataDatabaseUser(std::rc::Rc::new(DataDatabaseUser_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataDatabaseUserData {
+            data: std::cell::RefCell::new(DataDatabaseUserData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -194,6 +206,16 @@ impl DataDatabaseUserRef {
         self.base.clone()
     }
 
+    #[doc = "Get a reference to the value of field `access_cert` after provisioning.\n"]
+    pub fn access_cert(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_cert", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `access_key` after provisioning.\n"]
+    pub fn access_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_key", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `cluster_id` after provisioning.\n"]
     pub fn cluster_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_id", self.extract_ref()))
@@ -225,13 +247,13 @@ impl DataDatabaseUserRef {
     }
 
     #[doc = "Get a reference to the value of field `settings` after provisioning.\n"]
-    pub fn settings(&self) -> terrars::ListRef<DataDatabaseUserSettingsElRef> {
+    pub fn settings(&self) -> terrars::ListRef<DataDatabaseUser_SettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.settings", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataDatabaseUserSettingsElAclEl {
+pub struct DataDatabaseUser_Settings_Acl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -240,7 +262,7 @@ pub struct DataDatabaseUserSettingsElAclEl {
     topic: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDatabaseUserSettingsElAclEl {
+impl DataDatabaseUser_Settings_Acl {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -260,8 +282,8 @@ impl DataDatabaseUserSettingsElAclEl {
     }
 }
 
-impl terrars::ToListMappable for DataDatabaseUserSettingsElAclEl {
-    type O = terrars::BlockAssignable<DataDatabaseUserSettingsElAclEl>;
+impl terrars::ToListMappable for DataDatabaseUser_Settings_Acl {
+    type O = terrars::BlockAssignable<DataDatabaseUser_Settings_Acl>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -272,11 +294,11 @@ impl terrars::ToListMappable for DataDatabaseUserSettingsElAclEl {
     }
 }
 
-pub struct BuildDataDatabaseUserSettingsElAclEl {}
+pub struct BuildDataDatabaseUser_Settings_Acl {}
 
-impl BuildDataDatabaseUserSettingsElAclEl {
-    pub fn build(self) -> DataDatabaseUserSettingsElAclEl {
-        DataDatabaseUserSettingsElAclEl {
+impl BuildDataDatabaseUser_Settings_Acl {
+    pub fn build(self) -> DataDatabaseUser_Settings_Acl {
+        DataDatabaseUser_Settings_Acl {
             id: core::default::Default::default(),
             permission: core::default::Default::default(),
             topic: core::default::Default::default(),
@@ -284,21 +306,23 @@ impl BuildDataDatabaseUserSettingsElAclEl {
     }
 }
 
-pub struct DataDatabaseUserSettingsElAclElRef {
+#[allow(dead_code)]
+pub struct DataDatabaseUser_Settings_AclRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDatabaseUserSettingsElAclElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDatabaseUserSettingsElAclElRef {
-        DataDatabaseUserSettingsElAclElRef {
+impl terrars::Ref for DataDatabaseUser_Settings_AclRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDatabaseUser_Settings_AclRef {
+        DataDatabaseUser_Settings_AclRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDatabaseUserSettingsElAclElRef {
+impl DataDatabaseUser_Settings_AclRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -320,21 +344,29 @@ impl DataDatabaseUserSettingsElAclElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataDatabaseUserSettingsEl {
+pub struct DataDatabaseUser_Settings_OpensearchAcl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    acl: std::option::Option<terrars::ListField<DataDatabaseUserSettingsElAclEl>>,
+    index: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    permission: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDatabaseUserSettingsEl {
-    #[doc = "Set the field `acl`.\n"]
-    pub fn set_acl(mut self, v: impl std::convert::Into<terrars::ListField<DataDatabaseUserSettingsElAclEl>>) -> Self {
-        self.acl = std::option::Option::Some(v.into());
+impl DataDatabaseUser_Settings_OpensearchAcl {
+    #[doc = "Set the field `index`.\n"]
+    pub fn set_index(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.index = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `permission`.\n"]
+    pub fn set_permission(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.permission = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataDatabaseUserSettingsEl {
-    type O = terrars::BlockAssignable<DataDatabaseUserSettingsEl>;
+impl terrars::ToListMappable for DataDatabaseUser_Settings_OpensearchAcl {
+    type O = terrars::BlockAssignable<DataDatabaseUser_Settings_OpensearchAcl>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -345,35 +377,125 @@ impl terrars::ToListMappable for DataDatabaseUserSettingsEl {
     }
 }
 
-pub struct BuildDataDatabaseUserSettingsEl {}
+pub struct BuildDataDatabaseUser_Settings_OpensearchAcl {}
 
-impl BuildDataDatabaseUserSettingsEl {
-    pub fn build(self) -> DataDatabaseUserSettingsEl {
-        DataDatabaseUserSettingsEl { acl: core::default::Default::default() }
+impl BuildDataDatabaseUser_Settings_OpensearchAcl {
+    pub fn build(self) -> DataDatabaseUser_Settings_OpensearchAcl {
+        DataDatabaseUser_Settings_OpensearchAcl {
+            index: core::default::Default::default(),
+            permission: core::default::Default::default(),
+        }
     }
 }
 
-pub struct DataDatabaseUserSettingsElRef {
+#[allow(dead_code)]
+pub struct DataDatabaseUser_Settings_OpensearchAclRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDatabaseUserSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDatabaseUserSettingsElRef {
-        DataDatabaseUserSettingsElRef {
+impl terrars::Ref for DataDatabaseUser_Settings_OpensearchAclRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDatabaseUser_Settings_OpensearchAclRef {
+        DataDatabaseUser_Settings_OpensearchAclRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDatabaseUserSettingsElRef {
+impl DataDatabaseUser_Settings_OpensearchAclRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `index` after provisioning.\n"]
+    pub fn index(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.index", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `permission` after provisioning.\n"]
+    pub fn permission(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.permission", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataDatabaseUser_Settings {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    acl: std::option::Option<terrars::ListField<DataDatabaseUser_Settings_Acl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    opensearch_acl: std::option::Option<terrars::ListField<DataDatabaseUser_Settings_OpensearchAcl>>,
+}
+
+impl DataDatabaseUser_Settings {
+    #[doc = "Set the field `acl`.\n"]
+    pub fn set_acl(mut self, v: impl std::convert::Into<terrars::ListField<DataDatabaseUser_Settings_Acl>>) -> Self {
+        self.acl = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `opensearch_acl`.\n"]
+    pub fn set_opensearch_acl(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataDatabaseUser_Settings_OpensearchAcl>>,
+    ) -> Self {
+        self.opensearch_acl = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataDatabaseUser_Settings {
+    type O = terrars::BlockAssignable<DataDatabaseUser_Settings>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataDatabaseUser_Settings {}
+
+impl BuildDataDatabaseUser_Settings {
+    pub fn build(self) -> DataDatabaseUser_Settings {
+        DataDatabaseUser_Settings {
+            acl: core::default::Default::default(),
+            opensearch_acl: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataDatabaseUser_SettingsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataDatabaseUser_SettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDatabaseUser_SettingsRef {
+        DataDatabaseUser_SettingsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataDatabaseUser_SettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `acl` after provisioning.\n"]
-    pub fn acl(&self) -> terrars::ListRef<DataDatabaseUserSettingsElAclElRef> {
+    pub fn acl(&self) -> terrars::ListRef<DataDatabaseUser_Settings_AclRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.acl", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `opensearch_acl` after provisioning.\n"]
+    pub fn opensearch_acl(&self) -> terrars::ListRef<DataDatabaseUser_Settings_OpensearchAclRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.opensearch_acl", self.base))
     }
 }

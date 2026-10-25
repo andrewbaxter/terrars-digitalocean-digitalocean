@@ -1,7 +1,9 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 
 #[derive(Serialize)]
-struct ProviderDigitaloceanData {
+struct ProviderDigitaloceanData_ {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     alias: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,7 +27,7 @@ struct ProviderDigitaloceanData {
 }
 
 struct ProviderDigitalocean_ {
-    data: std::cell::RefCell<ProviderDigitaloceanData>,
+    data: std::cell::RefCell<ProviderDigitaloceanData_>,
 }
 
 pub struct ProviderDigitalocean(std::rc::Rc<ProviderDigitalocean_>);
@@ -108,7 +110,7 @@ impl terrars::Provider for ProviderDigitalocean_ {
     fn extract_provider_type(&self) -> serde_json::Value {
         serde_json::json!({
             "source": "digitalocean/digitalocean",
-            "version": "2.34.1",
+            "version": "2.106.0",
         })
     }
 
@@ -123,7 +125,7 @@ impl BuildProviderDigitalocean {
     pub fn build(self, stack: &mut terrars::Stack) -> ProviderDigitalocean {
         let out =
             ProviderDigitalocean(
-                std::rc::Rc::new(ProviderDigitalocean_ { data: std::cell::RefCell::new(ProviderDigitaloceanData {
+                std::rc::Rc::new(ProviderDigitalocean_ { data: std::cell::RefCell::new(ProviderDigitaloceanData_ {
                     alias: std::option::Option::None,
                     api_endpoint: core::default::Default::default(),
                     http_retry_max: core::default::Default::default(),

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderDigitalocean;
 
 #[derive(Serialize)]
-struct DataAppData {
+struct DataAppData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,12 +21,15 @@ struct DataAppData {
     app_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dedicated_ips: std::option::Option<std::vec::Vec<DataApp_DedicatedIps>>,
+    dynamic: DataAppDynamic,
 }
 
 struct DataApp_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataAppData>,
+    data: std::cell::RefCell<DataAppData_>,
 }
 
 #[derive(Clone)]
@@ -75,6 +80,19 @@ impl DataApp {
         self
     }
 
+    #[doc = "Set the field `dedicated_ips`.\n"]
+    pub fn set_dedicated_ips(self, v: impl std::convert::Into<terrars::BlockAssignable<DataApp_DedicatedIps>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().dedicated_ips = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.dedicated_ips = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc =
         "Get a reference to the value of field `active_deployment_id` after provisioning.\nThe ID the App's currently active deployment"]
     pub fn active_deployment_id(&self) -> terrars::PrimExpr<std::string::String> {
@@ -103,13 +121,23 @@ impl DataApp {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `live_domain` after provisioning.\n"]
+    pub fn live_domain(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.live_domain", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `live_url` after provisioning.\n"]
     pub fn live_url(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.live_url", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `project_id` after provisioning.\n"]
+    pub fn project_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `spec` after provisioning.\nA DigitalOcean App Platform Spec"]
-    pub fn spec(&self) -> terrars::ListRef<DataAppSpecElRef> {
+    pub fn spec(&self) -> terrars::ListRef<DataApp_SpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
     }
 
@@ -123,6 +151,11 @@ impl DataApp {
         "Get a reference to the value of field `urn` after provisioning.\nThe uniform resource identifier for the app"]
     pub fn urn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.urn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `dedicated_ips` after provisioning.\n"]
+    pub fn dedicated_ips(&self) -> terrars::ListRef<DataApp_DedicatedIpsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dedicated_ips", self.extract_ref()))
     }
 }
 
@@ -168,13 +201,15 @@ impl BuildDataApp {
         let out = DataApp(std::rc::Rc::new(DataApp_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataAppData {
+            data: std::cell::RefCell::new(DataAppData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 app_id: self.app_id,
                 id: core::default::Default::default(),
+                dedicated_ips: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -233,13 +268,23 @@ impl DataAppRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `live_domain` after provisioning.\n"]
+    pub fn live_domain(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.live_domain", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `live_url` after provisioning.\n"]
     pub fn live_url(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.live_url", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `project_id` after provisioning.\n"]
+    pub fn project_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `spec` after provisioning.\nA DigitalOcean App Platform Spec"]
-    pub fn spec(&self) -> terrars::ListRef<DataAppSpecElRef> {
+    pub fn spec(&self) -> terrars::ListRef<DataApp_SpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
     }
 
@@ -254,17 +299,196 @@ impl DataAppRef {
     pub fn urn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.urn", self.extract_ref()))
     }
+
+    #[doc = "Get a reference to the value of field `dedicated_ips` after provisioning.\n"]
+    pub fn dedicated_ips(&self) -> terrars::ListRef<DataApp_DedicatedIpsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dedicated_ips", self.extract_ref()))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElAlertEl {
+pub struct DataApp_Spec_Alert_Destinations_SlackWebhooks {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    channel: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Alert_Destinations_SlackWebhooks {
+    #[doc = "Set the field `channel`.\n"]
+    pub fn set_channel(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.channel = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `url`.\n"]
+    pub fn set_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.url = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Alert_Destinations_SlackWebhooks {
+    type O = terrars::BlockAssignable<DataApp_Spec_Alert_Destinations_SlackWebhooks>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Alert_Destinations_SlackWebhooks {}
+
+impl BuildDataApp_Spec_Alert_Destinations_SlackWebhooks {
+    pub fn build(self) -> DataApp_Spec_Alert_Destinations_SlackWebhooks {
+        DataApp_Spec_Alert_Destinations_SlackWebhooks {
+            channel: core::default::Default::default(),
+            url: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Alert_Destinations_SlackWebhooksRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Alert_Destinations_SlackWebhooksRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataApp_Spec_Alert_Destinations_SlackWebhooksRef {
+        DataApp_Spec_Alert_Destinations_SlackWebhooksRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Alert_Destinations_SlackWebhooksRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `channel` after provisioning.\n"]
+    pub fn channel(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.channel", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `url` after provisioning.\n"]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Alert_Destinations {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    emails: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    slack_webhooks: std::option::Option<terrars::ListField<DataApp_Spec_Alert_Destinations_SlackWebhooks>>,
+}
+
+impl DataApp_Spec_Alert_Destinations {
+    #[doc = "Set the field `emails`.\n"]
+    pub fn set_emails(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.emails = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `slack_webhooks`.\n"]
+    pub fn set_slack_webhooks(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Alert_Destinations_SlackWebhooks>>,
+    ) -> Self {
+        self.slack_webhooks = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Alert_Destinations {
+    type O = terrars::BlockAssignable<DataApp_Spec_Alert_Destinations>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Alert_Destinations {}
+
+impl BuildDataApp_Spec_Alert_Destinations {
+    pub fn build(self) -> DataApp_Spec_Alert_Destinations {
+        DataApp_Spec_Alert_Destinations {
+            emails: core::default::Default::default(),
+            slack_webhooks: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Alert_DestinationsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Alert_DestinationsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Alert_DestinationsRef {
+        DataApp_Spec_Alert_DestinationsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Alert_DestinationsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `emails` after provisioning.\n"]
+    pub fn emails(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.emails", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `slack_webhooks` after provisioning.\n"]
+    pub fn slack_webhooks(&self) -> terrars::ListRef<DataApp_Spec_Alert_Destinations_SlackWebhooksRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.slack_webhooks", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Alert {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destinations: std::option::Option<terrars::SetField<DataApp_Spec_Alert_Destinations>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     rule: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElAlertEl {
+impl DataApp_Spec_Alert {
+    #[doc = "Set the field `destinations`.\n"]
+    pub fn set_destinations(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<DataApp_Spec_Alert_Destinations>>,
+    ) -> Self {
+        self.destinations = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `disabled`.\n"]
     pub fn set_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.disabled = std::option::Option::Some(v.into());
@@ -278,8 +502,8 @@ impl DataAppSpecElAlertEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElAlertEl {
-    type O = terrars::BlockAssignable<DataAppSpecElAlertEl>;
+impl terrars::ToListMappable for DataApp_Spec_Alert {
+    type O = terrars::BlockAssignable<DataApp_Spec_Alert>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -290,34 +514,42 @@ impl terrars::ToListMappable for DataAppSpecElAlertEl {
     }
 }
 
-pub struct BuildDataAppSpecElAlertEl {}
+pub struct BuildDataApp_Spec_Alert {}
 
-impl BuildDataAppSpecElAlertEl {
-    pub fn build(self) -> DataAppSpecElAlertEl {
-        DataAppSpecElAlertEl {
+impl BuildDataApp_Spec_Alert {
+    pub fn build(self) -> DataApp_Spec_Alert {
+        DataApp_Spec_Alert {
+            destinations: core::default::Default::default(),
             disabled: core::default::Default::default(),
             rule: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElAlertElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_AlertRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElAlertElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElAlertElRef {
-        DataAppSpecElAlertElRef {
+impl terrars::Ref for DataApp_Spec_AlertRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_AlertRef {
+        DataApp_Spec_AlertRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElAlertElRef {
+impl DataApp_Spec_AlertRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `destinations` after provisioning.\n"]
+    pub fn destinations(&self) -> terrars::SetRef<DataApp_Spec_Alert_DestinationsRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.destinations", self.base))
     }
 
     #[doc = "Get a reference to the value of field `disabled` after provisioning.\n"]
@@ -332,7 +564,7 @@ impl DataAppSpecElAlertElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElDatabaseEl {
+pub struct DataApp_Spec_Database {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cluster_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -349,7 +581,7 @@ pub struct DataAppSpecElDatabaseEl {
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElDatabaseEl {
+impl DataApp_Spec_Database {
     #[doc = "Set the field `cluster_name`.\n"]
     pub fn set_cluster_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cluster_name = std::option::Option::Some(v.into());
@@ -393,8 +625,8 @@ impl DataAppSpecElDatabaseEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElDatabaseEl {
-    type O = terrars::BlockAssignable<DataAppSpecElDatabaseEl>;
+impl terrars::ToListMappable for DataApp_Spec_Database {
+    type O = terrars::BlockAssignable<DataApp_Spec_Database>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -405,11 +637,11 @@ impl terrars::ToListMappable for DataAppSpecElDatabaseEl {
     }
 }
 
-pub struct BuildDataAppSpecElDatabaseEl {}
+pub struct BuildDataApp_Spec_Database {}
 
-impl BuildDataAppSpecElDatabaseEl {
-    pub fn build(self) -> DataAppSpecElDatabaseEl {
-        DataAppSpecElDatabaseEl {
+impl BuildDataApp_Spec_Database {
+    pub fn build(self) -> DataApp_Spec_Database {
+        DataApp_Spec_Database {
             cluster_name: core::default::Default::default(),
             db_name: core::default::Default::default(),
             db_user: core::default::Default::default(),
@@ -421,21 +653,23 @@ impl BuildDataAppSpecElDatabaseEl {
     }
 }
 
-pub struct DataAppSpecElDatabaseElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_DatabaseRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElDatabaseElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElDatabaseElRef {
-        DataAppSpecElDatabaseElRef {
+impl terrars::Ref for DataApp_Spec_DatabaseRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_DatabaseRef {
+        DataApp_Spec_DatabaseRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElDatabaseElRef {
+impl DataApp_Spec_DatabaseRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -477,7 +711,7 @@ impl DataAppSpecElDatabaseElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElDomainEl {
+pub struct DataApp_Spec_Domain {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
@@ -488,7 +722,7 @@ pub struct DataAppSpecElDomainEl {
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElDomainEl {
+impl DataApp_Spec_Domain {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -514,8 +748,8 @@ impl DataAppSpecElDomainEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElDomainEl {
-    type O = terrars::BlockAssignable<DataAppSpecElDomainEl>;
+impl terrars::ToListMappable for DataApp_Spec_Domain {
+    type O = terrars::BlockAssignable<DataApp_Spec_Domain>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -526,11 +760,11 @@ impl terrars::ToListMappable for DataAppSpecElDomainEl {
     }
 }
 
-pub struct BuildDataAppSpecElDomainEl {}
+pub struct BuildDataApp_Spec_Domain {}
 
-impl BuildDataAppSpecElDomainEl {
-    pub fn build(self) -> DataAppSpecElDomainEl {
-        DataAppSpecElDomainEl {
+impl BuildDataApp_Spec_Domain {
+    pub fn build(self) -> DataApp_Spec_Domain {
+        DataApp_Spec_Domain {
             name: core::default::Default::default(),
             type_: core::default::Default::default(),
             wildcard: core::default::Default::default(),
@@ -539,21 +773,23 @@ impl BuildDataAppSpecElDomainEl {
     }
 }
 
-pub struct DataAppSpecElDomainElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_DomainRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElDomainElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElDomainElRef {
-        DataAppSpecElDomainElRef {
+impl terrars::Ref for DataApp_Spec_DomainRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_DomainRef {
+        DataApp_Spec_DomainRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElDomainElRef {
+impl DataApp_Spec_DomainRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -580,7 +816,68 @@ impl DataAppSpecElDomainElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElEnvEl {
+pub struct DataApp_Spec_Egress {
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Egress {
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Egress {
+    type O = terrars::BlockAssignable<DataApp_Spec_Egress>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Egress {}
+
+impl BuildDataApp_Spec_Egress {
+    pub fn build(self) -> DataApp_Spec_Egress {
+        DataApp_Spec_Egress { type_: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_EgressRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_EgressRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_EgressRef {
+        DataApp_Spec_EgressRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_EgressRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Env {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -591,7 +888,7 @@ pub struct DataAppSpecElEnvEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElEnvEl {
+impl DataApp_Spec_Env {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -617,8 +914,8 @@ impl DataAppSpecElEnvEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElEnvEl {
-    type O = terrars::BlockAssignable<DataAppSpecElEnvEl>;
+impl terrars::ToListMappable for DataApp_Spec_Env {
+    type O = terrars::BlockAssignable<DataApp_Spec_Env>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -629,11 +926,11 @@ impl terrars::ToListMappable for DataAppSpecElEnvEl {
     }
 }
 
-pub struct BuildDataAppSpecElEnvEl {}
+pub struct BuildDataApp_Spec_Env {}
 
-impl BuildDataAppSpecElEnvEl {
-    pub fn build(self) -> DataAppSpecElEnvEl {
-        DataAppSpecElEnvEl {
+impl BuildDataApp_Spec_Env {
+    pub fn build(self) -> DataApp_Spec_Env {
+        DataApp_Spec_Env {
             key: core::default::Default::default(),
             scope: core::default::Default::default(),
             type_: core::default::Default::default(),
@@ -642,21 +939,23 @@ impl BuildDataAppSpecElEnvEl {
     }
 }
 
-pub struct DataAppSpecElEnvElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_EnvRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElEnvElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElEnvElRef {
-        DataAppSpecElEnvElRef {
+impl terrars::Ref for DataApp_Spec_EnvRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_EnvRef {
+        DataApp_Spec_EnvRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElEnvElRef {
+impl DataApp_Spec_EnvRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -683,7 +982,172 @@ impl DataAppSpecElEnvElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElFunctionElAlertEl {
+pub struct DataApp_Spec_Function_Alert_Destinations_SlackWebhooks {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    channel: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Function_Alert_Destinations_SlackWebhooks {
+    #[doc = "Set the field `channel`.\n"]
+    pub fn set_channel(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.channel = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `url`.\n"]
+    pub fn set_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.url = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Function_Alert_Destinations_SlackWebhooks {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_Alert_Destinations_SlackWebhooks>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Function_Alert_Destinations_SlackWebhooks {}
+
+impl BuildDataApp_Spec_Function_Alert_Destinations_SlackWebhooks {
+    pub fn build(self) -> DataApp_Spec_Function_Alert_Destinations_SlackWebhooks {
+        DataApp_Spec_Function_Alert_Destinations_SlackWebhooks {
+            channel: core::default::Default::default(),
+            url: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_Alert_Destinations_SlackWebhooksRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Function_Alert_Destinations_SlackWebhooksRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataApp_Spec_Function_Alert_Destinations_SlackWebhooksRef {
+        DataApp_Spec_Function_Alert_Destinations_SlackWebhooksRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Function_Alert_Destinations_SlackWebhooksRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `channel` after provisioning.\n"]
+    pub fn channel(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.channel", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `url` after provisioning.\n"]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Function_Alert_Destinations {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    emails: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    slack_webhooks: std::option::Option<terrars::ListField<DataApp_Spec_Function_Alert_Destinations_SlackWebhooks>>,
+}
+
+impl DataApp_Spec_Function_Alert_Destinations {
+    #[doc = "Set the field `emails`.\n"]
+    pub fn set_emails(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.emails = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `slack_webhooks`.\n"]
+    pub fn set_slack_webhooks(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function_Alert_Destinations_SlackWebhooks>>,
+    ) -> Self {
+        self.slack_webhooks = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Function_Alert_Destinations {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_Alert_Destinations>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Function_Alert_Destinations {}
+
+impl BuildDataApp_Spec_Function_Alert_Destinations {
+    pub fn build(self) -> DataApp_Spec_Function_Alert_Destinations {
+        DataApp_Spec_Function_Alert_Destinations {
+            emails: core::default::Default::default(),
+            slack_webhooks: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_Alert_DestinationsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Function_Alert_DestinationsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Function_Alert_DestinationsRef {
+        DataApp_Spec_Function_Alert_DestinationsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Function_Alert_DestinationsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `emails` after provisioning.\n"]
+    pub fn emails(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.emails", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `slack_webhooks` after provisioning.\n"]
+    pub fn slack_webhooks(&self) -> terrars::ListRef<DataApp_Spec_Function_Alert_Destinations_SlackWebhooksRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.slack_webhooks", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Function_Alert {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destinations: std::option::Option<terrars::SetField<DataApp_Spec_Function_Alert_Destinations>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -696,7 +1160,16 @@ pub struct DataAppSpecElFunctionElAlertEl {
     window: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElFunctionElAlertEl {
+impl DataApp_Spec_Function_Alert {
+    #[doc = "Set the field `destinations`.\n"]
+    pub fn set_destinations(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<DataApp_Spec_Function_Alert_Destinations>>,
+    ) -> Self {
+        self.destinations = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `disabled`.\n"]
     pub fn set_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.disabled = std::option::Option::Some(v.into());
@@ -728,8 +1201,8 @@ impl DataAppSpecElFunctionElAlertEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElFunctionElAlertEl {
-    type O = terrars::BlockAssignable<DataAppSpecElFunctionElAlertEl>;
+impl terrars::ToListMappable for DataApp_Spec_Function_Alert {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_Alert>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -740,11 +1213,12 @@ impl terrars::ToListMappable for DataAppSpecElFunctionElAlertEl {
     }
 }
 
-pub struct BuildDataAppSpecElFunctionElAlertEl {}
+pub struct BuildDataApp_Spec_Function_Alert {}
 
-impl BuildDataAppSpecElFunctionElAlertEl {
-    pub fn build(self) -> DataAppSpecElFunctionElAlertEl {
-        DataAppSpecElFunctionElAlertEl {
+impl BuildDataApp_Spec_Function_Alert {
+    pub fn build(self) -> DataApp_Spec_Function_Alert {
+        DataApp_Spec_Function_Alert {
+            destinations: core::default::Default::default(),
             disabled: core::default::Default::default(),
             operator: core::default::Default::default(),
             rule: core::default::Default::default(),
@@ -754,23 +1228,30 @@ impl BuildDataAppSpecElFunctionElAlertEl {
     }
 }
 
-pub struct DataAppSpecElFunctionElAlertElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_AlertRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElFunctionElAlertElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElFunctionElAlertElRef {
-        DataAppSpecElFunctionElAlertElRef {
+impl terrars::Ref for DataApp_Spec_Function_AlertRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Function_AlertRef {
+        DataApp_Spec_Function_AlertRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElFunctionElAlertElRef {
+impl DataApp_Spec_Function_AlertRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `destinations` after provisioning.\n"]
+    pub fn destinations(&self) -> terrars::SetRef<DataApp_Spec_Function_Alert_DestinationsRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.destinations", self.base))
     }
 
     #[doc = "Get a reference to the value of field `disabled` after provisioning.\n"]
@@ -800,7 +1281,98 @@ impl DataAppSpecElFunctionElAlertElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElFunctionElCorsElAllowOriginsEl {
+pub struct DataApp_Spec_Function_Bitbucket {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    branch: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deploy_on_push: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    repo: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Function_Bitbucket {
+    #[doc = "Set the field `branch`.\n"]
+    pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.branch = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `deploy_on_push`.\n"]
+    pub fn set_deploy_on_push(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.deploy_on_push = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `repo`.\n"]
+    pub fn set_repo(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.repo = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Function_Bitbucket {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_Bitbucket>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Function_Bitbucket {}
+
+impl BuildDataApp_Spec_Function_Bitbucket {
+    pub fn build(self) -> DataApp_Spec_Function_Bitbucket {
+        DataApp_Spec_Function_Bitbucket {
+            branch: core::default::Default::default(),
+            deploy_on_push: core::default::Default::default(),
+            repo: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_BitbucketRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Function_BitbucketRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Function_BitbucketRef {
+        DataApp_Spec_Function_BitbucketRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Function_BitbucketRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `branch` after provisioning.\n"]
+    pub fn branch(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.branch", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `deploy_on_push` after provisioning.\n"]
+    pub fn deploy_on_push(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deploy_on_push", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `repo` after provisioning.\n"]
+    pub fn repo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.repo", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Function_Cors_AllowOrigins {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exact: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -809,7 +1381,7 @@ pub struct DataAppSpecElFunctionElCorsElAllowOriginsEl {
     regex: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElFunctionElCorsElAllowOriginsEl {
+impl DataApp_Spec_Function_Cors_AllowOrigins {
     #[doc = "Set the field `exact`.\n"]
     pub fn set_exact(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.exact = std::option::Option::Some(v.into());
@@ -829,8 +1401,8 @@ impl DataAppSpecElFunctionElCorsElAllowOriginsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElFunctionElCorsElAllowOriginsEl {
-    type O = terrars::BlockAssignable<DataAppSpecElFunctionElCorsElAllowOriginsEl>;
+impl terrars::ToListMappable for DataApp_Spec_Function_Cors_AllowOrigins {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_Cors_AllowOrigins>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -841,11 +1413,11 @@ impl terrars::ToListMappable for DataAppSpecElFunctionElCorsElAllowOriginsEl {
     }
 }
 
-pub struct BuildDataAppSpecElFunctionElCorsElAllowOriginsEl {}
+pub struct BuildDataApp_Spec_Function_Cors_AllowOrigins {}
 
-impl BuildDataAppSpecElFunctionElCorsElAllowOriginsEl {
-    pub fn build(self) -> DataAppSpecElFunctionElCorsElAllowOriginsEl {
-        DataAppSpecElFunctionElCorsElAllowOriginsEl {
+impl BuildDataApp_Spec_Function_Cors_AllowOrigins {
+    pub fn build(self) -> DataApp_Spec_Function_Cors_AllowOrigins {
+        DataApp_Spec_Function_Cors_AllowOrigins {
             exact: core::default::Default::default(),
             prefix: core::default::Default::default(),
             regex: core::default::Default::default(),
@@ -853,24 +1425,23 @@ impl BuildDataAppSpecElFunctionElCorsElAllowOriginsEl {
     }
 }
 
-pub struct DataAppSpecElFunctionElCorsElAllowOriginsElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_Cors_AllowOriginsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElFunctionElCorsElAllowOriginsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataAppSpecElFunctionElCorsElAllowOriginsElRef {
-        DataAppSpecElFunctionElCorsElAllowOriginsElRef {
+impl terrars::Ref for DataApp_Spec_Function_Cors_AllowOriginsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Function_Cors_AllowOriginsRef {
+        DataApp_Spec_Function_Cors_AllowOriginsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElFunctionElCorsElAllowOriginsElRef {
+impl DataApp_Spec_Function_Cors_AllowOriginsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -892,7 +1463,7 @@ impl DataAppSpecElFunctionElCorsElAllowOriginsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElFunctionElCorsEl {
+pub struct DataApp_Spec_Function_Cors {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_credentials: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -900,14 +1471,14 @@ pub struct DataAppSpecElFunctionElCorsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_methods: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_origins: std::option::Option<terrars::ListField<DataAppSpecElFunctionElCorsElAllowOriginsEl>>,
+    allow_origins: std::option::Option<terrars::ListField<DataApp_Spec_Function_Cors_AllowOrigins>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     expose_headers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_age: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElFunctionElCorsEl {
+impl DataApp_Spec_Function_Cors {
     #[doc = "Set the field `allow_credentials`.\n"]
     pub fn set_allow_credentials(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.allow_credentials = std::option::Option::Some(v.into());
@@ -935,7 +1506,7 @@ impl DataAppSpecElFunctionElCorsEl {
     #[doc = "Set the field `allow_origins`.\n"]
     pub fn set_allow_origins(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElFunctionElCorsElAllowOriginsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function_Cors_AllowOrigins>>,
     ) -> Self {
         self.allow_origins = std::option::Option::Some(v.into());
         self
@@ -957,8 +1528,8 @@ impl DataAppSpecElFunctionElCorsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElFunctionElCorsEl {
-    type O = terrars::BlockAssignable<DataAppSpecElFunctionElCorsEl>;
+impl terrars::ToListMappable for DataApp_Spec_Function_Cors {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_Cors>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -969,11 +1540,11 @@ impl terrars::ToListMappable for DataAppSpecElFunctionElCorsEl {
     }
 }
 
-pub struct BuildDataAppSpecElFunctionElCorsEl {}
+pub struct BuildDataApp_Spec_Function_Cors {}
 
-impl BuildDataAppSpecElFunctionElCorsEl {
-    pub fn build(self) -> DataAppSpecElFunctionElCorsEl {
-        DataAppSpecElFunctionElCorsEl {
+impl BuildDataApp_Spec_Function_Cors {
+    pub fn build(self) -> DataApp_Spec_Function_Cors {
+        DataApp_Spec_Function_Cors {
             allow_credentials: core::default::Default::default(),
             allow_headers: core::default::Default::default(),
             allow_methods: core::default::Default::default(),
@@ -984,21 +1555,23 @@ impl BuildDataAppSpecElFunctionElCorsEl {
     }
 }
 
-pub struct DataAppSpecElFunctionElCorsElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_CorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElFunctionElCorsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElFunctionElCorsElRef {
-        DataAppSpecElFunctionElCorsElRef {
+impl terrars::Ref for DataApp_Spec_Function_CorsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Function_CorsRef {
+        DataApp_Spec_Function_CorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElFunctionElCorsElRef {
+impl DataApp_Spec_Function_CorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1019,7 +1592,7 @@ impl DataAppSpecElFunctionElCorsElRef {
     }
 
     #[doc = "Get a reference to the value of field `allow_origins` after provisioning.\n"]
-    pub fn allow_origins(&self) -> terrars::ListRef<DataAppSpecElFunctionElCorsElAllowOriginsElRef> {
+    pub fn allow_origins(&self) -> terrars::ListRef<DataApp_Spec_Function_Cors_AllowOriginsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.allow_origins", self.base))
     }
 
@@ -1035,7 +1608,7 @@ impl DataAppSpecElFunctionElCorsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElFunctionElEnvEl {
+pub struct DataApp_Spec_Function_Env {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1046,7 +1619,7 @@ pub struct DataAppSpecElFunctionElEnvEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElFunctionElEnvEl {
+impl DataApp_Spec_Function_Env {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -1072,8 +1645,8 @@ impl DataAppSpecElFunctionElEnvEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElFunctionElEnvEl {
-    type O = terrars::BlockAssignable<DataAppSpecElFunctionElEnvEl>;
+impl terrars::ToListMappable for DataApp_Spec_Function_Env {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_Env>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1084,11 +1657,11 @@ impl terrars::ToListMappable for DataAppSpecElFunctionElEnvEl {
     }
 }
 
-pub struct BuildDataAppSpecElFunctionElEnvEl {}
+pub struct BuildDataApp_Spec_Function_Env {}
 
-impl BuildDataAppSpecElFunctionElEnvEl {
-    pub fn build(self) -> DataAppSpecElFunctionElEnvEl {
-        DataAppSpecElFunctionElEnvEl {
+impl BuildDataApp_Spec_Function_Env {
+    pub fn build(self) -> DataApp_Spec_Function_Env {
+        DataApp_Spec_Function_Env {
             key: core::default::Default::default(),
             scope: core::default::Default::default(),
             type_: core::default::Default::default(),
@@ -1097,21 +1670,23 @@ impl BuildDataAppSpecElFunctionElEnvEl {
     }
 }
 
-pub struct DataAppSpecElFunctionElEnvElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_EnvRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElFunctionElEnvElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElFunctionElEnvElRef {
-        DataAppSpecElFunctionElEnvElRef {
+impl terrars::Ref for DataApp_Spec_Function_EnvRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Function_EnvRef {
+        DataApp_Spec_Function_EnvRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElFunctionElEnvElRef {
+impl DataApp_Spec_Function_EnvRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1138,14 +1713,14 @@ impl DataAppSpecElFunctionElEnvElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElFunctionElGitEl {
+pub struct DataApp_Spec_Function_Git {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repo_clone_url: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElFunctionElGitEl {
+impl DataApp_Spec_Function_Git {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -1159,8 +1734,8 @@ impl DataAppSpecElFunctionElGitEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElFunctionElGitEl {
-    type O = terrars::BlockAssignable<DataAppSpecElFunctionElGitEl>;
+impl terrars::ToListMappable for DataApp_Spec_Function_Git {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_Git>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1171,32 +1746,34 @@ impl terrars::ToListMappable for DataAppSpecElFunctionElGitEl {
     }
 }
 
-pub struct BuildDataAppSpecElFunctionElGitEl {}
+pub struct BuildDataApp_Spec_Function_Git {}
 
-impl BuildDataAppSpecElFunctionElGitEl {
-    pub fn build(self) -> DataAppSpecElFunctionElGitEl {
-        DataAppSpecElFunctionElGitEl {
+impl BuildDataApp_Spec_Function_Git {
+    pub fn build(self) -> DataApp_Spec_Function_Git {
+        DataApp_Spec_Function_Git {
             branch: core::default::Default::default(),
             repo_clone_url: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElFunctionElGitElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_GitRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElFunctionElGitElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElFunctionElGitElRef {
-        DataAppSpecElFunctionElGitElRef {
+impl terrars::Ref for DataApp_Spec_Function_GitRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Function_GitRef {
+        DataApp_Spec_Function_GitRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElFunctionElGitElRef {
+impl DataApp_Spec_Function_GitRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1213,7 +1790,7 @@ impl DataAppSpecElFunctionElGitElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElFunctionElGithubEl {
+pub struct DataApp_Spec_Function_Github {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1222,7 +1799,7 @@ pub struct DataAppSpecElFunctionElGithubEl {
     repo: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElFunctionElGithubEl {
+impl DataApp_Spec_Function_Github {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -1242,8 +1819,8 @@ impl DataAppSpecElFunctionElGithubEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElFunctionElGithubEl {
-    type O = terrars::BlockAssignable<DataAppSpecElFunctionElGithubEl>;
+impl terrars::ToListMappable for DataApp_Spec_Function_Github {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_Github>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1254,11 +1831,11 @@ impl terrars::ToListMappable for DataAppSpecElFunctionElGithubEl {
     }
 }
 
-pub struct BuildDataAppSpecElFunctionElGithubEl {}
+pub struct BuildDataApp_Spec_Function_Github {}
 
-impl BuildDataAppSpecElFunctionElGithubEl {
-    pub fn build(self) -> DataAppSpecElFunctionElGithubEl {
-        DataAppSpecElFunctionElGithubEl {
+impl BuildDataApp_Spec_Function_Github {
+    pub fn build(self) -> DataApp_Spec_Function_Github {
+        DataApp_Spec_Function_Github {
             branch: core::default::Default::default(),
             deploy_on_push: core::default::Default::default(),
             repo: core::default::Default::default(),
@@ -1266,21 +1843,23 @@ impl BuildDataAppSpecElFunctionElGithubEl {
     }
 }
 
-pub struct DataAppSpecElFunctionElGithubElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_GithubRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElFunctionElGithubElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElFunctionElGithubElRef {
-        DataAppSpecElFunctionElGithubElRef {
+impl terrars::Ref for DataApp_Spec_Function_GithubRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Function_GithubRef {
+        DataApp_Spec_Function_GithubRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElFunctionElGithubElRef {
+impl DataApp_Spec_Function_GithubRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1302,7 +1881,7 @@ impl DataAppSpecElFunctionElGithubElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElFunctionElGitlabEl {
+pub struct DataApp_Spec_Function_Gitlab {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1311,7 +1890,7 @@ pub struct DataAppSpecElFunctionElGitlabEl {
     repo: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElFunctionElGitlabEl {
+impl DataApp_Spec_Function_Gitlab {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -1331,8 +1910,8 @@ impl DataAppSpecElFunctionElGitlabEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElFunctionElGitlabEl {
-    type O = terrars::BlockAssignable<DataAppSpecElFunctionElGitlabEl>;
+impl terrars::ToListMappable for DataApp_Spec_Function_Gitlab {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_Gitlab>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1343,11 +1922,11 @@ impl terrars::ToListMappable for DataAppSpecElFunctionElGitlabEl {
     }
 }
 
-pub struct BuildDataAppSpecElFunctionElGitlabEl {}
+pub struct BuildDataApp_Spec_Function_Gitlab {}
 
-impl BuildDataAppSpecElFunctionElGitlabEl {
-    pub fn build(self) -> DataAppSpecElFunctionElGitlabEl {
-        DataAppSpecElFunctionElGitlabEl {
+impl BuildDataApp_Spec_Function_Gitlab {
+    pub fn build(self) -> DataApp_Spec_Function_Gitlab {
+        DataApp_Spec_Function_Gitlab {
             branch: core::default::Default::default(),
             deploy_on_push: core::default::Default::default(),
             repo: core::default::Default::default(),
@@ -1355,21 +1934,23 @@ impl BuildDataAppSpecElFunctionElGitlabEl {
     }
 }
 
-pub struct DataAppSpecElFunctionElGitlabElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_GitlabRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElFunctionElGitlabElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElFunctionElGitlabElRef {
-        DataAppSpecElFunctionElGitlabElRef {
+impl terrars::Ref for DataApp_Spec_Function_GitlabRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Function_GitlabRef {
+        DataApp_Spec_Function_GitlabRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElFunctionElGitlabElRef {
+impl DataApp_Spec_Function_GitlabRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1391,14 +1972,14 @@ impl DataAppSpecElFunctionElGitlabElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElFunctionElLogDestinationElDatadogEl {
+pub struct DataApp_Spec_Function_LogDestination_Datadog {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     api_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElFunctionElLogDestinationElDatadogEl {
+impl DataApp_Spec_Function_LogDestination_Datadog {
     #[doc = "Set the field `api_key`.\n"]
     pub fn set_api_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.api_key = std::option::Option::Some(v.into());
@@ -1412,8 +1993,8 @@ impl DataAppSpecElFunctionElLogDestinationElDatadogEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElFunctionElLogDestinationElDatadogEl {
-    type O = terrars::BlockAssignable<DataAppSpecElFunctionElLogDestinationElDatadogEl>;
+impl terrars::ToListMappable for DataApp_Spec_Function_LogDestination_Datadog {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_LogDestination_Datadog>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1424,35 +2005,37 @@ impl terrars::ToListMappable for DataAppSpecElFunctionElLogDestinationElDatadogE
     }
 }
 
-pub struct BuildDataAppSpecElFunctionElLogDestinationElDatadogEl {}
+pub struct BuildDataApp_Spec_Function_LogDestination_Datadog {}
 
-impl BuildDataAppSpecElFunctionElLogDestinationElDatadogEl {
-    pub fn build(self) -> DataAppSpecElFunctionElLogDestinationElDatadogEl {
-        DataAppSpecElFunctionElLogDestinationElDatadogEl {
+impl BuildDataApp_Spec_Function_LogDestination_Datadog {
+    pub fn build(self) -> DataApp_Spec_Function_LogDestination_Datadog {
+        DataApp_Spec_Function_LogDestination_Datadog {
             api_key: core::default::Default::default(),
             endpoint: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElFunctionElLogDestinationElDatadogElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_LogDestination_DatadogRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElFunctionElLogDestinationElDatadogElRef {
+impl terrars::Ref for DataApp_Spec_Function_LogDestination_DatadogRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAppSpecElFunctionElLogDestinationElDatadogElRef {
-        DataAppSpecElFunctionElLogDestinationElDatadogElRef {
+    ) -> DataApp_Spec_Function_LogDestination_DatadogRef {
+        DataApp_Spec_Function_LogDestination_DatadogRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElFunctionElLogDestinationElDatadogElRef {
+impl DataApp_Spec_Function_LogDestination_DatadogRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1469,12 +2052,12 @@ impl DataAppSpecElFunctionElLogDestinationElDatadogElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElFunctionElLogDestinationElLogtailEl {
+pub struct DataApp_Spec_Function_LogDestination_Logtail {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     token: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElFunctionElLogDestinationElLogtailEl {
+impl DataApp_Spec_Function_LogDestination_Logtail {
     #[doc = "Set the field `token`.\n"]
     pub fn set_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.token = std::option::Option::Some(v.into());
@@ -1482,8 +2065,8 @@ impl DataAppSpecElFunctionElLogDestinationElLogtailEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElFunctionElLogDestinationElLogtailEl {
-    type O = terrars::BlockAssignable<DataAppSpecElFunctionElLogDestinationElLogtailEl>;
+impl terrars::ToListMappable for DataApp_Spec_Function_LogDestination_Logtail {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_LogDestination_Logtail>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1494,32 +2077,34 @@ impl terrars::ToListMappable for DataAppSpecElFunctionElLogDestinationElLogtailE
     }
 }
 
-pub struct BuildDataAppSpecElFunctionElLogDestinationElLogtailEl {}
+pub struct BuildDataApp_Spec_Function_LogDestination_Logtail {}
 
-impl BuildDataAppSpecElFunctionElLogDestinationElLogtailEl {
-    pub fn build(self) -> DataAppSpecElFunctionElLogDestinationElLogtailEl {
-        DataAppSpecElFunctionElLogDestinationElLogtailEl { token: core::default::Default::default() }
+impl BuildDataApp_Spec_Function_LogDestination_Logtail {
+    pub fn build(self) -> DataApp_Spec_Function_LogDestination_Logtail {
+        DataApp_Spec_Function_LogDestination_Logtail { token: core::default::Default::default() }
     }
 }
 
-pub struct DataAppSpecElFunctionElLogDestinationElLogtailElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_LogDestination_LogtailRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElFunctionElLogDestinationElLogtailElRef {
+impl terrars::Ref for DataApp_Spec_Function_LogDestination_LogtailRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAppSpecElFunctionElLogDestinationElLogtailElRef {
-        DataAppSpecElFunctionElLogDestinationElLogtailElRef {
+    ) -> DataApp_Spec_Function_LogDestination_LogtailRef {
+        DataApp_Spec_Function_LogDestination_LogtailRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElFunctionElLogDestinationElLogtailElRef {
+impl DataApp_Spec_Function_LogDestination_LogtailRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1531,21 +2116,29 @@ impl DataAppSpecElFunctionElLogDestinationElLogtailElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElFunctionElLogDestinationElPapertrailEl {
+pub struct DataApp_Spec_Function_LogDestination_OpenSearch_BasicAuth {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+    password: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElFunctionElLogDestinationElPapertrailEl {
-    #[doc = "Set the field `endpoint`.\n"]
-    pub fn set_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.endpoint = std::option::Option::Some(v.into());
+impl DataApp_Spec_Function_LogDestination_OpenSearch_BasicAuth {
+    #[doc = "Set the field `password`.\n"]
+    pub fn set_password(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.password = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `user`.\n"]
+    pub fn set_user(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.user = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElFunctionElLogDestinationElPapertrailEl {
-    type O = terrars::BlockAssignable<DataAppSpecElFunctionElLogDestinationElPapertrailEl>;
+impl terrars::ToListMappable for DataApp_Spec_Function_LogDestination_OpenSearch_BasicAuth {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_LogDestination_OpenSearch_BasicAuth>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1556,32 +2149,217 @@ impl terrars::ToListMappable for DataAppSpecElFunctionElLogDestinationElPapertra
     }
 }
 
-pub struct BuildDataAppSpecElFunctionElLogDestinationElPapertrailEl {}
+pub struct BuildDataApp_Spec_Function_LogDestination_OpenSearch_BasicAuth {}
 
-impl BuildDataAppSpecElFunctionElLogDestinationElPapertrailEl {
-    pub fn build(self) -> DataAppSpecElFunctionElLogDestinationElPapertrailEl {
-        DataAppSpecElFunctionElLogDestinationElPapertrailEl { endpoint: core::default::Default::default() }
+impl BuildDataApp_Spec_Function_LogDestination_OpenSearch_BasicAuth {
+    pub fn build(self) -> DataApp_Spec_Function_LogDestination_OpenSearch_BasicAuth {
+        DataApp_Spec_Function_LogDestination_OpenSearch_BasicAuth {
+            password: core::default::Default::default(),
+            user: core::default::Default::default(),
+        }
     }
 }
 
-pub struct DataAppSpecElFunctionElLogDestinationElPapertrailElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_LogDestination_OpenSearch_BasicAuthRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElFunctionElLogDestinationElPapertrailElRef {
+impl terrars::Ref for DataApp_Spec_Function_LogDestination_OpenSearch_BasicAuthRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAppSpecElFunctionElLogDestinationElPapertrailElRef {
-        DataAppSpecElFunctionElLogDestinationElPapertrailElRef {
+    ) -> DataApp_Spec_Function_LogDestination_OpenSearch_BasicAuthRef {
+        DataApp_Spec_Function_LogDestination_OpenSearch_BasicAuthRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElFunctionElLogDestinationElPapertrailElRef {
+impl DataApp_Spec_Function_LogDestination_OpenSearch_BasicAuthRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
+    pub fn password(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `user` after provisioning.\n"]
+    pub fn user(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Function_LogDestination_OpenSearch {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    basic_auth: std::option::Option<terrars::ListField<DataApp_Spec_Function_LogDestination_OpenSearch_BasicAuth>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    index_name: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Function_LogDestination_OpenSearch {
+    #[doc = "Set the field `basic_auth`.\n"]
+    pub fn set_basic_auth(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function_LogDestination_OpenSearch_BasicAuth>>,
+    ) -> Self {
+        self.basic_auth = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cluster_name`.\n"]
+    pub fn set_cluster_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cluster_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `endpoint`.\n"]
+    pub fn set_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.endpoint = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `index_name`.\n"]
+    pub fn set_index_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.index_name = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Function_LogDestination_OpenSearch {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_LogDestination_OpenSearch>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Function_LogDestination_OpenSearch {}
+
+impl BuildDataApp_Spec_Function_LogDestination_OpenSearch {
+    pub fn build(self) -> DataApp_Spec_Function_LogDestination_OpenSearch {
+        DataApp_Spec_Function_LogDestination_OpenSearch {
+            basic_auth: core::default::Default::default(),
+            cluster_name: core::default::Default::default(),
+            endpoint: core::default::Default::default(),
+            index_name: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_LogDestination_OpenSearchRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Function_LogDestination_OpenSearchRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataApp_Spec_Function_LogDestination_OpenSearchRef {
+        DataApp_Spec_Function_LogDestination_OpenSearchRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Function_LogDestination_OpenSearchRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `basic_auth` after provisioning.\n"]
+    pub fn basic_auth(&self) -> terrars::ListRef<DataApp_Spec_Function_LogDestination_OpenSearch_BasicAuthRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.basic_auth", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cluster_name` after provisioning.\n"]
+    pub fn cluster_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `index_name` after provisioning.\n"]
+    pub fn index_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_name", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Function_LogDestination_Papertrail {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Function_LogDestination_Papertrail {
+    #[doc = "Set the field `endpoint`.\n"]
+    pub fn set_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.endpoint = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Function_LogDestination_Papertrail {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_LogDestination_Papertrail>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Function_LogDestination_Papertrail {}
+
+impl BuildDataApp_Spec_Function_LogDestination_Papertrail {
+    pub fn build(self) -> DataApp_Spec_Function_LogDestination_Papertrail {
+        DataApp_Spec_Function_LogDestination_Papertrail { endpoint: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_LogDestination_PapertrailRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Function_LogDestination_PapertrailRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataApp_Spec_Function_LogDestination_PapertrailRef {
+        DataApp_Spec_Function_LogDestination_PapertrailRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Function_LogDestination_PapertrailRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1593,22 +2371,24 @@ impl DataAppSpecElFunctionElLogDestinationElPapertrailElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElFunctionElLogDestinationEl {
+pub struct DataApp_Spec_Function_LogDestination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    datadog: std::option::Option<terrars::ListField<DataAppSpecElFunctionElLogDestinationElDatadogEl>>,
+    datadog: std::option::Option<terrars::ListField<DataApp_Spec_Function_LogDestination_Datadog>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logtail: std::option::Option<terrars::ListField<DataAppSpecElFunctionElLogDestinationElLogtailEl>>,
+    logtail: std::option::Option<terrars::ListField<DataApp_Spec_Function_LogDestination_Logtail>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    papertrail: std::option::Option<terrars::ListField<DataAppSpecElFunctionElLogDestinationElPapertrailEl>>,
+    open_search: std::option::Option<terrars::ListField<DataApp_Spec_Function_LogDestination_OpenSearch>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    papertrail: std::option::Option<terrars::ListField<DataApp_Spec_Function_LogDestination_Papertrail>>,
 }
 
-impl DataAppSpecElFunctionElLogDestinationEl {
+impl DataApp_Spec_Function_LogDestination {
     #[doc = "Set the field `datadog`.\n"]
     pub fn set_datadog(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElFunctionElLogDestinationElDatadogEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function_LogDestination_Datadog>>,
     ) -> Self {
         self.datadog = std::option::Option::Some(v.into());
         self
@@ -1617,7 +2397,7 @@ impl DataAppSpecElFunctionElLogDestinationEl {
     #[doc = "Set the field `logtail`.\n"]
     pub fn set_logtail(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElFunctionElLogDestinationElLogtailEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function_LogDestination_Logtail>>,
     ) -> Self {
         self.logtail = std::option::Option::Some(v.into());
         self
@@ -1629,18 +2409,27 @@ impl DataAppSpecElFunctionElLogDestinationEl {
         self
     }
 
+    #[doc = "Set the field `open_search`.\n"]
+    pub fn set_open_search(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function_LogDestination_OpenSearch>>,
+    ) -> Self {
+        self.open_search = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `papertrail`.\n"]
     pub fn set_papertrail(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElFunctionElLogDestinationElPapertrailEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function_LogDestination_Papertrail>>,
     ) -> Self {
         self.papertrail = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElFunctionElLogDestinationEl {
-    type O = terrars::BlockAssignable<DataAppSpecElFunctionElLogDestinationEl>;
+impl terrars::ToListMappable for DataApp_Spec_Function_LogDestination {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_LogDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1651,45 +2440,48 @@ impl terrars::ToListMappable for DataAppSpecElFunctionElLogDestinationEl {
     }
 }
 
-pub struct BuildDataAppSpecElFunctionElLogDestinationEl {}
+pub struct BuildDataApp_Spec_Function_LogDestination {}
 
-impl BuildDataAppSpecElFunctionElLogDestinationEl {
-    pub fn build(self) -> DataAppSpecElFunctionElLogDestinationEl {
-        DataAppSpecElFunctionElLogDestinationEl {
+impl BuildDataApp_Spec_Function_LogDestination {
+    pub fn build(self) -> DataApp_Spec_Function_LogDestination {
+        DataApp_Spec_Function_LogDestination {
             datadog: core::default::Default::default(),
             logtail: core::default::Default::default(),
             name: core::default::Default::default(),
+            open_search: core::default::Default::default(),
             papertrail: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElFunctionElLogDestinationElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_LogDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElFunctionElLogDestinationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElFunctionElLogDestinationElRef {
-        DataAppSpecElFunctionElLogDestinationElRef {
+impl terrars::Ref for DataApp_Spec_Function_LogDestinationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Function_LogDestinationRef {
+        DataApp_Spec_Function_LogDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElFunctionElLogDestinationElRef {
+impl DataApp_Spec_Function_LogDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `datadog` after provisioning.\n"]
-    pub fn datadog(&self) -> terrars::ListRef<DataAppSpecElFunctionElLogDestinationElDatadogElRef> {
+    pub fn datadog(&self) -> terrars::ListRef<DataApp_Spec_Function_LogDestination_DatadogRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.datadog", self.base))
     }
 
     #[doc = "Get a reference to the value of field `logtail` after provisioning.\n"]
-    pub fn logtail(&self) -> terrars::ListRef<DataAppSpecElFunctionElLogDestinationElLogtailElRef> {
+    pub fn logtail(&self) -> terrars::ListRef<DataApp_Spec_Function_LogDestination_LogtailRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logtail", self.base))
     }
 
@@ -1698,21 +2490,26 @@ impl DataAppSpecElFunctionElLogDestinationElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `open_search` after provisioning.\n"]
+    pub fn open_search(&self) -> terrars::ListRef<DataApp_Spec_Function_LogDestination_OpenSearchRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.open_search", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `papertrail` after provisioning.\n"]
-    pub fn papertrail(&self) -> terrars::ListRef<DataAppSpecElFunctionElLogDestinationElPapertrailElRef> {
+    pub fn papertrail(&self) -> terrars::ListRef<DataApp_Spec_Function_LogDestination_PapertrailRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.papertrail", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElFunctionElRoutesEl {
+pub struct DataApp_Spec_Function_Routes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preserve_path_prefix: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataAppSpecElFunctionElRoutesEl {
+impl DataApp_Spec_Function_Routes {
     #[doc = "Set the field `path`.\n"]
     pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.path = std::option::Option::Some(v.into());
@@ -1726,8 +2523,8 @@ impl DataAppSpecElFunctionElRoutesEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElFunctionElRoutesEl {
-    type O = terrars::BlockAssignable<DataAppSpecElFunctionElRoutesEl>;
+impl terrars::ToListMappable for DataApp_Spec_Function_Routes {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function_Routes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1738,32 +2535,34 @@ impl terrars::ToListMappable for DataAppSpecElFunctionElRoutesEl {
     }
 }
 
-pub struct BuildDataAppSpecElFunctionElRoutesEl {}
+pub struct BuildDataApp_Spec_Function_Routes {}
 
-impl BuildDataAppSpecElFunctionElRoutesEl {
-    pub fn build(self) -> DataAppSpecElFunctionElRoutesEl {
-        DataAppSpecElFunctionElRoutesEl {
+impl BuildDataApp_Spec_Function_Routes {
+    pub fn build(self) -> DataApp_Spec_Function_Routes {
+        DataApp_Spec_Function_Routes {
             path: core::default::Default::default(),
             preserve_path_prefix: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElFunctionElRoutesElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Function_RoutesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElFunctionElRoutesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElFunctionElRoutesElRef {
-        DataAppSpecElFunctionElRoutesElRef {
+impl terrars::Ref for DataApp_Spec_Function_RoutesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Function_RoutesRef {
+        DataApp_Spec_Function_RoutesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElFunctionElRoutesElRef {
+impl DataApp_Spec_Function_RoutesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1780,68 +2579,73 @@ impl DataAppSpecElFunctionElRoutesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElFunctionEl {
+pub struct DataApp_Spec_Function {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    alert: std::option::Option<terrars::ListField<DataAppSpecElFunctionElAlertEl>>,
+    alert: std::option::Option<terrars::ListField<DataApp_Spec_Function_Alert>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cors: std::option::Option<terrars::ListField<DataAppSpecElFunctionElCorsEl>>,
+    bitbucket: std::option::Option<terrars::ListField<DataApp_Spec_Function_Bitbucket>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    env: std::option::Option<terrars::SetField<DataAppSpecElFunctionElEnvEl>>,
+    cors: std::option::Option<terrars::ListField<DataApp_Spec_Function_Cors>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    git: std::option::Option<terrars::ListField<DataAppSpecElFunctionElGitEl>>,
+    env: std::option::Option<terrars::SetField<DataApp_Spec_Function_Env>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    github: std::option::Option<terrars::ListField<DataAppSpecElFunctionElGithubEl>>,
+    git: std::option::Option<terrars::ListField<DataApp_Spec_Function_Git>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gitlab: std::option::Option<terrars::ListField<DataAppSpecElFunctionElGitlabEl>>,
+    github: std::option::Option<terrars::ListField<DataApp_Spec_Function_Github>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_destination: std::option::Option<terrars::ListField<DataAppSpecElFunctionElLogDestinationEl>>,
+    gitlab: std::option::Option<terrars::ListField<DataApp_Spec_Function_Gitlab>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    log_destination: std::option::Option<terrars::ListField<DataApp_Spec_Function_LogDestination>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    routes: std::option::Option<terrars::ListField<DataAppSpecElFunctionElRoutesEl>>,
+    routes: std::option::Option<terrars::ListField<DataApp_Spec_Function_Routes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_dir: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElFunctionEl {
+impl DataApp_Spec_Function {
     #[doc = "Set the field `alert`.\n"]
-    pub fn set_alert(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElFunctionElAlertEl>>) -> Self {
+    pub fn set_alert(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function_Alert>>) -> Self {
         self.alert = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc = "Set the field `bitbucket`.\n"]
+    pub fn set_bitbucket(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function_Bitbucket>>,
+    ) -> Self {
+        self.bitbucket = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `cors`.\n"]
-    pub fn set_cors(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElFunctionElCorsEl>>) -> Self {
+    pub fn set_cors(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function_Cors>>) -> Self {
         self.cors = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `env`.\n"]
-    pub fn set_env(mut self, v: impl std::convert::Into<terrars::SetField<DataAppSpecElFunctionElEnvEl>>) -> Self {
+    pub fn set_env(mut self, v: impl std::convert::Into<terrars::SetField<DataApp_Spec_Function_Env>>) -> Self {
         self.env = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `git`.\n"]
-    pub fn set_git(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElFunctionElGitEl>>) -> Self {
+    pub fn set_git(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function_Git>>) -> Self {
         self.git = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `github`.\n"]
-    pub fn set_github(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElFunctionElGithubEl>>,
-    ) -> Self {
+    pub fn set_github(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function_Github>>) -> Self {
         self.github = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `gitlab`.\n"]
-    pub fn set_gitlab(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElFunctionElGitlabEl>>,
-    ) -> Self {
+    pub fn set_gitlab(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function_Gitlab>>) -> Self {
         self.gitlab = std::option::Option::Some(v.into());
         self
     }
@@ -1849,7 +2653,7 @@ impl DataAppSpecElFunctionEl {
     #[doc = "Set the field `log_destination`.\n"]
     pub fn set_log_destination(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElFunctionElLogDestinationEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function_LogDestination>>,
     ) -> Self {
         self.log_destination = std::option::Option::Some(v.into());
         self
@@ -1862,10 +2666,7 @@ impl DataAppSpecElFunctionEl {
     }
 
     #[doc = "Set the field `routes`.\n"]
-    pub fn set_routes(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElFunctionElRoutesEl>>,
-    ) -> Self {
+    pub fn set_routes(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function_Routes>>) -> Self {
         self.routes = std::option::Option::Some(v.into());
         self
     }
@@ -1877,8 +2678,8 @@ impl DataAppSpecElFunctionEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElFunctionEl {
-    type O = terrars::BlockAssignable<DataAppSpecElFunctionEl>;
+impl terrars::ToListMappable for DataApp_Spec_Function {
+    type O = terrars::BlockAssignable<DataApp_Spec_Function>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1889,12 +2690,13 @@ impl terrars::ToListMappable for DataAppSpecElFunctionEl {
     }
 }
 
-pub struct BuildDataAppSpecElFunctionEl {}
+pub struct BuildDataApp_Spec_Function {}
 
-impl BuildDataAppSpecElFunctionEl {
-    pub fn build(self) -> DataAppSpecElFunctionEl {
-        DataAppSpecElFunctionEl {
+impl BuildDataApp_Spec_Function {
+    pub fn build(self) -> DataApp_Spec_Function {
+        DataApp_Spec_Function {
             alert: core::default::Default::default(),
+            bitbucket: core::default::Default::default(),
             cors: core::default::Default::default(),
             env: core::default::Default::default(),
             git: core::default::Default::default(),
@@ -1908,57 +2710,64 @@ impl BuildDataAppSpecElFunctionEl {
     }
 }
 
-pub struct DataAppSpecElFunctionElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_FunctionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElFunctionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElFunctionElRef {
-        DataAppSpecElFunctionElRef {
+impl terrars::Ref for DataApp_Spec_FunctionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_FunctionRef {
+        DataApp_Spec_FunctionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElFunctionElRef {
+impl DataApp_Spec_FunctionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `alert` after provisioning.\n"]
-    pub fn alert(&self) -> terrars::ListRef<DataAppSpecElFunctionElAlertElRef> {
+    pub fn alert(&self) -> terrars::ListRef<DataApp_Spec_Function_AlertRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.alert", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `bitbucket` after provisioning.\n"]
+    pub fn bitbucket(&self) -> terrars::ListRef<DataApp_Spec_Function_BitbucketRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bitbucket", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `cors` after provisioning.\n"]
-    pub fn cors(&self) -> terrars::ListRef<DataAppSpecElFunctionElCorsElRef> {
+    pub fn cors(&self) -> terrars::ListRef<DataApp_Spec_Function_CorsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors", self.base))
     }
 
     #[doc = "Get a reference to the value of field `env` after provisioning.\n"]
-    pub fn env(&self) -> terrars::SetRef<DataAppSpecElFunctionElEnvElRef> {
+    pub fn env(&self) -> terrars::SetRef<DataApp_Spec_Function_EnvRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.env", self.base))
     }
 
     #[doc = "Get a reference to the value of field `git` after provisioning.\n"]
-    pub fn git(&self) -> terrars::ListRef<DataAppSpecElFunctionElGitElRef> {
+    pub fn git(&self) -> terrars::ListRef<DataApp_Spec_Function_GitRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.git", self.base))
     }
 
     #[doc = "Get a reference to the value of field `github` after provisioning.\n"]
-    pub fn github(&self) -> terrars::ListRef<DataAppSpecElFunctionElGithubElRef> {
+    pub fn github(&self) -> terrars::ListRef<DataApp_Spec_Function_GithubRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.github", self.base))
     }
 
     #[doc = "Get a reference to the value of field `gitlab` after provisioning.\n"]
-    pub fn gitlab(&self) -> terrars::ListRef<DataAppSpecElFunctionElGitlabElRef> {
+    pub fn gitlab(&self) -> terrars::ListRef<DataApp_Spec_Function_GitlabRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gitlab", self.base))
     }
 
     #[doc = "Get a reference to the value of field `log_destination` after provisioning.\n"]
-    pub fn log_destination(&self) -> terrars::ListRef<DataAppSpecElFunctionElLogDestinationElRef> {
+    pub fn log_destination(&self) -> terrars::ListRef<DataApp_Spec_Function_LogDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_destination", self.base))
     }
 
@@ -1968,7 +2777,7 @@ impl DataAppSpecElFunctionElRef {
     }
 
     #[doc = "Get a reference to the value of field `routes` after provisioning.\n"]
-    pub fn routes(&self) -> terrars::ListRef<DataAppSpecElFunctionElRoutesElRef> {
+    pub fn routes(&self) -> terrars::ListRef<DataApp_Spec_Function_RoutesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.routes", self.base))
     }
 
@@ -1979,7 +2788,7 @@ impl DataAppSpecElFunctionElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElIngressElRuleElComponentEl {
+pub struct DataApp_Spec_Ingress_Rule_Component {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1988,7 +2797,7 @@ pub struct DataAppSpecElIngressElRuleElComponentEl {
     rewrite: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElIngressElRuleElComponentEl {
+impl DataApp_Spec_Ingress_Rule_Component {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -2008,8 +2817,8 @@ impl DataAppSpecElIngressElRuleElComponentEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElIngressElRuleElComponentEl {
-    type O = terrars::BlockAssignable<DataAppSpecElIngressElRuleElComponentEl>;
+impl terrars::ToListMappable for DataApp_Spec_Ingress_Rule_Component {
+    type O = terrars::BlockAssignable<DataApp_Spec_Ingress_Rule_Component>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2020,11 +2829,11 @@ impl terrars::ToListMappable for DataAppSpecElIngressElRuleElComponentEl {
     }
 }
 
-pub struct BuildDataAppSpecElIngressElRuleElComponentEl {}
+pub struct BuildDataApp_Spec_Ingress_Rule_Component {}
 
-impl BuildDataAppSpecElIngressElRuleElComponentEl {
-    pub fn build(self) -> DataAppSpecElIngressElRuleElComponentEl {
-        DataAppSpecElIngressElRuleElComponentEl {
+impl BuildDataApp_Spec_Ingress_Rule_Component {
+    pub fn build(self) -> DataApp_Spec_Ingress_Rule_Component {
+        DataApp_Spec_Ingress_Rule_Component {
             name: core::default::Default::default(),
             preserve_path_prefix: core::default::Default::default(),
             rewrite: core::default::Default::default(),
@@ -2032,21 +2841,23 @@ impl BuildDataAppSpecElIngressElRuleElComponentEl {
     }
 }
 
-pub struct DataAppSpecElIngressElRuleElComponentElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Ingress_Rule_ComponentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElIngressElRuleElComponentElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElIngressElRuleElComponentElRef {
-        DataAppSpecElIngressElRuleElComponentElRef {
+impl terrars::Ref for DataApp_Spec_Ingress_Rule_ComponentRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Ingress_Rule_ComponentRef {
+        DataApp_Spec_Ingress_Rule_ComponentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElIngressElRuleElComponentElRef {
+impl DataApp_Spec_Ingress_Rule_ComponentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2068,7 +2879,7 @@ impl DataAppSpecElIngressElRuleElComponentElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElIngressElRuleElCorsElAllowOriginsEl {
+pub struct DataApp_Spec_Ingress_Rule_Cors_AllowOrigins {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exact: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2077,7 +2888,7 @@ pub struct DataAppSpecElIngressElRuleElCorsElAllowOriginsEl {
     regex: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElIngressElRuleElCorsElAllowOriginsEl {
+impl DataApp_Spec_Ingress_Rule_Cors_AllowOrigins {
     #[doc = "Set the field `exact`.\n"]
     pub fn set_exact(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.exact = std::option::Option::Some(v.into());
@@ -2097,8 +2908,8 @@ impl DataAppSpecElIngressElRuleElCorsElAllowOriginsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElIngressElRuleElCorsElAllowOriginsEl {
-    type O = terrars::BlockAssignable<DataAppSpecElIngressElRuleElCorsElAllowOriginsEl>;
+impl terrars::ToListMappable for DataApp_Spec_Ingress_Rule_Cors_AllowOrigins {
+    type O = terrars::BlockAssignable<DataApp_Spec_Ingress_Rule_Cors_AllowOrigins>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2109,11 +2920,11 @@ impl terrars::ToListMappable for DataAppSpecElIngressElRuleElCorsElAllowOriginsE
     }
 }
 
-pub struct BuildDataAppSpecElIngressElRuleElCorsElAllowOriginsEl {}
+pub struct BuildDataApp_Spec_Ingress_Rule_Cors_AllowOrigins {}
 
-impl BuildDataAppSpecElIngressElRuleElCorsElAllowOriginsEl {
-    pub fn build(self) -> DataAppSpecElIngressElRuleElCorsElAllowOriginsEl {
-        DataAppSpecElIngressElRuleElCorsElAllowOriginsEl {
+impl BuildDataApp_Spec_Ingress_Rule_Cors_AllowOrigins {
+    pub fn build(self) -> DataApp_Spec_Ingress_Rule_Cors_AllowOrigins {
+        DataApp_Spec_Ingress_Rule_Cors_AllowOrigins {
             exact: core::default::Default::default(),
             prefix: core::default::Default::default(),
             regex: core::default::Default::default(),
@@ -2121,24 +2932,26 @@ impl BuildDataAppSpecElIngressElRuleElCorsElAllowOriginsEl {
     }
 }
 
-pub struct DataAppSpecElIngressElRuleElCorsElAllowOriginsElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Ingress_Rule_Cors_AllowOriginsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElIngressElRuleElCorsElAllowOriginsElRef {
+impl terrars::Ref for DataApp_Spec_Ingress_Rule_Cors_AllowOriginsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAppSpecElIngressElRuleElCorsElAllowOriginsElRef {
-        DataAppSpecElIngressElRuleElCorsElAllowOriginsElRef {
+    ) -> DataApp_Spec_Ingress_Rule_Cors_AllowOriginsRef {
+        DataApp_Spec_Ingress_Rule_Cors_AllowOriginsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElIngressElRuleElCorsElAllowOriginsElRef {
+impl DataApp_Spec_Ingress_Rule_Cors_AllowOriginsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2160,7 +2973,7 @@ impl DataAppSpecElIngressElRuleElCorsElAllowOriginsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElIngressElRuleElCorsEl {
+pub struct DataApp_Spec_Ingress_Rule_Cors {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_credentials: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2168,14 +2981,14 @@ pub struct DataAppSpecElIngressElRuleElCorsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_methods: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_origins: std::option::Option<terrars::ListField<DataAppSpecElIngressElRuleElCorsElAllowOriginsEl>>,
+    allow_origins: std::option::Option<terrars::ListField<DataApp_Spec_Ingress_Rule_Cors_AllowOrigins>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     expose_headers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_age: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElIngressElRuleElCorsEl {
+impl DataApp_Spec_Ingress_Rule_Cors {
     #[doc = "Set the field `allow_credentials`.\n"]
     pub fn set_allow_credentials(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.allow_credentials = std::option::Option::Some(v.into());
@@ -2203,7 +3016,7 @@ impl DataAppSpecElIngressElRuleElCorsEl {
     #[doc = "Set the field `allow_origins`.\n"]
     pub fn set_allow_origins(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElIngressElRuleElCorsElAllowOriginsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Ingress_Rule_Cors_AllowOrigins>>,
     ) -> Self {
         self.allow_origins = std::option::Option::Some(v.into());
         self
@@ -2225,8 +3038,8 @@ impl DataAppSpecElIngressElRuleElCorsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElIngressElRuleElCorsEl {
-    type O = terrars::BlockAssignable<DataAppSpecElIngressElRuleElCorsEl>;
+impl terrars::ToListMappable for DataApp_Spec_Ingress_Rule_Cors {
+    type O = terrars::BlockAssignable<DataApp_Spec_Ingress_Rule_Cors>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2237,11 +3050,11 @@ impl terrars::ToListMappable for DataAppSpecElIngressElRuleElCorsEl {
     }
 }
 
-pub struct BuildDataAppSpecElIngressElRuleElCorsEl {}
+pub struct BuildDataApp_Spec_Ingress_Rule_Cors {}
 
-impl BuildDataAppSpecElIngressElRuleElCorsEl {
-    pub fn build(self) -> DataAppSpecElIngressElRuleElCorsEl {
-        DataAppSpecElIngressElRuleElCorsEl {
+impl BuildDataApp_Spec_Ingress_Rule_Cors {
+    pub fn build(self) -> DataApp_Spec_Ingress_Rule_Cors {
+        DataApp_Spec_Ingress_Rule_Cors {
             allow_credentials: core::default::Default::default(),
             allow_headers: core::default::Default::default(),
             allow_methods: core::default::Default::default(),
@@ -2252,21 +3065,23 @@ impl BuildDataAppSpecElIngressElRuleElCorsEl {
     }
 }
 
-pub struct DataAppSpecElIngressElRuleElCorsElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Ingress_Rule_CorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElIngressElRuleElCorsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElIngressElRuleElCorsElRef {
-        DataAppSpecElIngressElRuleElCorsElRef {
+impl terrars::Ref for DataApp_Spec_Ingress_Rule_CorsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Ingress_Rule_CorsRef {
+        DataApp_Spec_Ingress_Rule_CorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElIngressElRuleElCorsElRef {
+impl DataApp_Spec_Ingress_Rule_CorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2287,7 +3102,7 @@ impl DataAppSpecElIngressElRuleElCorsElRef {
     }
 
     #[doc = "Get a reference to the value of field `allow_origins` after provisioning.\n"]
-    pub fn allow_origins(&self) -> terrars::ListRef<DataAppSpecElIngressElRuleElCorsElAllowOriginsElRef> {
+    pub fn allow_origins(&self) -> terrars::ListRef<DataApp_Spec_Ingress_Rule_Cors_AllowOriginsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.allow_origins", self.base))
     }
 
@@ -2303,21 +3118,21 @@ impl DataAppSpecElIngressElRuleElCorsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElIngressElRuleElMatchElPathEl {
+pub struct DataApp_Spec_Ingress_Rule_Match_Authority {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    exact: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElIngressElRuleElMatchElPathEl {
-    #[doc = "Set the field `prefix`.\n"]
-    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.prefix = std::option::Option::Some(v.into());
+impl DataApp_Spec_Ingress_Rule_Match_Authority {
+    #[doc = "Set the field `exact`.\n"]
+    pub fn set_exact(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.exact = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElIngressElRuleElMatchElPathEl {
-    type O = terrars::BlockAssignable<DataAppSpecElIngressElRuleElMatchElPathEl>;
+impl terrars::ToListMappable for DataApp_Spec_Ingress_Rule_Match_Authority {
+    type O = terrars::BlockAssignable<DataApp_Spec_Ingress_Rule_Match_Authority>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2328,29 +3143,92 @@ impl terrars::ToListMappable for DataAppSpecElIngressElRuleElMatchElPathEl {
     }
 }
 
-pub struct BuildDataAppSpecElIngressElRuleElMatchElPathEl {}
+pub struct BuildDataApp_Spec_Ingress_Rule_Match_Authority {}
 
-impl BuildDataAppSpecElIngressElRuleElMatchElPathEl {
-    pub fn build(self) -> DataAppSpecElIngressElRuleElMatchElPathEl {
-        DataAppSpecElIngressElRuleElMatchElPathEl { prefix: core::default::Default::default() }
+impl BuildDataApp_Spec_Ingress_Rule_Match_Authority {
+    pub fn build(self) -> DataApp_Spec_Ingress_Rule_Match_Authority {
+        DataApp_Spec_Ingress_Rule_Match_Authority { exact: core::default::Default::default() }
     }
 }
 
-pub struct DataAppSpecElIngressElRuleElMatchElPathElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Ingress_Rule_Match_AuthorityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElIngressElRuleElMatchElPathElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElIngressElRuleElMatchElPathElRef {
-        DataAppSpecElIngressElRuleElMatchElPathElRef {
+impl terrars::Ref for DataApp_Spec_Ingress_Rule_Match_AuthorityRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Ingress_Rule_Match_AuthorityRef {
+        DataApp_Spec_Ingress_Rule_Match_AuthorityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElIngressElRuleElMatchElPathElRef {
+impl DataApp_Spec_Ingress_Rule_Match_AuthorityRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `exact` after provisioning.\n"]
+    pub fn exact(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.exact", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Ingress_Rule_Match_Path {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Ingress_Rule_Match_Path {
+    #[doc = "Set the field `prefix`.\n"]
+    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Ingress_Rule_Match_Path {
+    type O = terrars::BlockAssignable<DataApp_Spec_Ingress_Rule_Match_Path>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Ingress_Rule_Match_Path {}
+
+impl BuildDataApp_Spec_Ingress_Rule_Match_Path {
+    pub fn build(self) -> DataApp_Spec_Ingress_Rule_Match_Path {
+        DataApp_Spec_Ingress_Rule_Match_Path { prefix: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Ingress_Rule_Match_PathRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Ingress_Rule_Match_PathRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Ingress_Rule_Match_PathRef {
+        DataApp_Spec_Ingress_Rule_Match_PathRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Ingress_Rule_Match_PathRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2362,24 +3240,35 @@ impl DataAppSpecElIngressElRuleElMatchElPathElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElIngressElRuleElMatchEl {
+pub struct DataApp_Spec_Ingress_Rule_Match {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    path: std::option::Option<terrars::ListField<DataAppSpecElIngressElRuleElMatchElPathEl>>,
+    authority: std::option::Option<terrars::ListField<DataApp_Spec_Ingress_Rule_Match_Authority>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    path: std::option::Option<terrars::ListField<DataApp_Spec_Ingress_Rule_Match_Path>>,
 }
 
-impl DataAppSpecElIngressElRuleElMatchEl {
+impl DataApp_Spec_Ingress_Rule_Match {
+    #[doc = "Set the field `authority`.\n"]
+    pub fn set_authority(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Ingress_Rule_Match_Authority>>,
+    ) -> Self {
+        self.authority = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `path`.\n"]
     pub fn set_path(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElIngressElRuleElMatchElPathEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Ingress_Rule_Match_Path>>,
     ) -> Self {
         self.path = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElIngressElRuleElMatchEl {
-    type O = terrars::BlockAssignable<DataAppSpecElIngressElRuleElMatchEl>;
+impl terrars::ToListMappable for DataApp_Spec_Ingress_Rule_Match {
+    type O = terrars::BlockAssignable<DataApp_Spec_Ingress_Rule_Match>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2390,41 +3279,51 @@ impl terrars::ToListMappable for DataAppSpecElIngressElRuleElMatchEl {
     }
 }
 
-pub struct BuildDataAppSpecElIngressElRuleElMatchEl {}
+pub struct BuildDataApp_Spec_Ingress_Rule_Match {}
 
-impl BuildDataAppSpecElIngressElRuleElMatchEl {
-    pub fn build(self) -> DataAppSpecElIngressElRuleElMatchEl {
-        DataAppSpecElIngressElRuleElMatchEl { path: core::default::Default::default() }
+impl BuildDataApp_Spec_Ingress_Rule_Match {
+    pub fn build(self) -> DataApp_Spec_Ingress_Rule_Match {
+        DataApp_Spec_Ingress_Rule_Match {
+            authority: core::default::Default::default(),
+            path: core::default::Default::default(),
+        }
     }
 }
 
-pub struct DataAppSpecElIngressElRuleElMatchElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Ingress_Rule_MatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElIngressElRuleElMatchElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElIngressElRuleElMatchElRef {
-        DataAppSpecElIngressElRuleElMatchElRef {
+impl terrars::Ref for DataApp_Spec_Ingress_Rule_MatchRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Ingress_Rule_MatchRef {
+        DataApp_Spec_Ingress_Rule_MatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElIngressElRuleElMatchElRef {
+impl DataApp_Spec_Ingress_Rule_MatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `authority` after provisioning.\n"]
+    pub fn authority(&self) -> terrars::ListRef<DataApp_Spec_Ingress_Rule_Match_AuthorityRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.authority", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `path` after provisioning.\n"]
-    pub fn path(&self) -> terrars::ListRef<DataAppSpecElIngressElRuleElMatchElPathElRef> {
+    pub fn path(&self) -> terrars::ListRef<DataApp_Spec_Ingress_Rule_Match_PathRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.path", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElIngressElRuleElRedirectEl {
+pub struct DataApp_Spec_Ingress_Rule_Redirect {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authority: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2437,7 +3336,7 @@ pub struct DataAppSpecElIngressElRuleElRedirectEl {
     uri: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElIngressElRuleElRedirectEl {
+impl DataApp_Spec_Ingress_Rule_Redirect {
     #[doc = "Set the field `authority`.\n"]
     pub fn set_authority(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.authority = std::option::Option::Some(v.into());
@@ -2469,8 +3368,8 @@ impl DataAppSpecElIngressElRuleElRedirectEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElIngressElRuleElRedirectEl {
-    type O = terrars::BlockAssignable<DataAppSpecElIngressElRuleElRedirectEl>;
+impl terrars::ToListMappable for DataApp_Spec_Ingress_Rule_Redirect {
+    type O = terrars::BlockAssignable<DataApp_Spec_Ingress_Rule_Redirect>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2481,11 +3380,11 @@ impl terrars::ToListMappable for DataAppSpecElIngressElRuleElRedirectEl {
     }
 }
 
-pub struct BuildDataAppSpecElIngressElRuleElRedirectEl {}
+pub struct BuildDataApp_Spec_Ingress_Rule_Redirect {}
 
-impl BuildDataAppSpecElIngressElRuleElRedirectEl {
-    pub fn build(self) -> DataAppSpecElIngressElRuleElRedirectEl {
-        DataAppSpecElIngressElRuleElRedirectEl {
+impl BuildDataApp_Spec_Ingress_Rule_Redirect {
+    pub fn build(self) -> DataApp_Spec_Ingress_Rule_Redirect {
+        DataApp_Spec_Ingress_Rule_Redirect {
             authority: core::default::Default::default(),
             port: core::default::Default::default(),
             redirect_code: core::default::Default::default(),
@@ -2495,21 +3394,23 @@ impl BuildDataAppSpecElIngressElRuleElRedirectEl {
     }
 }
 
-pub struct DataAppSpecElIngressElRuleElRedirectElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Ingress_Rule_RedirectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElIngressElRuleElRedirectElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElIngressElRuleElRedirectElRef {
-        DataAppSpecElIngressElRuleElRedirectElRef {
+impl terrars::Ref for DataApp_Spec_Ingress_Rule_RedirectRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Ingress_Rule_RedirectRef {
+        DataApp_Spec_Ingress_Rule_RedirectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElIngressElRuleElRedirectElRef {
+impl DataApp_Spec_Ingress_Rule_RedirectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2541,41 +3442,35 @@ impl DataAppSpecElIngressElRuleElRedirectElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElIngressElRuleEl {
+pub struct DataApp_Spec_Ingress_Rule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    component: std::option::Option<terrars::ListField<DataAppSpecElIngressElRuleElComponentEl>>,
+    component: std::option::Option<terrars::ListField<DataApp_Spec_Ingress_Rule_Component>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cors: std::option::Option<terrars::ListField<DataAppSpecElIngressElRuleElCorsEl>>,
+    cors: std::option::Option<terrars::ListField<DataApp_Spec_Ingress_Rule_Cors>>,
     #[serde(rename = "match", skip_serializing_if = "std::option::Option::is_none")]
-    match_: std::option::Option<terrars::ListField<DataAppSpecElIngressElRuleElMatchEl>>,
+    match_: std::option::Option<terrars::ListField<DataApp_Spec_Ingress_Rule_Match>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redirect: std::option::Option<terrars::ListField<DataAppSpecElIngressElRuleElRedirectEl>>,
+    redirect: std::option::Option<terrars::ListField<DataApp_Spec_Ingress_Rule_Redirect>>,
 }
 
-impl DataAppSpecElIngressElRuleEl {
+impl DataApp_Spec_Ingress_Rule {
     #[doc = "Set the field `component`.\n"]
     pub fn set_component(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElIngressElRuleElComponentEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Ingress_Rule_Component>>,
     ) -> Self {
         self.component = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `cors`.\n"]
-    pub fn set_cors(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElIngressElRuleElCorsEl>>,
-    ) -> Self {
+    pub fn set_cors(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Ingress_Rule_Cors>>) -> Self {
         self.cors = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `match_`.\n"]
-    pub fn set_match(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElIngressElRuleElMatchEl>>,
-    ) -> Self {
+    pub fn set_match(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Ingress_Rule_Match>>) -> Self {
         self.match_ = std::option::Option::Some(v.into());
         self
     }
@@ -2583,15 +3478,15 @@ impl DataAppSpecElIngressElRuleEl {
     #[doc = "Set the field `redirect`.\n"]
     pub fn set_redirect(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElIngressElRuleElRedirectEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Ingress_Rule_Redirect>>,
     ) -> Self {
         self.redirect = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElIngressElRuleEl {
-    type O = terrars::BlockAssignable<DataAppSpecElIngressElRuleEl>;
+impl terrars::ToListMappable for DataApp_Spec_Ingress_Rule {
+    type O = terrars::BlockAssignable<DataApp_Spec_Ingress_Rule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2602,11 +3497,11 @@ impl terrars::ToListMappable for DataAppSpecElIngressElRuleEl {
     }
 }
 
-pub struct BuildDataAppSpecElIngressElRuleEl {}
+pub struct BuildDataApp_Spec_Ingress_Rule {}
 
-impl BuildDataAppSpecElIngressElRuleEl {
-    pub fn build(self) -> DataAppSpecElIngressElRuleEl {
-        DataAppSpecElIngressElRuleEl {
+impl BuildDataApp_Spec_Ingress_Rule {
+    pub fn build(self) -> DataApp_Spec_Ingress_Rule {
+        DataApp_Spec_Ingress_Rule {
             component: core::default::Default::default(),
             cors: core::default::Default::default(),
             match_: core::default::Default::default(),
@@ -2615,62 +3510,72 @@ impl BuildDataAppSpecElIngressElRuleEl {
     }
 }
 
-pub struct DataAppSpecElIngressElRuleElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Ingress_RuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElIngressElRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElIngressElRuleElRef {
-        DataAppSpecElIngressElRuleElRef {
+impl terrars::Ref for DataApp_Spec_Ingress_RuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Ingress_RuleRef {
+        DataApp_Spec_Ingress_RuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElIngressElRuleElRef {
+impl DataApp_Spec_Ingress_RuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `component` after provisioning.\n"]
-    pub fn component(&self) -> terrars::ListRef<DataAppSpecElIngressElRuleElComponentElRef> {
+    pub fn component(&self) -> terrars::ListRef<DataApp_Spec_Ingress_Rule_ComponentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.component", self.base))
     }
 
     #[doc = "Get a reference to the value of field `cors` after provisioning.\n"]
-    pub fn cors(&self) -> terrars::ListRef<DataAppSpecElIngressElRuleElCorsElRef> {
+    pub fn cors(&self) -> terrars::ListRef<DataApp_Spec_Ingress_Rule_CorsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors", self.base))
     }
 
     #[doc = "Get a reference to the value of field `match_` after provisioning.\n"]
-    pub fn match_(&self) -> terrars::ListRef<DataAppSpecElIngressElRuleElMatchElRef> {
+    pub fn match_(&self) -> terrars::ListRef<DataApp_Spec_Ingress_Rule_MatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.match", self.base))
     }
 
     #[doc = "Get a reference to the value of field `redirect` after provisioning.\n"]
-    pub fn redirect(&self) -> terrars::ListRef<DataAppSpecElIngressElRuleElRedirectElRef> {
+    pub fn redirect(&self) -> terrars::ListRef<DataApp_Spec_Ingress_Rule_RedirectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redirect", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElIngressEl {
+pub struct DataApp_Spec_Ingress_SecureHeader {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule: std::option::Option<terrars::ListField<DataAppSpecElIngressElRuleEl>>,
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElIngressEl {
-    #[doc = "Set the field `rule`.\n"]
-    pub fn set_rule(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElIngressElRuleEl>>) -> Self {
-        self.rule = std::option::Option::Some(v.into());
+impl DataApp_Spec_Ingress_SecureHeader {
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `value`.\n"]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElIngressEl {
-    type O = terrars::BlockAssignable<DataAppSpecElIngressEl>;
+impl terrars::ToListMappable for DataApp_Spec_Ingress_SecureHeader {
+    type O = terrars::BlockAssignable<DataApp_Spec_Ingress_SecureHeader>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2681,41 +3586,296 @@ impl terrars::ToListMappable for DataAppSpecElIngressEl {
     }
 }
 
-pub struct BuildDataAppSpecElIngressEl {}
+pub struct BuildDataApp_Spec_Ingress_SecureHeader {}
 
-impl BuildDataAppSpecElIngressEl {
-    pub fn build(self) -> DataAppSpecElIngressEl {
-        DataAppSpecElIngressEl { rule: core::default::Default::default() }
+impl BuildDataApp_Spec_Ingress_SecureHeader {
+    pub fn build(self) -> DataApp_Spec_Ingress_SecureHeader {
+        DataApp_Spec_Ingress_SecureHeader {
+            key: core::default::Default::default(),
+            value: core::default::Default::default(),
+        }
     }
 }
 
-pub struct DataAppSpecElIngressElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Ingress_SecureHeaderRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElIngressElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElIngressElRef {
-        DataAppSpecElIngressElRef {
+impl terrars::Ref for DataApp_Spec_Ingress_SecureHeaderRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Ingress_SecureHeaderRef {
+        DataApp_Spec_Ingress_SecureHeaderRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElIngressElRef {
+impl DataApp_Spec_Ingress_SecureHeaderRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Ingress {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rule: std::option::Option<terrars::ListField<DataApp_Spec_Ingress_Rule>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secure_header: std::option::Option<terrars::ListField<DataApp_Spec_Ingress_SecureHeader>>,
+}
+
+impl DataApp_Spec_Ingress {
+    #[doc = "Set the field `rule`.\n"]
+    pub fn set_rule(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Ingress_Rule>>) -> Self {
+        self.rule = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secure_header`.\n"]
+    pub fn set_secure_header(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Ingress_SecureHeader>>,
+    ) -> Self {
+        self.secure_header = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Ingress {
+    type O = terrars::BlockAssignable<DataApp_Spec_Ingress>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Ingress {}
+
+impl BuildDataApp_Spec_Ingress {
+    pub fn build(self) -> DataApp_Spec_Ingress {
+        DataApp_Spec_Ingress {
+            rule: core::default::Default::default(),
+            secure_header: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_IngressRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_IngressRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_IngressRef {
+        DataApp_Spec_IngressRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_IngressRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `rule` after provisioning.\n"]
-    pub fn rule(&self) -> terrars::ListRef<DataAppSpecElIngressElRuleElRef> {
+    pub fn rule(&self) -> terrars::ListRef<DataApp_Spec_Ingress_RuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rule", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `secure_header` after provisioning.\n"]
+    pub fn secure_header(&self) -> terrars::ListRef<DataApp_Spec_Ingress_SecureHeaderRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.secure_header", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElJobElAlertEl {
+pub struct DataApp_Spec_Job_Alert_Destinations_SlackWebhooks {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    channel: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Job_Alert_Destinations_SlackWebhooks {
+    #[doc = "Set the field `channel`.\n"]
+    pub fn set_channel(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.channel = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `url`.\n"]
+    pub fn set_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.url = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Job_Alert_Destinations_SlackWebhooks {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_Alert_Destinations_SlackWebhooks>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Job_Alert_Destinations_SlackWebhooks {}
+
+impl BuildDataApp_Spec_Job_Alert_Destinations_SlackWebhooks {
+    pub fn build(self) -> DataApp_Spec_Job_Alert_Destinations_SlackWebhooks {
+        DataApp_Spec_Job_Alert_Destinations_SlackWebhooks {
+            channel: core::default::Default::default(),
+            url: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_Alert_Destinations_SlackWebhooksRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Job_Alert_Destinations_SlackWebhooksRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataApp_Spec_Job_Alert_Destinations_SlackWebhooksRef {
+        DataApp_Spec_Job_Alert_Destinations_SlackWebhooksRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Job_Alert_Destinations_SlackWebhooksRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `channel` after provisioning.\n"]
+    pub fn channel(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.channel", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `url` after provisioning.\n"]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Job_Alert_Destinations {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    emails: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    slack_webhooks: std::option::Option<terrars::ListField<DataApp_Spec_Job_Alert_Destinations_SlackWebhooks>>,
+}
+
+impl DataApp_Spec_Job_Alert_Destinations {
+    #[doc = "Set the field `emails`.\n"]
+    pub fn set_emails(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.emails = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `slack_webhooks`.\n"]
+    pub fn set_slack_webhooks(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job_Alert_Destinations_SlackWebhooks>>,
+    ) -> Self {
+        self.slack_webhooks = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Job_Alert_Destinations {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_Alert_Destinations>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Job_Alert_Destinations {}
+
+impl BuildDataApp_Spec_Job_Alert_Destinations {
+    pub fn build(self) -> DataApp_Spec_Job_Alert_Destinations {
+        DataApp_Spec_Job_Alert_Destinations {
+            emails: core::default::Default::default(),
+            slack_webhooks: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_Alert_DestinationsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Job_Alert_DestinationsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Job_Alert_DestinationsRef {
+        DataApp_Spec_Job_Alert_DestinationsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Job_Alert_DestinationsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `emails` after provisioning.\n"]
+    pub fn emails(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.emails", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `slack_webhooks` after provisioning.\n"]
+    pub fn slack_webhooks(&self) -> terrars::ListRef<DataApp_Spec_Job_Alert_Destinations_SlackWebhooksRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.slack_webhooks", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Job_Alert {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destinations: std::option::Option<terrars::SetField<DataApp_Spec_Job_Alert_Destinations>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2728,7 +3888,16 @@ pub struct DataAppSpecElJobElAlertEl {
     window: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElJobElAlertEl {
+impl DataApp_Spec_Job_Alert {
+    #[doc = "Set the field `destinations`.\n"]
+    pub fn set_destinations(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<DataApp_Spec_Job_Alert_Destinations>>,
+    ) -> Self {
+        self.destinations = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `disabled`.\n"]
     pub fn set_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.disabled = std::option::Option::Some(v.into());
@@ -2760,8 +3929,8 @@ impl DataAppSpecElJobElAlertEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElJobElAlertEl {
-    type O = terrars::BlockAssignable<DataAppSpecElJobElAlertEl>;
+impl terrars::ToListMappable for DataApp_Spec_Job_Alert {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_Alert>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2772,11 +3941,12 @@ impl terrars::ToListMappable for DataAppSpecElJobElAlertEl {
     }
 }
 
-pub struct BuildDataAppSpecElJobElAlertEl {}
+pub struct BuildDataApp_Spec_Job_Alert {}
 
-impl BuildDataAppSpecElJobElAlertEl {
-    pub fn build(self) -> DataAppSpecElJobElAlertEl {
-        DataAppSpecElJobElAlertEl {
+impl BuildDataApp_Spec_Job_Alert {
+    pub fn build(self) -> DataApp_Spec_Job_Alert {
+        DataApp_Spec_Job_Alert {
+            destinations: core::default::Default::default(),
             disabled: core::default::Default::default(),
             operator: core::default::Default::default(),
             rule: core::default::Default::default(),
@@ -2786,23 +3956,30 @@ impl BuildDataAppSpecElJobElAlertEl {
     }
 }
 
-pub struct DataAppSpecElJobElAlertElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_AlertRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElJobElAlertElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElJobElAlertElRef {
-        DataAppSpecElJobElAlertElRef {
+impl terrars::Ref for DataApp_Spec_Job_AlertRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Job_AlertRef {
+        DataApp_Spec_Job_AlertRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElJobElAlertElRef {
+impl DataApp_Spec_Job_AlertRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `destinations` after provisioning.\n"]
+    pub fn destinations(&self) -> terrars::SetRef<DataApp_Spec_Job_Alert_DestinationsRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.destinations", self.base))
     }
 
     #[doc = "Get a reference to the value of field `disabled` after provisioning.\n"]
@@ -2832,7 +4009,98 @@ impl DataAppSpecElJobElAlertElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElJobElEnvEl {
+pub struct DataApp_Spec_Job_Bitbucket {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    branch: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deploy_on_push: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    repo: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Job_Bitbucket {
+    #[doc = "Set the field `branch`.\n"]
+    pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.branch = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `deploy_on_push`.\n"]
+    pub fn set_deploy_on_push(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.deploy_on_push = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `repo`.\n"]
+    pub fn set_repo(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.repo = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Job_Bitbucket {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_Bitbucket>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Job_Bitbucket {}
+
+impl BuildDataApp_Spec_Job_Bitbucket {
+    pub fn build(self) -> DataApp_Spec_Job_Bitbucket {
+        DataApp_Spec_Job_Bitbucket {
+            branch: core::default::Default::default(),
+            deploy_on_push: core::default::Default::default(),
+            repo: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_BitbucketRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Job_BitbucketRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Job_BitbucketRef {
+        DataApp_Spec_Job_BitbucketRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Job_BitbucketRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `branch` after provisioning.\n"]
+    pub fn branch(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.branch", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `deploy_on_push` after provisioning.\n"]
+    pub fn deploy_on_push(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deploy_on_push", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `repo` after provisioning.\n"]
+    pub fn repo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.repo", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Job_Env {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2843,7 +4111,7 @@ pub struct DataAppSpecElJobElEnvEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElJobElEnvEl {
+impl DataApp_Spec_Job_Env {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -2869,8 +4137,8 @@ impl DataAppSpecElJobElEnvEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElJobElEnvEl {
-    type O = terrars::BlockAssignable<DataAppSpecElJobElEnvEl>;
+impl terrars::ToListMappable for DataApp_Spec_Job_Env {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_Env>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2881,11 +4149,11 @@ impl terrars::ToListMappable for DataAppSpecElJobElEnvEl {
     }
 }
 
-pub struct BuildDataAppSpecElJobElEnvEl {}
+pub struct BuildDataApp_Spec_Job_Env {}
 
-impl BuildDataAppSpecElJobElEnvEl {
-    pub fn build(self) -> DataAppSpecElJobElEnvEl {
-        DataAppSpecElJobElEnvEl {
+impl BuildDataApp_Spec_Job_Env {
+    pub fn build(self) -> DataApp_Spec_Job_Env {
+        DataApp_Spec_Job_Env {
             key: core::default::Default::default(),
             scope: core::default::Default::default(),
             type_: core::default::Default::default(),
@@ -2894,21 +4162,23 @@ impl BuildDataAppSpecElJobElEnvEl {
     }
 }
 
-pub struct DataAppSpecElJobElEnvElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_EnvRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElJobElEnvElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElJobElEnvElRef {
-        DataAppSpecElJobElEnvElRef {
+impl terrars::Ref for DataApp_Spec_Job_EnvRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Job_EnvRef {
+        DataApp_Spec_Job_EnvRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElJobElEnvElRef {
+impl DataApp_Spec_Job_EnvRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2935,14 +4205,14 @@ impl DataAppSpecElJobElEnvElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElJobElGitEl {
+pub struct DataApp_Spec_Job_Git {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repo_clone_url: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElJobElGitEl {
+impl DataApp_Spec_Job_Git {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -2956,8 +4226,8 @@ impl DataAppSpecElJobElGitEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElJobElGitEl {
-    type O = terrars::BlockAssignable<DataAppSpecElJobElGitEl>;
+impl terrars::ToListMappable for DataApp_Spec_Job_Git {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_Git>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2968,32 +4238,34 @@ impl terrars::ToListMappable for DataAppSpecElJobElGitEl {
     }
 }
 
-pub struct BuildDataAppSpecElJobElGitEl {}
+pub struct BuildDataApp_Spec_Job_Git {}
 
-impl BuildDataAppSpecElJobElGitEl {
-    pub fn build(self) -> DataAppSpecElJobElGitEl {
-        DataAppSpecElJobElGitEl {
+impl BuildDataApp_Spec_Job_Git {
+    pub fn build(self) -> DataApp_Spec_Job_Git {
+        DataApp_Spec_Job_Git {
             branch: core::default::Default::default(),
             repo_clone_url: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElJobElGitElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_GitRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElJobElGitElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElJobElGitElRef {
-        DataAppSpecElJobElGitElRef {
+impl terrars::Ref for DataApp_Spec_Job_GitRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Job_GitRef {
+        DataApp_Spec_Job_GitRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElJobElGitElRef {
+impl DataApp_Spec_Job_GitRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3010,7 +4282,7 @@ impl DataAppSpecElJobElGitElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElJobElGithubEl {
+pub struct DataApp_Spec_Job_Github {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3019,7 +4291,7 @@ pub struct DataAppSpecElJobElGithubEl {
     repo: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElJobElGithubEl {
+impl DataApp_Spec_Job_Github {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -3039,8 +4311,8 @@ impl DataAppSpecElJobElGithubEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElJobElGithubEl {
-    type O = terrars::BlockAssignable<DataAppSpecElJobElGithubEl>;
+impl terrars::ToListMappable for DataApp_Spec_Job_Github {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_Github>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3051,11 +4323,11 @@ impl terrars::ToListMappable for DataAppSpecElJobElGithubEl {
     }
 }
 
-pub struct BuildDataAppSpecElJobElGithubEl {}
+pub struct BuildDataApp_Spec_Job_Github {}
 
-impl BuildDataAppSpecElJobElGithubEl {
-    pub fn build(self) -> DataAppSpecElJobElGithubEl {
-        DataAppSpecElJobElGithubEl {
+impl BuildDataApp_Spec_Job_Github {
+    pub fn build(self) -> DataApp_Spec_Job_Github {
+        DataApp_Spec_Job_Github {
             branch: core::default::Default::default(),
             deploy_on_push: core::default::Default::default(),
             repo: core::default::Default::default(),
@@ -3063,21 +4335,23 @@ impl BuildDataAppSpecElJobElGithubEl {
     }
 }
 
-pub struct DataAppSpecElJobElGithubElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_GithubRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElJobElGithubElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElJobElGithubElRef {
-        DataAppSpecElJobElGithubElRef {
+impl terrars::Ref for DataApp_Spec_Job_GithubRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Job_GithubRef {
+        DataApp_Spec_Job_GithubRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElJobElGithubElRef {
+impl DataApp_Spec_Job_GithubRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3099,7 +4373,7 @@ impl DataAppSpecElJobElGithubElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElJobElGitlabEl {
+pub struct DataApp_Spec_Job_Gitlab {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3108,7 +4382,7 @@ pub struct DataAppSpecElJobElGitlabEl {
     repo: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElJobElGitlabEl {
+impl DataApp_Spec_Job_Gitlab {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -3128,8 +4402,8 @@ impl DataAppSpecElJobElGitlabEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElJobElGitlabEl {
-    type O = terrars::BlockAssignable<DataAppSpecElJobElGitlabEl>;
+impl terrars::ToListMappable for DataApp_Spec_Job_Gitlab {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_Gitlab>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3140,11 +4414,11 @@ impl terrars::ToListMappable for DataAppSpecElJobElGitlabEl {
     }
 }
 
-pub struct BuildDataAppSpecElJobElGitlabEl {}
+pub struct BuildDataApp_Spec_Job_Gitlab {}
 
-impl BuildDataAppSpecElJobElGitlabEl {
-    pub fn build(self) -> DataAppSpecElJobElGitlabEl {
-        DataAppSpecElJobElGitlabEl {
+impl BuildDataApp_Spec_Job_Gitlab {
+    pub fn build(self) -> DataApp_Spec_Job_Gitlab {
+        DataApp_Spec_Job_Gitlab {
             branch: core::default::Default::default(),
             deploy_on_push: core::default::Default::default(),
             repo: core::default::Default::default(),
@@ -3152,21 +4426,23 @@ impl BuildDataAppSpecElJobElGitlabEl {
     }
 }
 
-pub struct DataAppSpecElJobElGitlabElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_GitlabRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElJobElGitlabElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElJobElGitlabElRef {
-        DataAppSpecElJobElGitlabElRef {
+impl terrars::Ref for DataApp_Spec_Job_GitlabRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Job_GitlabRef {
+        DataApp_Spec_Job_GitlabRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElJobElGitlabElRef {
+impl DataApp_Spec_Job_GitlabRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3188,12 +4464,12 @@ impl DataAppSpecElJobElGitlabElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElJobElImageElDeployOnPushEl {
+pub struct DataApp_Spec_Job_Image_DeployOnPush {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataAppSpecElJobElImageElDeployOnPushEl {
+impl DataApp_Spec_Job_Image_DeployOnPush {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -3201,8 +4477,8 @@ impl DataAppSpecElJobElImageElDeployOnPushEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElJobElImageElDeployOnPushEl {
-    type O = terrars::BlockAssignable<DataAppSpecElJobElImageElDeployOnPushEl>;
+impl terrars::ToListMappable for DataApp_Spec_Job_Image_DeployOnPush {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_Image_DeployOnPush>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3213,29 +4489,31 @@ impl terrars::ToListMappable for DataAppSpecElJobElImageElDeployOnPushEl {
     }
 }
 
-pub struct BuildDataAppSpecElJobElImageElDeployOnPushEl {}
+pub struct BuildDataApp_Spec_Job_Image_DeployOnPush {}
 
-impl BuildDataAppSpecElJobElImageElDeployOnPushEl {
-    pub fn build(self) -> DataAppSpecElJobElImageElDeployOnPushEl {
-        DataAppSpecElJobElImageElDeployOnPushEl { enabled: core::default::Default::default() }
+impl BuildDataApp_Spec_Job_Image_DeployOnPush {
+    pub fn build(self) -> DataApp_Spec_Job_Image_DeployOnPush {
+        DataApp_Spec_Job_Image_DeployOnPush { enabled: core::default::Default::default() }
     }
 }
 
-pub struct DataAppSpecElJobElImageElDeployOnPushElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_Image_DeployOnPushRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElJobElImageElDeployOnPushElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElJobElImageElDeployOnPushElRef {
-        DataAppSpecElJobElImageElDeployOnPushElRef {
+impl terrars::Ref for DataApp_Spec_Job_Image_DeployOnPushRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Job_Image_DeployOnPushRef {
+        DataApp_Spec_Job_Image_DeployOnPushRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElJobElImageElDeployOnPushElRef {
+impl DataApp_Spec_Job_Image_DeployOnPushRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3247,11 +4525,15 @@ impl DataAppSpecElJobElImageElDeployOnPushElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElJobElImageEl {
+pub struct DataApp_Spec_Job_Image {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    deploy_on_push: std::option::Option<terrars::ListField<DataAppSpecElJobElImageElDeployOnPushEl>>,
+    deploy_on_push: std::option::Option<terrars::ListField<DataApp_Spec_Job_Image_DeployOnPush>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    digest: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     registry: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    registry_credentials: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     registry_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3260,19 +4542,34 @@ pub struct DataAppSpecElJobElImageEl {
     tag: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElJobElImageEl {
+impl DataApp_Spec_Job_Image {
     #[doc = "Set the field `deploy_on_push`.\n"]
     pub fn set_deploy_on_push(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElJobElImageElDeployOnPushEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job_Image_DeployOnPush>>,
     ) -> Self {
         self.deploy_on_push = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `digest`.\n"]
+    pub fn set_digest(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.digest = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `registry`.\n"]
     pub fn set_registry(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.registry = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `registry_credentials`.\n"]
+    pub fn set_registry_credentials(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.registry_credentials = std::option::Option::Some(v.into());
         self
     }
 
@@ -3295,8 +4592,8 @@ impl DataAppSpecElJobElImageEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElJobElImageEl {
-    type O = terrars::BlockAssignable<DataAppSpecElJobElImageEl>;
+impl terrars::ToListMappable for DataApp_Spec_Job_Image {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_Image>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3307,13 +4604,15 @@ impl terrars::ToListMappable for DataAppSpecElJobElImageEl {
     }
 }
 
-pub struct BuildDataAppSpecElJobElImageEl {}
+pub struct BuildDataApp_Spec_Job_Image {}
 
-impl BuildDataAppSpecElJobElImageEl {
-    pub fn build(self) -> DataAppSpecElJobElImageEl {
-        DataAppSpecElJobElImageEl {
+impl BuildDataApp_Spec_Job_Image {
+    pub fn build(self) -> DataApp_Spec_Job_Image {
+        DataApp_Spec_Job_Image {
             deploy_on_push: core::default::Default::default(),
+            digest: core::default::Default::default(),
             registry: core::default::Default::default(),
+            registry_credentials: core::default::Default::default(),
             registry_type: core::default::Default::default(),
             repository: core::default::Default::default(),
             tag: core::default::Default::default(),
@@ -3321,33 +4620,45 @@ impl BuildDataAppSpecElJobElImageEl {
     }
 }
 
-pub struct DataAppSpecElJobElImageElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_ImageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElJobElImageElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElJobElImageElRef {
-        DataAppSpecElJobElImageElRef {
+impl terrars::Ref for DataApp_Spec_Job_ImageRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Job_ImageRef {
+        DataApp_Spec_Job_ImageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElJobElImageElRef {
+impl DataApp_Spec_Job_ImageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `deploy_on_push` after provisioning.\n"]
-    pub fn deploy_on_push(&self) -> terrars::ListRef<DataAppSpecElJobElImageElDeployOnPushElRef> {
+    pub fn deploy_on_push(&self) -> terrars::ListRef<DataApp_Spec_Job_Image_DeployOnPushRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deploy_on_push", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `digest` after provisioning.\n"]
+    pub fn digest(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.digest", self.base))
     }
 
     #[doc = "Get a reference to the value of field `registry` after provisioning.\n"]
     pub fn registry(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `registry_credentials` after provisioning.\n"]
+    pub fn registry_credentials(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_credentials", self.base))
     }
 
     #[doc = "Get a reference to the value of field `registry_type` after provisioning.\n"]
@@ -3367,14 +4678,14 @@ impl DataAppSpecElJobElImageElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElJobElLogDestinationElDatadogEl {
+pub struct DataApp_Spec_Job_LogDestination_Datadog {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     api_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElJobElLogDestinationElDatadogEl {
+impl DataApp_Spec_Job_LogDestination_Datadog {
     #[doc = "Set the field `api_key`.\n"]
     pub fn set_api_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.api_key = std::option::Option::Some(v.into());
@@ -3388,8 +4699,8 @@ impl DataAppSpecElJobElLogDestinationElDatadogEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElJobElLogDestinationElDatadogEl {
-    type O = terrars::BlockAssignable<DataAppSpecElJobElLogDestinationElDatadogEl>;
+impl terrars::ToListMappable for DataApp_Spec_Job_LogDestination_Datadog {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_LogDestination_Datadog>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3400,35 +4711,34 @@ impl terrars::ToListMappable for DataAppSpecElJobElLogDestinationElDatadogEl {
     }
 }
 
-pub struct BuildDataAppSpecElJobElLogDestinationElDatadogEl {}
+pub struct BuildDataApp_Spec_Job_LogDestination_Datadog {}
 
-impl BuildDataAppSpecElJobElLogDestinationElDatadogEl {
-    pub fn build(self) -> DataAppSpecElJobElLogDestinationElDatadogEl {
-        DataAppSpecElJobElLogDestinationElDatadogEl {
+impl BuildDataApp_Spec_Job_LogDestination_Datadog {
+    pub fn build(self) -> DataApp_Spec_Job_LogDestination_Datadog {
+        DataApp_Spec_Job_LogDestination_Datadog {
             api_key: core::default::Default::default(),
             endpoint: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElJobElLogDestinationElDatadogElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_LogDestination_DatadogRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElJobElLogDestinationElDatadogElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataAppSpecElJobElLogDestinationElDatadogElRef {
-        DataAppSpecElJobElLogDestinationElDatadogElRef {
+impl terrars::Ref for DataApp_Spec_Job_LogDestination_DatadogRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Job_LogDestination_DatadogRef {
+        DataApp_Spec_Job_LogDestination_DatadogRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElJobElLogDestinationElDatadogElRef {
+impl DataApp_Spec_Job_LogDestination_DatadogRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3445,12 +4755,12 @@ impl DataAppSpecElJobElLogDestinationElDatadogElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElJobElLogDestinationElLogtailEl {
+pub struct DataApp_Spec_Job_LogDestination_Logtail {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     token: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElJobElLogDestinationElLogtailEl {
+impl DataApp_Spec_Job_LogDestination_Logtail {
     #[doc = "Set the field `token`.\n"]
     pub fn set_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.token = std::option::Option::Some(v.into());
@@ -3458,8 +4768,8 @@ impl DataAppSpecElJobElLogDestinationElLogtailEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElJobElLogDestinationElLogtailEl {
-    type O = terrars::BlockAssignable<DataAppSpecElJobElLogDestinationElLogtailEl>;
+impl terrars::ToListMappable for DataApp_Spec_Job_LogDestination_Logtail {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_LogDestination_Logtail>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3470,32 +4780,31 @@ impl terrars::ToListMappable for DataAppSpecElJobElLogDestinationElLogtailEl {
     }
 }
 
-pub struct BuildDataAppSpecElJobElLogDestinationElLogtailEl {}
+pub struct BuildDataApp_Spec_Job_LogDestination_Logtail {}
 
-impl BuildDataAppSpecElJobElLogDestinationElLogtailEl {
-    pub fn build(self) -> DataAppSpecElJobElLogDestinationElLogtailEl {
-        DataAppSpecElJobElLogDestinationElLogtailEl { token: core::default::Default::default() }
+impl BuildDataApp_Spec_Job_LogDestination_Logtail {
+    pub fn build(self) -> DataApp_Spec_Job_LogDestination_Logtail {
+        DataApp_Spec_Job_LogDestination_Logtail { token: core::default::Default::default() }
     }
 }
 
-pub struct DataAppSpecElJobElLogDestinationElLogtailElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_LogDestination_LogtailRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElJobElLogDestinationElLogtailElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataAppSpecElJobElLogDestinationElLogtailElRef {
-        DataAppSpecElJobElLogDestinationElLogtailElRef {
+impl terrars::Ref for DataApp_Spec_Job_LogDestination_LogtailRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Job_LogDestination_LogtailRef {
+        DataApp_Spec_Job_LogDestination_LogtailRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElJobElLogDestinationElLogtailElRef {
+impl DataApp_Spec_Job_LogDestination_LogtailRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3507,21 +4816,29 @@ impl DataAppSpecElJobElLogDestinationElLogtailElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElJobElLogDestinationElPapertrailEl {
+pub struct DataApp_Spec_Job_LogDestination_OpenSearch_BasicAuth {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+    password: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElJobElLogDestinationElPapertrailEl {
-    #[doc = "Set the field `endpoint`.\n"]
-    pub fn set_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.endpoint = std::option::Option::Some(v.into());
+impl DataApp_Spec_Job_LogDestination_OpenSearch_BasicAuth {
+    #[doc = "Set the field `password`.\n"]
+    pub fn set_password(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.password = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `user`.\n"]
+    pub fn set_user(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.user = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElJobElLogDestinationElPapertrailEl {
-    type O = terrars::BlockAssignable<DataAppSpecElJobElLogDestinationElPapertrailEl>;
+impl terrars::ToListMappable for DataApp_Spec_Job_LogDestination_OpenSearch_BasicAuth {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_LogDestination_OpenSearch_BasicAuth>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3532,32 +4849,211 @@ impl terrars::ToListMappable for DataAppSpecElJobElLogDestinationElPapertrailEl 
     }
 }
 
-pub struct BuildDataAppSpecElJobElLogDestinationElPapertrailEl {}
+pub struct BuildDataApp_Spec_Job_LogDestination_OpenSearch_BasicAuth {}
 
-impl BuildDataAppSpecElJobElLogDestinationElPapertrailEl {
-    pub fn build(self) -> DataAppSpecElJobElLogDestinationElPapertrailEl {
-        DataAppSpecElJobElLogDestinationElPapertrailEl { endpoint: core::default::Default::default() }
+impl BuildDataApp_Spec_Job_LogDestination_OpenSearch_BasicAuth {
+    pub fn build(self) -> DataApp_Spec_Job_LogDestination_OpenSearch_BasicAuth {
+        DataApp_Spec_Job_LogDestination_OpenSearch_BasicAuth {
+            password: core::default::Default::default(),
+            user: core::default::Default::default(),
+        }
     }
 }
 
-pub struct DataAppSpecElJobElLogDestinationElPapertrailElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_LogDestination_OpenSearch_BasicAuthRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElJobElLogDestinationElPapertrailElRef {
+impl terrars::Ref for DataApp_Spec_Job_LogDestination_OpenSearch_BasicAuthRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAppSpecElJobElLogDestinationElPapertrailElRef {
-        DataAppSpecElJobElLogDestinationElPapertrailElRef {
+    ) -> DataApp_Spec_Job_LogDestination_OpenSearch_BasicAuthRef {
+        DataApp_Spec_Job_LogDestination_OpenSearch_BasicAuthRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElJobElLogDestinationElPapertrailElRef {
+impl DataApp_Spec_Job_LogDestination_OpenSearch_BasicAuthRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
+    pub fn password(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `user` after provisioning.\n"]
+    pub fn user(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Job_LogDestination_OpenSearch {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    basic_auth: std::option::Option<terrars::ListField<DataApp_Spec_Job_LogDestination_OpenSearch_BasicAuth>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    index_name: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Job_LogDestination_OpenSearch {
+    #[doc = "Set the field `basic_auth`.\n"]
+    pub fn set_basic_auth(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job_LogDestination_OpenSearch_BasicAuth>>,
+    ) -> Self {
+        self.basic_auth = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cluster_name`.\n"]
+    pub fn set_cluster_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cluster_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `endpoint`.\n"]
+    pub fn set_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.endpoint = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `index_name`.\n"]
+    pub fn set_index_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.index_name = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Job_LogDestination_OpenSearch {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_LogDestination_OpenSearch>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Job_LogDestination_OpenSearch {}
+
+impl BuildDataApp_Spec_Job_LogDestination_OpenSearch {
+    pub fn build(self) -> DataApp_Spec_Job_LogDestination_OpenSearch {
+        DataApp_Spec_Job_LogDestination_OpenSearch {
+            basic_auth: core::default::Default::default(),
+            cluster_name: core::default::Default::default(),
+            endpoint: core::default::Default::default(),
+            index_name: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_LogDestination_OpenSearchRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Job_LogDestination_OpenSearchRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Job_LogDestination_OpenSearchRef {
+        DataApp_Spec_Job_LogDestination_OpenSearchRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Job_LogDestination_OpenSearchRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `basic_auth` after provisioning.\n"]
+    pub fn basic_auth(&self) -> terrars::ListRef<DataApp_Spec_Job_LogDestination_OpenSearch_BasicAuthRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.basic_auth", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cluster_name` after provisioning.\n"]
+    pub fn cluster_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `index_name` after provisioning.\n"]
+    pub fn index_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_name", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Job_LogDestination_Papertrail {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Job_LogDestination_Papertrail {
+    #[doc = "Set the field `endpoint`.\n"]
+    pub fn set_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.endpoint = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Job_LogDestination_Papertrail {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_LogDestination_Papertrail>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Job_LogDestination_Papertrail {}
+
+impl BuildDataApp_Spec_Job_LogDestination_Papertrail {
+    pub fn build(self) -> DataApp_Spec_Job_LogDestination_Papertrail {
+        DataApp_Spec_Job_LogDestination_Papertrail { endpoint: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_LogDestination_PapertrailRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Job_LogDestination_PapertrailRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Job_LogDestination_PapertrailRef {
+        DataApp_Spec_Job_LogDestination_PapertrailRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Job_LogDestination_PapertrailRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3569,22 +5065,24 @@ impl DataAppSpecElJobElLogDestinationElPapertrailElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElJobElLogDestinationEl {
+pub struct DataApp_Spec_Job_LogDestination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    datadog: std::option::Option<terrars::ListField<DataAppSpecElJobElLogDestinationElDatadogEl>>,
+    datadog: std::option::Option<terrars::ListField<DataApp_Spec_Job_LogDestination_Datadog>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logtail: std::option::Option<terrars::ListField<DataAppSpecElJobElLogDestinationElLogtailEl>>,
+    logtail: std::option::Option<terrars::ListField<DataApp_Spec_Job_LogDestination_Logtail>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    papertrail: std::option::Option<terrars::ListField<DataAppSpecElJobElLogDestinationElPapertrailEl>>,
+    open_search: std::option::Option<terrars::ListField<DataApp_Spec_Job_LogDestination_OpenSearch>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    papertrail: std::option::Option<terrars::ListField<DataApp_Spec_Job_LogDestination_Papertrail>>,
 }
 
-impl DataAppSpecElJobElLogDestinationEl {
+impl DataApp_Spec_Job_LogDestination {
     #[doc = "Set the field `datadog`.\n"]
     pub fn set_datadog(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElJobElLogDestinationElDatadogEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job_LogDestination_Datadog>>,
     ) -> Self {
         self.datadog = std::option::Option::Some(v.into());
         self
@@ -3593,7 +5091,7 @@ impl DataAppSpecElJobElLogDestinationEl {
     #[doc = "Set the field `logtail`.\n"]
     pub fn set_logtail(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElJobElLogDestinationElLogtailEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job_LogDestination_Logtail>>,
     ) -> Self {
         self.logtail = std::option::Option::Some(v.into());
         self
@@ -3605,18 +5103,27 @@ impl DataAppSpecElJobElLogDestinationEl {
         self
     }
 
+    #[doc = "Set the field `open_search`.\n"]
+    pub fn set_open_search(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job_LogDestination_OpenSearch>>,
+    ) -> Self {
+        self.open_search = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `papertrail`.\n"]
     pub fn set_papertrail(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElJobElLogDestinationElPapertrailEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job_LogDestination_Papertrail>>,
     ) -> Self {
         self.papertrail = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElJobElLogDestinationEl {
-    type O = terrars::BlockAssignable<DataAppSpecElJobElLogDestinationEl>;
+impl terrars::ToListMappable for DataApp_Spec_Job_LogDestination {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_LogDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3627,45 +5134,48 @@ impl terrars::ToListMappable for DataAppSpecElJobElLogDestinationEl {
     }
 }
 
-pub struct BuildDataAppSpecElJobElLogDestinationEl {}
+pub struct BuildDataApp_Spec_Job_LogDestination {}
 
-impl BuildDataAppSpecElJobElLogDestinationEl {
-    pub fn build(self) -> DataAppSpecElJobElLogDestinationEl {
-        DataAppSpecElJobElLogDestinationEl {
+impl BuildDataApp_Spec_Job_LogDestination {
+    pub fn build(self) -> DataApp_Spec_Job_LogDestination {
+        DataApp_Spec_Job_LogDestination {
             datadog: core::default::Default::default(),
             logtail: core::default::Default::default(),
             name: core::default::Default::default(),
+            open_search: core::default::Default::default(),
             papertrail: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElJobElLogDestinationElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_LogDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElJobElLogDestinationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElJobElLogDestinationElRef {
-        DataAppSpecElJobElLogDestinationElRef {
+impl terrars::Ref for DataApp_Spec_Job_LogDestinationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Job_LogDestinationRef {
+        DataApp_Spec_Job_LogDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElJobElLogDestinationElRef {
+impl DataApp_Spec_Job_LogDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `datadog` after provisioning.\n"]
-    pub fn datadog(&self) -> terrars::ListRef<DataAppSpecElJobElLogDestinationElDatadogElRef> {
+    pub fn datadog(&self) -> terrars::ListRef<DataApp_Spec_Job_LogDestination_DatadogRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.datadog", self.base))
     }
 
     #[doc = "Get a reference to the value of field `logtail` after provisioning.\n"]
-    pub fn logtail(&self) -> terrars::ListRef<DataAppSpecElJobElLogDestinationElLogtailElRef> {
+    pub fn logtail(&self) -> terrars::ListRef<DataApp_Spec_Job_LogDestination_LogtailRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logtail", self.base))
     }
 
@@ -3674,32 +5184,100 @@ impl DataAppSpecElJobElLogDestinationElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `open_search` after provisioning.\n"]
+    pub fn open_search(&self) -> terrars::ListRef<DataApp_Spec_Job_LogDestination_OpenSearchRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.open_search", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `papertrail` after provisioning.\n"]
-    pub fn papertrail(&self) -> terrars::ListRef<DataAppSpecElJobElLogDestinationElPapertrailElRef> {
+    pub fn papertrail(&self) -> terrars::ListRef<DataApp_Spec_Job_LogDestination_PapertrailRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.papertrail", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElJobEl {
+pub struct DataApp_Spec_Job_Termination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    alert: std::option::Option<terrars::ListField<DataAppSpecElJobElAlertEl>>,
+    grace_period_seconds: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataApp_Spec_Job_Termination {
+    #[doc = "Set the field `grace_period_seconds`.\n"]
+    pub fn set_grace_period_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.grace_period_seconds = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Job_Termination {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job_Termination>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Job_Termination {}
+
+impl BuildDataApp_Spec_Job_Termination {
+    pub fn build(self) -> DataApp_Spec_Job_Termination {
+        DataApp_Spec_Job_Termination { grace_period_seconds: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Job_TerminationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Job_TerminationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Job_TerminationRef {
+        DataApp_Spec_Job_TerminationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Job_TerminationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `grace_period_seconds` after provisioning.\n"]
+    pub fn grace_period_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.grace_period_seconds", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Job {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    alert: std::option::Option<terrars::ListField<DataApp_Spec_Job_Alert>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bitbucket: std::option::Option<terrars::ListField<DataApp_Spec_Job_Bitbucket>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     build_command: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dockerfile_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    env: std::option::Option<terrars::SetField<DataAppSpecElJobElEnvEl>>,
+    env: std::option::Option<terrars::SetField<DataApp_Spec_Job_Env>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     environment_slug: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    git: std::option::Option<terrars::ListField<DataAppSpecElJobElGitEl>>,
+    git: std::option::Option<terrars::ListField<DataApp_Spec_Job_Git>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    github: std::option::Option<terrars::ListField<DataAppSpecElJobElGithubEl>>,
+    github: std::option::Option<terrars::ListField<DataApp_Spec_Job_Github>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gitlab: std::option::Option<terrars::ListField<DataAppSpecElJobElGitlabEl>>,
+    gitlab: std::option::Option<terrars::ListField<DataApp_Spec_Job_Gitlab>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    image: std::option::Option<terrars::ListField<DataAppSpecElJobElImageEl>>,
+    image: std::option::Option<terrars::ListField<DataApp_Spec_Job_Image>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3707,19 +5285,27 @@ pub struct DataAppSpecElJobEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kind: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_destination: std::option::Option<terrars::ListField<DataAppSpecElJobElLogDestinationEl>>,
+    log_destination: std::option::Option<terrars::ListField<DataApp_Spec_Job_LogDestination>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     run_command: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_dir: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    termination: std::option::Option<terrars::ListField<DataApp_Spec_Job_Termination>>,
 }
 
-impl DataAppSpecElJobEl {
+impl DataApp_Spec_Job {
     #[doc = "Set the field `alert`.\n"]
-    pub fn set_alert(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElJobElAlertEl>>) -> Self {
+    pub fn set_alert(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job_Alert>>) -> Self {
         self.alert = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `bitbucket`.\n"]
+    pub fn set_bitbucket(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job_Bitbucket>>) -> Self {
+        self.bitbucket = std::option::Option::Some(v.into());
         self
     }
 
@@ -3736,7 +5322,7 @@ impl DataAppSpecElJobEl {
     }
 
     #[doc = "Set the field `env`.\n"]
-    pub fn set_env(mut self, v: impl std::convert::Into<terrars::SetField<DataAppSpecElJobElEnvEl>>) -> Self {
+    pub fn set_env(mut self, v: impl std::convert::Into<terrars::SetField<DataApp_Spec_Job_Env>>) -> Self {
         self.env = std::option::Option::Some(v.into());
         self
     }
@@ -3748,25 +5334,25 @@ impl DataAppSpecElJobEl {
     }
 
     #[doc = "Set the field `git`.\n"]
-    pub fn set_git(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElJobElGitEl>>) -> Self {
+    pub fn set_git(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job_Git>>) -> Self {
         self.git = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `github`.\n"]
-    pub fn set_github(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElJobElGithubEl>>) -> Self {
+    pub fn set_github(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job_Github>>) -> Self {
         self.github = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `gitlab`.\n"]
-    pub fn set_gitlab(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElJobElGitlabEl>>) -> Self {
+    pub fn set_gitlab(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job_Gitlab>>) -> Self {
         self.gitlab = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `image`.\n"]
-    pub fn set_image(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElJobElImageEl>>) -> Self {
+    pub fn set_image(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job_Image>>) -> Self {
         self.image = std::option::Option::Some(v.into());
         self
     }
@@ -3795,7 +5381,7 @@ impl DataAppSpecElJobEl {
     #[doc = "Set the field `log_destination`.\n"]
     pub fn set_log_destination(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElJobElLogDestinationEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job_LogDestination>>,
     ) -> Self {
         self.log_destination = std::option::Option::Some(v.into());
         self
@@ -3818,10 +5404,19 @@ impl DataAppSpecElJobEl {
         self.source_dir = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `termination`.\n"]
+    pub fn set_termination(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job_Termination>>,
+    ) -> Self {
+        self.termination = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataAppSpecElJobEl {
-    type O = terrars::BlockAssignable<DataAppSpecElJobEl>;
+impl terrars::ToListMappable for DataApp_Spec_Job {
+    type O = terrars::BlockAssignable<DataApp_Spec_Job>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3832,12 +5427,13 @@ impl terrars::ToListMappable for DataAppSpecElJobEl {
     }
 }
 
-pub struct BuildDataAppSpecElJobEl {}
+pub struct BuildDataApp_Spec_Job {}
 
-impl BuildDataAppSpecElJobEl {
-    pub fn build(self) -> DataAppSpecElJobEl {
-        DataAppSpecElJobEl {
+impl BuildDataApp_Spec_Job {
+    pub fn build(self) -> DataApp_Spec_Job {
+        DataApp_Spec_Job {
             alert: core::default::Default::default(),
+            bitbucket: core::default::Default::default(),
             build_command: core::default::Default::default(),
             dockerfile_path: core::default::Default::default(),
             env: core::default::Default::default(),
@@ -3853,32 +5449,40 @@ impl BuildDataAppSpecElJobEl {
             name: core::default::Default::default(),
             run_command: core::default::Default::default(),
             source_dir: core::default::Default::default(),
+            termination: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElJobElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_JobRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElJobElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElJobElRef {
-        DataAppSpecElJobElRef {
+impl terrars::Ref for DataApp_Spec_JobRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_JobRef {
+        DataApp_Spec_JobRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElJobElRef {
+impl DataApp_Spec_JobRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `alert` after provisioning.\n"]
-    pub fn alert(&self) -> terrars::ListRef<DataAppSpecElJobElAlertElRef> {
+    pub fn alert(&self) -> terrars::ListRef<DataApp_Spec_Job_AlertRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.alert", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `bitbucket` after provisioning.\n"]
+    pub fn bitbucket(&self) -> terrars::ListRef<DataApp_Spec_Job_BitbucketRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bitbucket", self.base))
     }
 
     #[doc = "Get a reference to the value of field `build_command` after provisioning.\n"]
@@ -3892,7 +5496,7 @@ impl DataAppSpecElJobElRef {
     }
 
     #[doc = "Get a reference to the value of field `env` after provisioning.\n"]
-    pub fn env(&self) -> terrars::SetRef<DataAppSpecElJobElEnvElRef> {
+    pub fn env(&self) -> terrars::SetRef<DataApp_Spec_Job_EnvRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.env", self.base))
     }
 
@@ -3902,22 +5506,22 @@ impl DataAppSpecElJobElRef {
     }
 
     #[doc = "Get a reference to the value of field `git` after provisioning.\n"]
-    pub fn git(&self) -> terrars::ListRef<DataAppSpecElJobElGitElRef> {
+    pub fn git(&self) -> terrars::ListRef<DataApp_Spec_Job_GitRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.git", self.base))
     }
 
     #[doc = "Get a reference to the value of field `github` after provisioning.\n"]
-    pub fn github(&self) -> terrars::ListRef<DataAppSpecElJobElGithubElRef> {
+    pub fn github(&self) -> terrars::ListRef<DataApp_Spec_Job_GithubRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.github", self.base))
     }
 
     #[doc = "Get a reference to the value of field `gitlab` after provisioning.\n"]
-    pub fn gitlab(&self) -> terrars::ListRef<DataAppSpecElJobElGitlabElRef> {
+    pub fn gitlab(&self) -> terrars::ListRef<DataApp_Spec_Job_GitlabRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gitlab", self.base))
     }
 
     #[doc = "Get a reference to the value of field `image` after provisioning.\n"]
-    pub fn image(&self) -> terrars::ListRef<DataAppSpecElJobElImageElRef> {
+    pub fn image(&self) -> terrars::ListRef<DataApp_Spec_Job_ImageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image", self.base))
     }
 
@@ -3937,7 +5541,7 @@ impl DataAppSpecElJobElRef {
     }
 
     #[doc = "Get a reference to the value of field `log_destination` after provisioning.\n"]
-    pub fn log_destination(&self) -> terrars::ListRef<DataAppSpecElJobElLogDestinationElRef> {
+    pub fn log_destination(&self) -> terrars::ListRef<DataApp_Spec_Job_LogDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_destination", self.base))
     }
 
@@ -3955,10 +5559,271 @@ impl DataAppSpecElJobElRef {
     pub fn source_dir(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_dir", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `termination` after provisioning.\n"]
+    pub fn termination(&self) -> terrars::ListRef<DataApp_Spec_Job_TerminationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.termination", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceElAlertEl {
+pub struct DataApp_Spec_Maintenance {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    archive: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    offline_page_url: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Maintenance {
+    #[doc = "Set the field `archive`.\n"]
+    pub fn set_archive(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.archive = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `offline_page_url`.\n"]
+    pub fn set_offline_page_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.offline_page_url = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Maintenance {
+    type O = terrars::BlockAssignable<DataApp_Spec_Maintenance>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Maintenance {}
+
+impl BuildDataApp_Spec_Maintenance {
+    pub fn build(self) -> DataApp_Spec_Maintenance {
+        DataApp_Spec_Maintenance {
+            archive: core::default::Default::default(),
+            enabled: core::default::Default::default(),
+            offline_page_url: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_MaintenanceRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_MaintenanceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_MaintenanceRef {
+        DataApp_Spec_MaintenanceRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_MaintenanceRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `archive` after provisioning.\n"]
+    pub fn archive(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.archive", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `offline_page_url` after provisioning.\n"]
+    pub fn offline_page_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.offline_page_url", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Service_Alert_Destinations_SlackWebhooks {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    channel: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Service_Alert_Destinations_SlackWebhooks {
+    #[doc = "Set the field `channel`.\n"]
+    pub fn set_channel(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.channel = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `url`.\n"]
+    pub fn set_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.url = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Service_Alert_Destinations_SlackWebhooks {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Alert_Destinations_SlackWebhooks>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Service_Alert_Destinations_SlackWebhooks {}
+
+impl BuildDataApp_Spec_Service_Alert_Destinations_SlackWebhooks {
+    pub fn build(self) -> DataApp_Spec_Service_Alert_Destinations_SlackWebhooks {
+        DataApp_Spec_Service_Alert_Destinations_SlackWebhooks {
+            channel: core::default::Default::default(),
+            url: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_Alert_Destinations_SlackWebhooksRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Service_Alert_Destinations_SlackWebhooksRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataApp_Spec_Service_Alert_Destinations_SlackWebhooksRef {
+        DataApp_Spec_Service_Alert_Destinations_SlackWebhooksRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Service_Alert_Destinations_SlackWebhooksRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `channel` after provisioning.\n"]
+    pub fn channel(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.channel", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `url` after provisioning.\n"]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Service_Alert_Destinations {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    emails: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    slack_webhooks: std::option::Option<terrars::ListField<DataApp_Spec_Service_Alert_Destinations_SlackWebhooks>>,
+}
+
+impl DataApp_Spec_Service_Alert_Destinations {
+    #[doc = "Set the field `emails`.\n"]
+    pub fn set_emails(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.emails = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `slack_webhooks`.\n"]
+    pub fn set_slack_webhooks(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_Alert_Destinations_SlackWebhooks>>,
+    ) -> Self {
+        self.slack_webhooks = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Service_Alert_Destinations {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Alert_Destinations>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Service_Alert_Destinations {}
+
+impl BuildDataApp_Spec_Service_Alert_Destinations {
+    pub fn build(self) -> DataApp_Spec_Service_Alert_Destinations {
+        DataApp_Spec_Service_Alert_Destinations {
+            emails: core::default::Default::default(),
+            slack_webhooks: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_Alert_DestinationsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Service_Alert_DestinationsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_Alert_DestinationsRef {
+        DataApp_Spec_Service_Alert_DestinationsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Service_Alert_DestinationsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `emails` after provisioning.\n"]
+    pub fn emails(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.emails", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `slack_webhooks` after provisioning.\n"]
+    pub fn slack_webhooks(&self) -> terrars::ListRef<DataApp_Spec_Service_Alert_Destinations_SlackWebhooksRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.slack_webhooks", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Service_Alert {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destinations: std::option::Option<terrars::SetField<DataApp_Spec_Service_Alert_Destinations>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3971,7 +5836,16 @@ pub struct DataAppSpecElServiceElAlertEl {
     window: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElServiceElAlertEl {
+impl DataApp_Spec_Service_Alert {
+    #[doc = "Set the field `destinations`.\n"]
+    pub fn set_destinations(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<DataApp_Spec_Service_Alert_Destinations>>,
+    ) -> Self {
+        self.destinations = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `disabled`.\n"]
     pub fn set_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.disabled = std::option::Option::Some(v.into());
@@ -4003,8 +5877,8 @@ impl DataAppSpecElServiceElAlertEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceElAlertEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceElAlertEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service_Alert {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Alert>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4015,11 +5889,12 @@ impl terrars::ToListMappable for DataAppSpecElServiceElAlertEl {
     }
 }
 
-pub struct BuildDataAppSpecElServiceElAlertEl {}
+pub struct BuildDataApp_Spec_Service_Alert {}
 
-impl BuildDataAppSpecElServiceElAlertEl {
-    pub fn build(self) -> DataAppSpecElServiceElAlertEl {
-        DataAppSpecElServiceElAlertEl {
+impl BuildDataApp_Spec_Service_Alert {
+    pub fn build(self) -> DataApp_Spec_Service_Alert {
+        DataApp_Spec_Service_Alert {
+            destinations: core::default::Default::default(),
             disabled: core::default::Default::default(),
             operator: core::default::Default::default(),
             rule: core::default::Default::default(),
@@ -4029,23 +5904,30 @@ impl BuildDataAppSpecElServiceElAlertEl {
     }
 }
 
-pub struct DataAppSpecElServiceElAlertElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_AlertRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElAlertElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElServiceElAlertElRef {
-        DataAppSpecElServiceElAlertElRef {
+impl terrars::Ref for DataApp_Spec_Service_AlertRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_AlertRef {
+        DataApp_Spec_Service_AlertRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElAlertElRef {
+impl DataApp_Spec_Service_AlertRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `destinations` after provisioning.\n"]
+    pub fn destinations(&self) -> terrars::SetRef<DataApp_Spec_Service_Alert_DestinationsRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.destinations", self.base))
     }
 
     #[doc = "Get a reference to the value of field `disabled` after provisioning.\n"]
@@ -4075,7 +5957,320 @@ impl DataAppSpecElServiceElAlertElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceElCorsElAllowOriginsEl {
+pub struct DataApp_Spec_Service_Autoscaling_Metrics_Cpu {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    percent: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataApp_Spec_Service_Autoscaling_Metrics_Cpu {
+    #[doc = "Set the field `percent`.\n"]
+    pub fn set_percent(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.percent = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Service_Autoscaling_Metrics_Cpu {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Autoscaling_Metrics_Cpu>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Service_Autoscaling_Metrics_Cpu {}
+
+impl BuildDataApp_Spec_Service_Autoscaling_Metrics_Cpu {
+    pub fn build(self) -> DataApp_Spec_Service_Autoscaling_Metrics_Cpu {
+        DataApp_Spec_Service_Autoscaling_Metrics_Cpu { percent: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_Autoscaling_Metrics_CpuRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Service_Autoscaling_Metrics_CpuRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataApp_Spec_Service_Autoscaling_Metrics_CpuRef {
+        DataApp_Spec_Service_Autoscaling_Metrics_CpuRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Service_Autoscaling_Metrics_CpuRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `percent` after provisioning.\n"]
+    pub fn percent(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.percent", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Service_Autoscaling_Metrics {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu: std::option::Option<terrars::ListField<DataApp_Spec_Service_Autoscaling_Metrics_Cpu>>,
+}
+
+impl DataApp_Spec_Service_Autoscaling_Metrics {
+    #[doc = "Set the field `cpu`.\n"]
+    pub fn set_cpu(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_Autoscaling_Metrics_Cpu>>,
+    ) -> Self {
+        self.cpu = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Service_Autoscaling_Metrics {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Autoscaling_Metrics>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Service_Autoscaling_Metrics {}
+
+impl BuildDataApp_Spec_Service_Autoscaling_Metrics {
+    pub fn build(self) -> DataApp_Spec_Service_Autoscaling_Metrics {
+        DataApp_Spec_Service_Autoscaling_Metrics { cpu: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_Autoscaling_MetricsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Service_Autoscaling_MetricsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_Autoscaling_MetricsRef {
+        DataApp_Spec_Service_Autoscaling_MetricsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Service_Autoscaling_MetricsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `cpu` after provisioning.\n"]
+    pub fn cpu(&self) -> terrars::ListRef<DataApp_Spec_Service_Autoscaling_Metrics_CpuRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cpu", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Service_Autoscaling {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_instance_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metrics: std::option::Option<terrars::ListField<DataApp_Spec_Service_Autoscaling_Metrics>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_instance_count: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataApp_Spec_Service_Autoscaling {
+    #[doc = "Set the field `max_instance_count`.\n"]
+    pub fn set_max_instance_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_instance_count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `metrics`.\n"]
+    pub fn set_metrics(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_Autoscaling_Metrics>>,
+    ) -> Self {
+        self.metrics = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `min_instance_count`.\n"]
+    pub fn set_min_instance_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min_instance_count = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Service_Autoscaling {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Autoscaling>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Service_Autoscaling {}
+
+impl BuildDataApp_Spec_Service_Autoscaling {
+    pub fn build(self) -> DataApp_Spec_Service_Autoscaling {
+        DataApp_Spec_Service_Autoscaling {
+            max_instance_count: core::default::Default::default(),
+            metrics: core::default::Default::default(),
+            min_instance_count: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_AutoscalingRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Service_AutoscalingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_AutoscalingRef {
+        DataApp_Spec_Service_AutoscalingRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Service_AutoscalingRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `max_instance_count` after provisioning.\n"]
+    pub fn max_instance_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_instance_count", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `metrics` after provisioning.\n"]
+    pub fn metrics(&self) -> terrars::ListRef<DataApp_Spec_Service_Autoscaling_MetricsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metrics", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `min_instance_count` after provisioning.\n"]
+    pub fn min_instance_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_instance_count", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Service_Bitbucket {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    branch: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deploy_on_push: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    repo: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Service_Bitbucket {
+    #[doc = "Set the field `branch`.\n"]
+    pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.branch = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `deploy_on_push`.\n"]
+    pub fn set_deploy_on_push(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.deploy_on_push = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `repo`.\n"]
+    pub fn set_repo(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.repo = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Service_Bitbucket {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Bitbucket>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Service_Bitbucket {}
+
+impl BuildDataApp_Spec_Service_Bitbucket {
+    pub fn build(self) -> DataApp_Spec_Service_Bitbucket {
+        DataApp_Spec_Service_Bitbucket {
+            branch: core::default::Default::default(),
+            deploy_on_push: core::default::Default::default(),
+            repo: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_BitbucketRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Service_BitbucketRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_BitbucketRef {
+        DataApp_Spec_Service_BitbucketRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Service_BitbucketRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `branch` after provisioning.\n"]
+    pub fn branch(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.branch", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `deploy_on_push` after provisioning.\n"]
+    pub fn deploy_on_push(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deploy_on_push", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `repo` after provisioning.\n"]
+    pub fn repo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.repo", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Service_Cors_AllowOrigins {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exact: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4084,7 +6279,7 @@ pub struct DataAppSpecElServiceElCorsElAllowOriginsEl {
     regex: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElServiceElCorsElAllowOriginsEl {
+impl DataApp_Spec_Service_Cors_AllowOrigins {
     #[doc = "Set the field `exact`.\n"]
     pub fn set_exact(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.exact = std::option::Option::Some(v.into());
@@ -4104,8 +6299,8 @@ impl DataAppSpecElServiceElCorsElAllowOriginsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceElCorsElAllowOriginsEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceElCorsElAllowOriginsEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service_Cors_AllowOrigins {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Cors_AllowOrigins>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4116,11 +6311,11 @@ impl terrars::ToListMappable for DataAppSpecElServiceElCorsElAllowOriginsEl {
     }
 }
 
-pub struct BuildDataAppSpecElServiceElCorsElAllowOriginsEl {}
+pub struct BuildDataApp_Spec_Service_Cors_AllowOrigins {}
 
-impl BuildDataAppSpecElServiceElCorsElAllowOriginsEl {
-    pub fn build(self) -> DataAppSpecElServiceElCorsElAllowOriginsEl {
-        DataAppSpecElServiceElCorsElAllowOriginsEl {
+impl BuildDataApp_Spec_Service_Cors_AllowOrigins {
+    pub fn build(self) -> DataApp_Spec_Service_Cors_AllowOrigins {
+        DataApp_Spec_Service_Cors_AllowOrigins {
             exact: core::default::Default::default(),
             prefix: core::default::Default::default(),
             regex: core::default::Default::default(),
@@ -4128,21 +6323,23 @@ impl BuildDataAppSpecElServiceElCorsElAllowOriginsEl {
     }
 }
 
-pub struct DataAppSpecElServiceElCorsElAllowOriginsElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_Cors_AllowOriginsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElCorsElAllowOriginsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElServiceElCorsElAllowOriginsElRef {
-        DataAppSpecElServiceElCorsElAllowOriginsElRef {
+impl terrars::Ref for DataApp_Spec_Service_Cors_AllowOriginsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_Cors_AllowOriginsRef {
+        DataApp_Spec_Service_Cors_AllowOriginsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElCorsElAllowOriginsElRef {
+impl DataApp_Spec_Service_Cors_AllowOriginsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4164,7 +6361,7 @@ impl DataAppSpecElServiceElCorsElAllowOriginsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceElCorsEl {
+pub struct DataApp_Spec_Service_Cors {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_credentials: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4172,14 +6369,14 @@ pub struct DataAppSpecElServiceElCorsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_methods: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_origins: std::option::Option<terrars::ListField<DataAppSpecElServiceElCorsElAllowOriginsEl>>,
+    allow_origins: std::option::Option<terrars::ListField<DataApp_Spec_Service_Cors_AllowOrigins>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     expose_headers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_age: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElServiceElCorsEl {
+impl DataApp_Spec_Service_Cors {
     #[doc = "Set the field `allow_credentials`.\n"]
     pub fn set_allow_credentials(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.allow_credentials = std::option::Option::Some(v.into());
@@ -4207,7 +6404,7 @@ impl DataAppSpecElServiceElCorsEl {
     #[doc = "Set the field `allow_origins`.\n"]
     pub fn set_allow_origins(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElServiceElCorsElAllowOriginsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_Cors_AllowOrigins>>,
     ) -> Self {
         self.allow_origins = std::option::Option::Some(v.into());
         self
@@ -4229,8 +6426,8 @@ impl DataAppSpecElServiceElCorsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceElCorsEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceElCorsEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service_Cors {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Cors>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4241,11 +6438,11 @@ impl terrars::ToListMappable for DataAppSpecElServiceElCorsEl {
     }
 }
 
-pub struct BuildDataAppSpecElServiceElCorsEl {}
+pub struct BuildDataApp_Spec_Service_Cors {}
 
-impl BuildDataAppSpecElServiceElCorsEl {
-    pub fn build(self) -> DataAppSpecElServiceElCorsEl {
-        DataAppSpecElServiceElCorsEl {
+impl BuildDataApp_Spec_Service_Cors {
+    pub fn build(self) -> DataApp_Spec_Service_Cors {
+        DataApp_Spec_Service_Cors {
             allow_credentials: core::default::Default::default(),
             allow_headers: core::default::Default::default(),
             allow_methods: core::default::Default::default(),
@@ -4256,21 +6453,23 @@ impl BuildDataAppSpecElServiceElCorsEl {
     }
 }
 
-pub struct DataAppSpecElServiceElCorsElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_CorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElCorsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElServiceElCorsElRef {
-        DataAppSpecElServiceElCorsElRef {
+impl terrars::Ref for DataApp_Spec_Service_CorsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_CorsRef {
+        DataApp_Spec_Service_CorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElCorsElRef {
+impl DataApp_Spec_Service_CorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4291,7 +6490,7 @@ impl DataAppSpecElServiceElCorsElRef {
     }
 
     #[doc = "Get a reference to the value of field `allow_origins` after provisioning.\n"]
-    pub fn allow_origins(&self) -> terrars::ListRef<DataAppSpecElServiceElCorsElAllowOriginsElRef> {
+    pub fn allow_origins(&self) -> terrars::ListRef<DataApp_Spec_Service_Cors_AllowOriginsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.allow_origins", self.base))
     }
 
@@ -4307,7 +6506,7 @@ impl DataAppSpecElServiceElCorsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceElEnvEl {
+pub struct DataApp_Spec_Service_Env {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4318,7 +6517,7 @@ pub struct DataAppSpecElServiceElEnvEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElServiceElEnvEl {
+impl DataApp_Spec_Service_Env {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -4344,8 +6543,8 @@ impl DataAppSpecElServiceElEnvEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceElEnvEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceElEnvEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service_Env {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Env>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4356,11 +6555,11 @@ impl terrars::ToListMappable for DataAppSpecElServiceElEnvEl {
     }
 }
 
-pub struct BuildDataAppSpecElServiceElEnvEl {}
+pub struct BuildDataApp_Spec_Service_Env {}
 
-impl BuildDataAppSpecElServiceElEnvEl {
-    pub fn build(self) -> DataAppSpecElServiceElEnvEl {
-        DataAppSpecElServiceElEnvEl {
+impl BuildDataApp_Spec_Service_Env {
+    pub fn build(self) -> DataApp_Spec_Service_Env {
+        DataApp_Spec_Service_Env {
             key: core::default::Default::default(),
             scope: core::default::Default::default(),
             type_: core::default::Default::default(),
@@ -4369,21 +6568,23 @@ impl BuildDataAppSpecElServiceElEnvEl {
     }
 }
 
-pub struct DataAppSpecElServiceElEnvElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_EnvRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElEnvElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElServiceElEnvElRef {
-        DataAppSpecElServiceElEnvElRef {
+impl terrars::Ref for DataApp_Spec_Service_EnvRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_EnvRef {
+        DataApp_Spec_Service_EnvRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElEnvElRef {
+impl DataApp_Spec_Service_EnvRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4410,14 +6611,14 @@ impl DataAppSpecElServiceElEnvElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceElGitEl {
+pub struct DataApp_Spec_Service_Git {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repo_clone_url: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElServiceElGitEl {
+impl DataApp_Spec_Service_Git {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -4431,8 +6632,8 @@ impl DataAppSpecElServiceElGitEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceElGitEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceElGitEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service_Git {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Git>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4443,32 +6644,34 @@ impl terrars::ToListMappable for DataAppSpecElServiceElGitEl {
     }
 }
 
-pub struct BuildDataAppSpecElServiceElGitEl {}
+pub struct BuildDataApp_Spec_Service_Git {}
 
-impl BuildDataAppSpecElServiceElGitEl {
-    pub fn build(self) -> DataAppSpecElServiceElGitEl {
-        DataAppSpecElServiceElGitEl {
+impl BuildDataApp_Spec_Service_Git {
+    pub fn build(self) -> DataApp_Spec_Service_Git {
+        DataApp_Spec_Service_Git {
             branch: core::default::Default::default(),
             repo_clone_url: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElServiceElGitElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_GitRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElGitElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElServiceElGitElRef {
-        DataAppSpecElServiceElGitElRef {
+impl terrars::Ref for DataApp_Spec_Service_GitRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_GitRef {
+        DataApp_Spec_Service_GitRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElGitElRef {
+impl DataApp_Spec_Service_GitRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4485,7 +6688,7 @@ impl DataAppSpecElServiceElGitElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceElGithubEl {
+pub struct DataApp_Spec_Service_Github {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4494,7 +6697,7 @@ pub struct DataAppSpecElServiceElGithubEl {
     repo: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElServiceElGithubEl {
+impl DataApp_Spec_Service_Github {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -4514,8 +6717,8 @@ impl DataAppSpecElServiceElGithubEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceElGithubEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceElGithubEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service_Github {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Github>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4526,11 +6729,11 @@ impl terrars::ToListMappable for DataAppSpecElServiceElGithubEl {
     }
 }
 
-pub struct BuildDataAppSpecElServiceElGithubEl {}
+pub struct BuildDataApp_Spec_Service_Github {}
 
-impl BuildDataAppSpecElServiceElGithubEl {
-    pub fn build(self) -> DataAppSpecElServiceElGithubEl {
-        DataAppSpecElServiceElGithubEl {
+impl BuildDataApp_Spec_Service_Github {
+    pub fn build(self) -> DataApp_Spec_Service_Github {
+        DataApp_Spec_Service_Github {
             branch: core::default::Default::default(),
             deploy_on_push: core::default::Default::default(),
             repo: core::default::Default::default(),
@@ -4538,21 +6741,23 @@ impl BuildDataAppSpecElServiceElGithubEl {
     }
 }
 
-pub struct DataAppSpecElServiceElGithubElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_GithubRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElGithubElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElServiceElGithubElRef {
-        DataAppSpecElServiceElGithubElRef {
+impl terrars::Ref for DataApp_Spec_Service_GithubRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_GithubRef {
+        DataApp_Spec_Service_GithubRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElGithubElRef {
+impl DataApp_Spec_Service_GithubRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4574,7 +6779,7 @@ impl DataAppSpecElServiceElGithubElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceElGitlabEl {
+pub struct DataApp_Spec_Service_Gitlab {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4583,7 +6788,7 @@ pub struct DataAppSpecElServiceElGitlabEl {
     repo: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElServiceElGitlabEl {
+impl DataApp_Spec_Service_Gitlab {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -4603,8 +6808,8 @@ impl DataAppSpecElServiceElGitlabEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceElGitlabEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceElGitlabEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service_Gitlab {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Gitlab>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4615,11 +6820,11 @@ impl terrars::ToListMappable for DataAppSpecElServiceElGitlabEl {
     }
 }
 
-pub struct BuildDataAppSpecElServiceElGitlabEl {}
+pub struct BuildDataApp_Spec_Service_Gitlab {}
 
-impl BuildDataAppSpecElServiceElGitlabEl {
-    pub fn build(self) -> DataAppSpecElServiceElGitlabEl {
-        DataAppSpecElServiceElGitlabEl {
+impl BuildDataApp_Spec_Service_Gitlab {
+    pub fn build(self) -> DataApp_Spec_Service_Gitlab {
+        DataApp_Spec_Service_Gitlab {
             branch: core::default::Default::default(),
             deploy_on_push: core::default::Default::default(),
             repo: core::default::Default::default(),
@@ -4627,21 +6832,23 @@ impl BuildDataAppSpecElServiceElGitlabEl {
     }
 }
 
-pub struct DataAppSpecElServiceElGitlabElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_GitlabRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElGitlabElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElServiceElGitlabElRef {
-        DataAppSpecElServiceElGitlabElRef {
+impl terrars::Ref for DataApp_Spec_Service_GitlabRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_GitlabRef {
+        DataApp_Spec_Service_GitlabRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElGitlabElRef {
+impl DataApp_Spec_Service_GitlabRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4663,7 +6870,7 @@ impl DataAppSpecElServiceElGitlabElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceElHealthCheckEl {
+pub struct DataApp_Spec_Service_HealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     failure_threshold: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4680,7 +6887,7 @@ pub struct DataAppSpecElServiceElHealthCheckEl {
     timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataAppSpecElServiceElHealthCheckEl {
+impl DataApp_Spec_Service_HealthCheck {
     #[doc = "Set the field `failure_threshold`.\n"]
     pub fn set_failure_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.failure_threshold = std::option::Option::Some(v.into());
@@ -4724,8 +6931,8 @@ impl DataAppSpecElServiceElHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceElHealthCheckEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceElHealthCheckEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service_HealthCheck {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_HealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4736,11 +6943,11 @@ impl terrars::ToListMappable for DataAppSpecElServiceElHealthCheckEl {
     }
 }
 
-pub struct BuildDataAppSpecElServiceElHealthCheckEl {}
+pub struct BuildDataApp_Spec_Service_HealthCheck {}
 
-impl BuildDataAppSpecElServiceElHealthCheckEl {
-    pub fn build(self) -> DataAppSpecElServiceElHealthCheckEl {
-        DataAppSpecElServiceElHealthCheckEl {
+impl BuildDataApp_Spec_Service_HealthCheck {
+    pub fn build(self) -> DataApp_Spec_Service_HealthCheck {
+        DataApp_Spec_Service_HealthCheck {
             failure_threshold: core::default::Default::default(),
             http_path: core::default::Default::default(),
             initial_delay_seconds: core::default::Default::default(),
@@ -4752,21 +6959,23 @@ impl BuildDataAppSpecElServiceElHealthCheckEl {
     }
 }
 
-pub struct DataAppSpecElServiceElHealthCheckElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_HealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElHealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElServiceElHealthCheckElRef {
-        DataAppSpecElServiceElHealthCheckElRef {
+impl terrars::Ref for DataApp_Spec_Service_HealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_HealthCheckRef {
+        DataApp_Spec_Service_HealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElHealthCheckElRef {
+impl DataApp_Spec_Service_HealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4808,12 +7017,12 @@ impl DataAppSpecElServiceElHealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceElImageElDeployOnPushEl {
+pub struct DataApp_Spec_Service_Image_DeployOnPush {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataAppSpecElServiceElImageElDeployOnPushEl {
+impl DataApp_Spec_Service_Image_DeployOnPush {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -4821,8 +7030,8 @@ impl DataAppSpecElServiceElImageElDeployOnPushEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceElImageElDeployOnPushEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceElImageElDeployOnPushEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service_Image_DeployOnPush {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Image_DeployOnPush>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4833,32 +7042,31 @@ impl terrars::ToListMappable for DataAppSpecElServiceElImageElDeployOnPushEl {
     }
 }
 
-pub struct BuildDataAppSpecElServiceElImageElDeployOnPushEl {}
+pub struct BuildDataApp_Spec_Service_Image_DeployOnPush {}
 
-impl BuildDataAppSpecElServiceElImageElDeployOnPushEl {
-    pub fn build(self) -> DataAppSpecElServiceElImageElDeployOnPushEl {
-        DataAppSpecElServiceElImageElDeployOnPushEl { enabled: core::default::Default::default() }
+impl BuildDataApp_Spec_Service_Image_DeployOnPush {
+    pub fn build(self) -> DataApp_Spec_Service_Image_DeployOnPush {
+        DataApp_Spec_Service_Image_DeployOnPush { enabled: core::default::Default::default() }
     }
 }
 
-pub struct DataAppSpecElServiceElImageElDeployOnPushElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_Image_DeployOnPushRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElImageElDeployOnPushElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataAppSpecElServiceElImageElDeployOnPushElRef {
-        DataAppSpecElServiceElImageElDeployOnPushElRef {
+impl terrars::Ref for DataApp_Spec_Service_Image_DeployOnPushRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_Image_DeployOnPushRef {
+        DataApp_Spec_Service_Image_DeployOnPushRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElImageElDeployOnPushElRef {
+impl DataApp_Spec_Service_Image_DeployOnPushRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4870,11 +7078,15 @@ impl DataAppSpecElServiceElImageElDeployOnPushElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceElImageEl {
+pub struct DataApp_Spec_Service_Image {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    deploy_on_push: std::option::Option<terrars::ListField<DataAppSpecElServiceElImageElDeployOnPushEl>>,
+    deploy_on_push: std::option::Option<terrars::ListField<DataApp_Spec_Service_Image_DeployOnPush>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    digest: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     registry: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    registry_credentials: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     registry_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4883,19 +7095,34 @@ pub struct DataAppSpecElServiceElImageEl {
     tag: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElServiceElImageEl {
+impl DataApp_Spec_Service_Image {
     #[doc = "Set the field `deploy_on_push`.\n"]
     pub fn set_deploy_on_push(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElServiceElImageElDeployOnPushEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_Image_DeployOnPush>>,
     ) -> Self {
         self.deploy_on_push = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `digest`.\n"]
+    pub fn set_digest(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.digest = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `registry`.\n"]
     pub fn set_registry(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.registry = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `registry_credentials`.\n"]
+    pub fn set_registry_credentials(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.registry_credentials = std::option::Option::Some(v.into());
         self
     }
 
@@ -4918,8 +7145,8 @@ impl DataAppSpecElServiceElImageEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceElImageEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceElImageEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service_Image {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Image>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4930,13 +7157,15 @@ impl terrars::ToListMappable for DataAppSpecElServiceElImageEl {
     }
 }
 
-pub struct BuildDataAppSpecElServiceElImageEl {}
+pub struct BuildDataApp_Spec_Service_Image {}
 
-impl BuildDataAppSpecElServiceElImageEl {
-    pub fn build(self) -> DataAppSpecElServiceElImageEl {
-        DataAppSpecElServiceElImageEl {
+impl BuildDataApp_Spec_Service_Image {
+    pub fn build(self) -> DataApp_Spec_Service_Image {
+        DataApp_Spec_Service_Image {
             deploy_on_push: core::default::Default::default(),
+            digest: core::default::Default::default(),
             registry: core::default::Default::default(),
+            registry_credentials: core::default::Default::default(),
             registry_type: core::default::Default::default(),
             repository: core::default::Default::default(),
             tag: core::default::Default::default(),
@@ -4944,33 +7173,45 @@ impl BuildDataAppSpecElServiceElImageEl {
     }
 }
 
-pub struct DataAppSpecElServiceElImageElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_ImageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElImageElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElServiceElImageElRef {
-        DataAppSpecElServiceElImageElRef {
+impl terrars::Ref for DataApp_Spec_Service_ImageRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_ImageRef {
+        DataApp_Spec_Service_ImageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElImageElRef {
+impl DataApp_Spec_Service_ImageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `deploy_on_push` after provisioning.\n"]
-    pub fn deploy_on_push(&self) -> terrars::ListRef<DataAppSpecElServiceElImageElDeployOnPushElRef> {
+    pub fn deploy_on_push(&self) -> terrars::ListRef<DataApp_Spec_Service_Image_DeployOnPushRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deploy_on_push", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `digest` after provisioning.\n"]
+    pub fn digest(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.digest", self.base))
     }
 
     #[doc = "Get a reference to the value of field `registry` after provisioning.\n"]
     pub fn registry(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `registry_credentials` after provisioning.\n"]
+    pub fn registry_credentials(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_credentials", self.base))
     }
 
     #[doc = "Get a reference to the value of field `registry_type` after provisioning.\n"]
@@ -4990,14 +7231,161 @@ impl DataAppSpecElServiceElImageElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceElLogDestinationElDatadogEl {
+pub struct DataApp_Spec_Service_LivenessHealthCheck {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    failure_threshold: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http_path: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    initial_delay_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    period_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    success_threshold: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataApp_Spec_Service_LivenessHealthCheck {
+    #[doc = "Set the field `failure_threshold`.\n"]
+    pub fn set_failure_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.failure_threshold = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `http_path`.\n"]
+    pub fn set_http_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.http_path = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `initial_delay_seconds`.\n"]
+    pub fn set_initial_delay_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.initial_delay_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `period_seconds`.\n"]
+    pub fn set_period_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.period_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `port`.\n"]
+    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.port = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `success_threshold`.\n"]
+    pub fn set_success_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.success_threshold = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `timeout_seconds`.\n"]
+    pub fn set_timeout_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.timeout_seconds = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Service_LivenessHealthCheck {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_LivenessHealthCheck>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Service_LivenessHealthCheck {}
+
+impl BuildDataApp_Spec_Service_LivenessHealthCheck {
+    pub fn build(self) -> DataApp_Spec_Service_LivenessHealthCheck {
+        DataApp_Spec_Service_LivenessHealthCheck {
+            failure_threshold: core::default::Default::default(),
+            http_path: core::default::Default::default(),
+            initial_delay_seconds: core::default::Default::default(),
+            period_seconds: core::default::Default::default(),
+            port: core::default::Default::default(),
+            success_threshold: core::default::Default::default(),
+            timeout_seconds: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_LivenessHealthCheckRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Service_LivenessHealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_LivenessHealthCheckRef {
+        DataApp_Spec_Service_LivenessHealthCheckRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Service_LivenessHealthCheckRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `failure_threshold` after provisioning.\n"]
+    pub fn failure_threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.failure_threshold", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `http_path` after provisioning.\n"]
+    pub fn http_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.http_path", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `initial_delay_seconds` after provisioning.\n"]
+    pub fn initial_delay_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.initial_delay_seconds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `period_seconds` after provisioning.\n"]
+    pub fn period_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.period_seconds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `success_threshold` after provisioning.\n"]
+    pub fn success_threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.success_threshold", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `timeout_seconds` after provisioning.\n"]
+    pub fn timeout_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.timeout_seconds", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Service_LogDestination_Datadog {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     api_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElServiceElLogDestinationElDatadogEl {
+impl DataApp_Spec_Service_LogDestination_Datadog {
     #[doc = "Set the field `api_key`.\n"]
     pub fn set_api_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.api_key = std::option::Option::Some(v.into());
@@ -5011,8 +7399,8 @@ impl DataAppSpecElServiceElLogDestinationElDatadogEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceElLogDestinationElDatadogEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceElLogDestinationElDatadogEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service_LogDestination_Datadog {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_LogDestination_Datadog>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5023,35 +7411,37 @@ impl terrars::ToListMappable for DataAppSpecElServiceElLogDestinationElDatadogEl
     }
 }
 
-pub struct BuildDataAppSpecElServiceElLogDestinationElDatadogEl {}
+pub struct BuildDataApp_Spec_Service_LogDestination_Datadog {}
 
-impl BuildDataAppSpecElServiceElLogDestinationElDatadogEl {
-    pub fn build(self) -> DataAppSpecElServiceElLogDestinationElDatadogEl {
-        DataAppSpecElServiceElLogDestinationElDatadogEl {
+impl BuildDataApp_Spec_Service_LogDestination_Datadog {
+    pub fn build(self) -> DataApp_Spec_Service_LogDestination_Datadog {
+        DataApp_Spec_Service_LogDestination_Datadog {
             api_key: core::default::Default::default(),
             endpoint: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElServiceElLogDestinationElDatadogElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_LogDestination_DatadogRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElLogDestinationElDatadogElRef {
+impl terrars::Ref for DataApp_Spec_Service_LogDestination_DatadogRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAppSpecElServiceElLogDestinationElDatadogElRef {
-        DataAppSpecElServiceElLogDestinationElDatadogElRef {
+    ) -> DataApp_Spec_Service_LogDestination_DatadogRef {
+        DataApp_Spec_Service_LogDestination_DatadogRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElLogDestinationElDatadogElRef {
+impl DataApp_Spec_Service_LogDestination_DatadogRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5068,12 +7458,12 @@ impl DataAppSpecElServiceElLogDestinationElDatadogElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceElLogDestinationElLogtailEl {
+pub struct DataApp_Spec_Service_LogDestination_Logtail {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     token: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElServiceElLogDestinationElLogtailEl {
+impl DataApp_Spec_Service_LogDestination_Logtail {
     #[doc = "Set the field `token`.\n"]
     pub fn set_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.token = std::option::Option::Some(v.into());
@@ -5081,8 +7471,8 @@ impl DataAppSpecElServiceElLogDestinationElLogtailEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceElLogDestinationElLogtailEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceElLogDestinationElLogtailEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service_LogDestination_Logtail {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_LogDestination_Logtail>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5093,32 +7483,34 @@ impl terrars::ToListMappable for DataAppSpecElServiceElLogDestinationElLogtailEl
     }
 }
 
-pub struct BuildDataAppSpecElServiceElLogDestinationElLogtailEl {}
+pub struct BuildDataApp_Spec_Service_LogDestination_Logtail {}
 
-impl BuildDataAppSpecElServiceElLogDestinationElLogtailEl {
-    pub fn build(self) -> DataAppSpecElServiceElLogDestinationElLogtailEl {
-        DataAppSpecElServiceElLogDestinationElLogtailEl { token: core::default::Default::default() }
+impl BuildDataApp_Spec_Service_LogDestination_Logtail {
+    pub fn build(self) -> DataApp_Spec_Service_LogDestination_Logtail {
+        DataApp_Spec_Service_LogDestination_Logtail { token: core::default::Default::default() }
     }
 }
 
-pub struct DataAppSpecElServiceElLogDestinationElLogtailElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_LogDestination_LogtailRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElLogDestinationElLogtailElRef {
+impl terrars::Ref for DataApp_Spec_Service_LogDestination_LogtailRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAppSpecElServiceElLogDestinationElLogtailElRef {
-        DataAppSpecElServiceElLogDestinationElLogtailElRef {
+    ) -> DataApp_Spec_Service_LogDestination_LogtailRef {
+        DataApp_Spec_Service_LogDestination_LogtailRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElLogDestinationElLogtailElRef {
+impl DataApp_Spec_Service_LogDestination_LogtailRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5130,21 +7522,29 @@ impl DataAppSpecElServiceElLogDestinationElLogtailElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceElLogDestinationElPapertrailEl {
+pub struct DataApp_Spec_Service_LogDestination_OpenSearch_BasicAuth {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+    password: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElServiceElLogDestinationElPapertrailEl {
-    #[doc = "Set the field `endpoint`.\n"]
-    pub fn set_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.endpoint = std::option::Option::Some(v.into());
+impl DataApp_Spec_Service_LogDestination_OpenSearch_BasicAuth {
+    #[doc = "Set the field `password`.\n"]
+    pub fn set_password(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.password = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `user`.\n"]
+    pub fn set_user(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.user = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceElLogDestinationElPapertrailEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceElLogDestinationElPapertrailEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service_LogDestination_OpenSearch_BasicAuth {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_LogDestination_OpenSearch_BasicAuth>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5155,32 +7555,217 @@ impl terrars::ToListMappable for DataAppSpecElServiceElLogDestinationElPapertrai
     }
 }
 
-pub struct BuildDataAppSpecElServiceElLogDestinationElPapertrailEl {}
+pub struct BuildDataApp_Spec_Service_LogDestination_OpenSearch_BasicAuth {}
 
-impl BuildDataAppSpecElServiceElLogDestinationElPapertrailEl {
-    pub fn build(self) -> DataAppSpecElServiceElLogDestinationElPapertrailEl {
-        DataAppSpecElServiceElLogDestinationElPapertrailEl { endpoint: core::default::Default::default() }
+impl BuildDataApp_Spec_Service_LogDestination_OpenSearch_BasicAuth {
+    pub fn build(self) -> DataApp_Spec_Service_LogDestination_OpenSearch_BasicAuth {
+        DataApp_Spec_Service_LogDestination_OpenSearch_BasicAuth {
+            password: core::default::Default::default(),
+            user: core::default::Default::default(),
+        }
     }
 }
 
-pub struct DataAppSpecElServiceElLogDestinationElPapertrailElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_LogDestination_OpenSearch_BasicAuthRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElLogDestinationElPapertrailElRef {
+impl terrars::Ref for DataApp_Spec_Service_LogDestination_OpenSearch_BasicAuthRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAppSpecElServiceElLogDestinationElPapertrailElRef {
-        DataAppSpecElServiceElLogDestinationElPapertrailElRef {
+    ) -> DataApp_Spec_Service_LogDestination_OpenSearch_BasicAuthRef {
+        DataApp_Spec_Service_LogDestination_OpenSearch_BasicAuthRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElLogDestinationElPapertrailElRef {
+impl DataApp_Spec_Service_LogDestination_OpenSearch_BasicAuthRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
+    pub fn password(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `user` after provisioning.\n"]
+    pub fn user(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Service_LogDestination_OpenSearch {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    basic_auth: std::option::Option<terrars::ListField<DataApp_Spec_Service_LogDestination_OpenSearch_BasicAuth>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    index_name: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Service_LogDestination_OpenSearch {
+    #[doc = "Set the field `basic_auth`.\n"]
+    pub fn set_basic_auth(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_LogDestination_OpenSearch_BasicAuth>>,
+    ) -> Self {
+        self.basic_auth = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cluster_name`.\n"]
+    pub fn set_cluster_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cluster_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `endpoint`.\n"]
+    pub fn set_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.endpoint = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `index_name`.\n"]
+    pub fn set_index_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.index_name = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Service_LogDestination_OpenSearch {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_LogDestination_OpenSearch>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Service_LogDestination_OpenSearch {}
+
+impl BuildDataApp_Spec_Service_LogDestination_OpenSearch {
+    pub fn build(self) -> DataApp_Spec_Service_LogDestination_OpenSearch {
+        DataApp_Spec_Service_LogDestination_OpenSearch {
+            basic_auth: core::default::Default::default(),
+            cluster_name: core::default::Default::default(),
+            endpoint: core::default::Default::default(),
+            index_name: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_LogDestination_OpenSearchRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Service_LogDestination_OpenSearchRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataApp_Spec_Service_LogDestination_OpenSearchRef {
+        DataApp_Spec_Service_LogDestination_OpenSearchRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Service_LogDestination_OpenSearchRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `basic_auth` after provisioning.\n"]
+    pub fn basic_auth(&self) -> terrars::ListRef<DataApp_Spec_Service_LogDestination_OpenSearch_BasicAuthRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.basic_auth", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cluster_name` after provisioning.\n"]
+    pub fn cluster_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `index_name` after provisioning.\n"]
+    pub fn index_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_name", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Service_LogDestination_Papertrail {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Service_LogDestination_Papertrail {
+    #[doc = "Set the field `endpoint`.\n"]
+    pub fn set_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.endpoint = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Service_LogDestination_Papertrail {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_LogDestination_Papertrail>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Service_LogDestination_Papertrail {}
+
+impl BuildDataApp_Spec_Service_LogDestination_Papertrail {
+    pub fn build(self) -> DataApp_Spec_Service_LogDestination_Papertrail {
+        DataApp_Spec_Service_LogDestination_Papertrail { endpoint: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_LogDestination_PapertrailRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Service_LogDestination_PapertrailRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataApp_Spec_Service_LogDestination_PapertrailRef {
+        DataApp_Spec_Service_LogDestination_PapertrailRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Service_LogDestination_PapertrailRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5192,22 +7777,24 @@ impl DataAppSpecElServiceElLogDestinationElPapertrailElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceElLogDestinationEl {
+pub struct DataApp_Spec_Service_LogDestination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    datadog: std::option::Option<terrars::ListField<DataAppSpecElServiceElLogDestinationElDatadogEl>>,
+    datadog: std::option::Option<terrars::ListField<DataApp_Spec_Service_LogDestination_Datadog>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logtail: std::option::Option<terrars::ListField<DataAppSpecElServiceElLogDestinationElLogtailEl>>,
+    logtail: std::option::Option<terrars::ListField<DataApp_Spec_Service_LogDestination_Logtail>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    papertrail: std::option::Option<terrars::ListField<DataAppSpecElServiceElLogDestinationElPapertrailEl>>,
+    open_search: std::option::Option<terrars::ListField<DataApp_Spec_Service_LogDestination_OpenSearch>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    papertrail: std::option::Option<terrars::ListField<DataApp_Spec_Service_LogDestination_Papertrail>>,
 }
 
-impl DataAppSpecElServiceElLogDestinationEl {
+impl DataApp_Spec_Service_LogDestination {
     #[doc = "Set the field `datadog`.\n"]
     pub fn set_datadog(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElServiceElLogDestinationElDatadogEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_LogDestination_Datadog>>,
     ) -> Self {
         self.datadog = std::option::Option::Some(v.into());
         self
@@ -5216,7 +7803,7 @@ impl DataAppSpecElServiceElLogDestinationEl {
     #[doc = "Set the field `logtail`.\n"]
     pub fn set_logtail(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElServiceElLogDestinationElLogtailEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_LogDestination_Logtail>>,
     ) -> Self {
         self.logtail = std::option::Option::Some(v.into());
         self
@@ -5228,18 +7815,27 @@ impl DataAppSpecElServiceElLogDestinationEl {
         self
     }
 
+    #[doc = "Set the field `open_search`.\n"]
+    pub fn set_open_search(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_LogDestination_OpenSearch>>,
+    ) -> Self {
+        self.open_search = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `papertrail`.\n"]
     pub fn set_papertrail(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElServiceElLogDestinationElPapertrailEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_LogDestination_Papertrail>>,
     ) -> Self {
         self.papertrail = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceElLogDestinationEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceElLogDestinationEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service_LogDestination {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_LogDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5250,45 +7846,48 @@ impl terrars::ToListMappable for DataAppSpecElServiceElLogDestinationEl {
     }
 }
 
-pub struct BuildDataAppSpecElServiceElLogDestinationEl {}
+pub struct BuildDataApp_Spec_Service_LogDestination {}
 
-impl BuildDataAppSpecElServiceElLogDestinationEl {
-    pub fn build(self) -> DataAppSpecElServiceElLogDestinationEl {
-        DataAppSpecElServiceElLogDestinationEl {
+impl BuildDataApp_Spec_Service_LogDestination {
+    pub fn build(self) -> DataApp_Spec_Service_LogDestination {
+        DataApp_Spec_Service_LogDestination {
             datadog: core::default::Default::default(),
             logtail: core::default::Default::default(),
             name: core::default::Default::default(),
+            open_search: core::default::Default::default(),
             papertrail: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElServiceElLogDestinationElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_LogDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElLogDestinationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElServiceElLogDestinationElRef {
-        DataAppSpecElServiceElLogDestinationElRef {
+impl terrars::Ref for DataApp_Spec_Service_LogDestinationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_LogDestinationRef {
+        DataApp_Spec_Service_LogDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElLogDestinationElRef {
+impl DataApp_Spec_Service_LogDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `datadog` after provisioning.\n"]
-    pub fn datadog(&self) -> terrars::ListRef<DataAppSpecElServiceElLogDestinationElDatadogElRef> {
+    pub fn datadog(&self) -> terrars::ListRef<DataApp_Spec_Service_LogDestination_DatadogRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.datadog", self.base))
     }
 
     #[doc = "Get a reference to the value of field `logtail` after provisioning.\n"]
-    pub fn logtail(&self) -> terrars::ListRef<DataAppSpecElServiceElLogDestinationElLogtailElRef> {
+    pub fn logtail(&self) -> terrars::ListRef<DataApp_Spec_Service_LogDestination_LogtailRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logtail", self.base))
     }
 
@@ -5297,21 +7896,26 @@ impl DataAppSpecElServiceElLogDestinationElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `open_search` after provisioning.\n"]
+    pub fn open_search(&self) -> terrars::ListRef<DataApp_Spec_Service_LogDestination_OpenSearchRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.open_search", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `papertrail` after provisioning.\n"]
-    pub fn papertrail(&self) -> terrars::ListRef<DataAppSpecElServiceElLogDestinationElPapertrailElRef> {
+    pub fn papertrail(&self) -> terrars::ListRef<DataApp_Spec_Service_LogDestination_PapertrailRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.papertrail", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceElRoutesEl {
+pub struct DataApp_Spec_Service_Routes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preserve_path_prefix: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataAppSpecElServiceElRoutesEl {
+impl DataApp_Spec_Service_Routes {
     #[doc = "Set the field `path`.\n"]
     pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.path = std::option::Option::Some(v.into());
@@ -5325,8 +7929,8 @@ impl DataAppSpecElServiceElRoutesEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceElRoutesEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceElRoutesEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service_Routes {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Routes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5337,32 +7941,34 @@ impl terrars::ToListMappable for DataAppSpecElServiceElRoutesEl {
     }
 }
 
-pub struct BuildDataAppSpecElServiceElRoutesEl {}
+pub struct BuildDataApp_Spec_Service_Routes {}
 
-impl BuildDataAppSpecElServiceElRoutesEl {
-    pub fn build(self) -> DataAppSpecElServiceElRoutesEl {
-        DataAppSpecElServiceElRoutesEl {
+impl BuildDataApp_Spec_Service_Routes {
+    pub fn build(self) -> DataApp_Spec_Service_Routes {
+        DataApp_Spec_Service_Routes {
             path: core::default::Default::default(),
             preserve_path_prefix: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElServiceElRoutesElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_RoutesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElRoutesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElServiceElRoutesElRef {
-        DataAppSpecElServiceElRoutesElRef {
+impl terrars::Ref for DataApp_Spec_Service_RoutesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_RoutesRef {
+        DataApp_Spec_Service_RoutesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElRoutesElRef {
+impl DataApp_Spec_Service_RoutesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5379,31 +7985,112 @@ impl DataAppSpecElServiceElRoutesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElServiceEl {
+pub struct DataApp_Spec_Service_Termination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    alert: std::option::Option<terrars::ListField<DataAppSpecElServiceElAlertEl>>,
+    drain_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    grace_period_seconds: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataApp_Spec_Service_Termination {
+    #[doc = "Set the field `drain_seconds`.\n"]
+    pub fn set_drain_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.drain_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `grace_period_seconds`.\n"]
+    pub fn set_grace_period_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.grace_period_seconds = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Service_Termination {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service_Termination>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Service_Termination {}
+
+impl BuildDataApp_Spec_Service_Termination {
+    pub fn build(self) -> DataApp_Spec_Service_Termination {
+        DataApp_Spec_Service_Termination {
+            drain_seconds: core::default::Default::default(),
+            grace_period_seconds: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Service_TerminationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Service_TerminationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Service_TerminationRef {
+        DataApp_Spec_Service_TerminationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Service_TerminationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `drain_seconds` after provisioning.\n"]
+    pub fn drain_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.drain_seconds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `grace_period_seconds` after provisioning.\n"]
+    pub fn grace_period_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.grace_period_seconds", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Service {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    alert: std::option::Option<terrars::ListField<DataApp_Spec_Service_Alert>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    autoscaling: std::option::Option<terrars::ListField<DataApp_Spec_Service_Autoscaling>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bitbucket: std::option::Option<terrars::ListField<DataApp_Spec_Service_Bitbucket>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     build_command: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cors: std::option::Option<terrars::ListField<DataAppSpecElServiceElCorsEl>>,
+    cors: std::option::Option<terrars::ListField<DataApp_Spec_Service_Cors>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dockerfile_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    env: std::option::Option<terrars::SetField<DataAppSpecElServiceElEnvEl>>,
+    env: std::option::Option<terrars::SetField<DataApp_Spec_Service_Env>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     environment_slug: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    git: std::option::Option<terrars::ListField<DataAppSpecElServiceElGitEl>>,
+    git: std::option::Option<terrars::ListField<DataApp_Spec_Service_Git>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    github: std::option::Option<terrars::ListField<DataAppSpecElServiceElGithubEl>>,
+    github: std::option::Option<terrars::ListField<DataApp_Spec_Service_Github>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gitlab: std::option::Option<terrars::ListField<DataAppSpecElServiceElGitlabEl>>,
+    gitlab: std::option::Option<terrars::ListField<DataApp_Spec_Service_Gitlab>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    health_check: std::option::Option<terrars::ListField<DataAppSpecElServiceElHealthCheckEl>>,
+    health_check: std::option::Option<terrars::ListField<DataApp_Spec_Service_HealthCheck>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     http_port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    image: std::option::Option<terrars::ListField<DataAppSpecElServiceElImageEl>>,
+    image: std::option::Option<terrars::ListField<DataApp_Spec_Service_Image>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5411,21 +8098,43 @@ pub struct DataAppSpecElServiceEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     internal_ports: std::option::Option<terrars::SetField<terrars::PrimField<f64>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_destination: std::option::Option<terrars::ListField<DataAppSpecElServiceElLogDestinationEl>>,
+    liveness_health_check: std::option::Option<terrars::ListField<DataApp_Spec_Service_LivenessHealthCheck>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    log_destination: std::option::Option<terrars::ListField<DataApp_Spec_Service_LogDestination>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    routes: std::option::Option<terrars::ListField<DataAppSpecElServiceElRoutesEl>>,
+    routes: std::option::Option<terrars::ListField<DataApp_Spec_Service_Routes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     run_command: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_dir: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    termination: std::option::Option<terrars::ListField<DataApp_Spec_Service_Termination>>,
 }
 
-impl DataAppSpecElServiceEl {
+impl DataApp_Spec_Service {
     #[doc = "Set the field `alert`.\n"]
-    pub fn set_alert(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElServiceElAlertEl>>) -> Self {
+    pub fn set_alert(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_Alert>>) -> Self {
         self.alert = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `autoscaling`.\n"]
+    pub fn set_autoscaling(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_Autoscaling>>,
+    ) -> Self {
+        self.autoscaling = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `bitbucket`.\n"]
+    pub fn set_bitbucket(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_Bitbucket>>,
+    ) -> Self {
+        self.bitbucket = std::option::Option::Some(v.into());
         self
     }
 
@@ -5436,7 +8145,7 @@ impl DataAppSpecElServiceEl {
     }
 
     #[doc = "Set the field `cors`.\n"]
-    pub fn set_cors(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElServiceElCorsEl>>) -> Self {
+    pub fn set_cors(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_Cors>>) -> Self {
         self.cors = std::option::Option::Some(v.into());
         self
     }
@@ -5448,7 +8157,7 @@ impl DataAppSpecElServiceEl {
     }
 
     #[doc = "Set the field `env`.\n"]
-    pub fn set_env(mut self, v: impl std::convert::Into<terrars::SetField<DataAppSpecElServiceElEnvEl>>) -> Self {
+    pub fn set_env(mut self, v: impl std::convert::Into<terrars::SetField<DataApp_Spec_Service_Env>>) -> Self {
         self.env = std::option::Option::Some(v.into());
         self
     }
@@ -5460,19 +8169,19 @@ impl DataAppSpecElServiceEl {
     }
 
     #[doc = "Set the field `git`.\n"]
-    pub fn set_git(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElServiceElGitEl>>) -> Self {
+    pub fn set_git(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_Git>>) -> Self {
         self.git = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `github`.\n"]
-    pub fn set_github(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElServiceElGithubEl>>) -> Self {
+    pub fn set_github(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_Github>>) -> Self {
         self.github = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `gitlab`.\n"]
-    pub fn set_gitlab(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElServiceElGitlabEl>>) -> Self {
+    pub fn set_gitlab(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_Gitlab>>) -> Self {
         self.gitlab = std::option::Option::Some(v.into());
         self
     }
@@ -5480,7 +8189,7 @@ impl DataAppSpecElServiceEl {
     #[doc = "Set the field `health_check`.\n"]
     pub fn set_health_check(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElServiceElHealthCheckEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_HealthCheck>>,
     ) -> Self {
         self.health_check = std::option::Option::Some(v.into());
         self
@@ -5493,7 +8202,7 @@ impl DataAppSpecElServiceEl {
     }
 
     #[doc = "Set the field `image`.\n"]
-    pub fn set_image(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElServiceElImageEl>>) -> Self {
+    pub fn set_image(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_Image>>) -> Self {
         self.image = std::option::Option::Some(v.into());
         self
     }
@@ -5522,10 +8231,19 @@ impl DataAppSpecElServiceEl {
         self
     }
 
+    #[doc = "Set the field `liveness_health_check`.\n"]
+    pub fn set_liveness_health_check(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_LivenessHealthCheck>>,
+    ) -> Self {
+        self.liveness_health_check = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `log_destination`.\n"]
     pub fn set_log_destination(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElServiceElLogDestinationEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_LogDestination>>,
     ) -> Self {
         self.log_destination = std::option::Option::Some(v.into());
         self
@@ -5538,7 +8256,7 @@ impl DataAppSpecElServiceEl {
     }
 
     #[doc = "Set the field `routes`.\n"]
-    pub fn set_routes(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElServiceElRoutesEl>>) -> Self {
+    pub fn set_routes(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_Routes>>) -> Self {
         self.routes = std::option::Option::Some(v.into());
         self
     }
@@ -5554,10 +8272,19 @@ impl DataAppSpecElServiceEl {
         self.source_dir = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `termination`.\n"]
+    pub fn set_termination(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service_Termination>>,
+    ) -> Self {
+        self.termination = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataAppSpecElServiceEl {
-    type O = terrars::BlockAssignable<DataAppSpecElServiceEl>;
+impl terrars::ToListMappable for DataApp_Spec_Service {
+    type O = terrars::BlockAssignable<DataApp_Spec_Service>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5568,12 +8295,14 @@ impl terrars::ToListMappable for DataAppSpecElServiceEl {
     }
 }
 
-pub struct BuildDataAppSpecElServiceEl {}
+pub struct BuildDataApp_Spec_Service {}
 
-impl BuildDataAppSpecElServiceEl {
-    pub fn build(self) -> DataAppSpecElServiceEl {
-        DataAppSpecElServiceEl {
+impl BuildDataApp_Spec_Service {
+    pub fn build(self) -> DataApp_Spec_Service {
+        DataApp_Spec_Service {
             alert: core::default::Default::default(),
+            autoscaling: core::default::Default::default(),
+            bitbucket: core::default::Default::default(),
             build_command: core::default::Default::default(),
             cors: core::default::Default::default(),
             dockerfile_path: core::default::Default::default(),
@@ -5588,37 +8317,51 @@ impl BuildDataAppSpecElServiceEl {
             instance_count: core::default::Default::default(),
             instance_size_slug: core::default::Default::default(),
             internal_ports: core::default::Default::default(),
+            liveness_health_check: core::default::Default::default(),
             log_destination: core::default::Default::default(),
             name: core::default::Default::default(),
             routes: core::default::Default::default(),
             run_command: core::default::Default::default(),
             source_dir: core::default::Default::default(),
+            termination: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElServiceElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_ServiceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElServiceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElServiceElRef {
-        DataAppSpecElServiceElRef {
+impl terrars::Ref for DataApp_Spec_ServiceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_ServiceRef {
+        DataApp_Spec_ServiceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElServiceElRef {
+impl DataApp_Spec_ServiceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `alert` after provisioning.\n"]
-    pub fn alert(&self) -> terrars::ListRef<DataAppSpecElServiceElAlertElRef> {
+    pub fn alert(&self) -> terrars::ListRef<DataApp_Spec_Service_AlertRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.alert", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `autoscaling` after provisioning.\n"]
+    pub fn autoscaling(&self) -> terrars::ListRef<DataApp_Spec_Service_AutoscalingRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `bitbucket` after provisioning.\n"]
+    pub fn bitbucket(&self) -> terrars::ListRef<DataApp_Spec_Service_BitbucketRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bitbucket", self.base))
     }
 
     #[doc = "Get a reference to the value of field `build_command` after provisioning.\n"]
@@ -5627,7 +8370,7 @@ impl DataAppSpecElServiceElRef {
     }
 
     #[doc = "Get a reference to the value of field `cors` after provisioning.\n"]
-    pub fn cors(&self) -> terrars::ListRef<DataAppSpecElServiceElCorsElRef> {
+    pub fn cors(&self) -> terrars::ListRef<DataApp_Spec_Service_CorsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors", self.base))
     }
 
@@ -5637,7 +8380,7 @@ impl DataAppSpecElServiceElRef {
     }
 
     #[doc = "Get a reference to the value of field `env` after provisioning.\n"]
-    pub fn env(&self) -> terrars::SetRef<DataAppSpecElServiceElEnvElRef> {
+    pub fn env(&self) -> terrars::SetRef<DataApp_Spec_Service_EnvRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.env", self.base))
     }
 
@@ -5647,22 +8390,22 @@ impl DataAppSpecElServiceElRef {
     }
 
     #[doc = "Get a reference to the value of field `git` after provisioning.\n"]
-    pub fn git(&self) -> terrars::ListRef<DataAppSpecElServiceElGitElRef> {
+    pub fn git(&self) -> terrars::ListRef<DataApp_Spec_Service_GitRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.git", self.base))
     }
 
     #[doc = "Get a reference to the value of field `github` after provisioning.\n"]
-    pub fn github(&self) -> terrars::ListRef<DataAppSpecElServiceElGithubElRef> {
+    pub fn github(&self) -> terrars::ListRef<DataApp_Spec_Service_GithubRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.github", self.base))
     }
 
     #[doc = "Get a reference to the value of field `gitlab` after provisioning.\n"]
-    pub fn gitlab(&self) -> terrars::ListRef<DataAppSpecElServiceElGitlabElRef> {
+    pub fn gitlab(&self) -> terrars::ListRef<DataApp_Spec_Service_GitlabRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gitlab", self.base))
     }
 
     #[doc = "Get a reference to the value of field `health_check` after provisioning.\n"]
-    pub fn health_check(&self) -> terrars::ListRef<DataAppSpecElServiceElHealthCheckElRef> {
+    pub fn health_check(&self) -> terrars::ListRef<DataApp_Spec_Service_HealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_check", self.base))
     }
 
@@ -5672,7 +8415,7 @@ impl DataAppSpecElServiceElRef {
     }
 
     #[doc = "Get a reference to the value of field `image` after provisioning.\n"]
-    pub fn image(&self) -> terrars::ListRef<DataAppSpecElServiceElImageElRef> {
+    pub fn image(&self) -> terrars::ListRef<DataApp_Spec_Service_ImageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image", self.base))
     }
 
@@ -5691,8 +8434,13 @@ impl DataAppSpecElServiceElRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.internal_ports", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `liveness_health_check` after provisioning.\n"]
+    pub fn liveness_health_check(&self) -> terrars::ListRef<DataApp_Spec_Service_LivenessHealthCheckRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.liveness_health_check", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `log_destination` after provisioning.\n"]
-    pub fn log_destination(&self) -> terrars::ListRef<DataAppSpecElServiceElLogDestinationElRef> {
+    pub fn log_destination(&self) -> terrars::ListRef<DataApp_Spec_Service_LogDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_destination", self.base))
     }
 
@@ -5702,7 +8450,7 @@ impl DataAppSpecElServiceElRef {
     }
 
     #[doc = "Get a reference to the value of field `routes` after provisioning.\n"]
-    pub fn routes(&self) -> terrars::ListRef<DataAppSpecElServiceElRoutesElRef> {
+    pub fn routes(&self) -> terrars::ListRef<DataApp_Spec_Service_RoutesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.routes", self.base))
     }
 
@@ -5715,10 +8463,106 @@ impl DataAppSpecElServiceElRef {
     pub fn source_dir(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_dir", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `termination` after provisioning.\n"]
+    pub fn termination(&self) -> terrars::ListRef<DataApp_Spec_Service_TerminationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.termination", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElStaticSiteElCorsElAllowOriginsEl {
+pub struct DataApp_Spec_StaticSite_Bitbucket {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    branch: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deploy_on_push: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    repo: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_StaticSite_Bitbucket {
+    #[doc = "Set the field `branch`.\n"]
+    pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.branch = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `deploy_on_push`.\n"]
+    pub fn set_deploy_on_push(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.deploy_on_push = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `repo`.\n"]
+    pub fn set_repo(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.repo = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_StaticSite_Bitbucket {
+    type O = terrars::BlockAssignable<DataApp_Spec_StaticSite_Bitbucket>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_StaticSite_Bitbucket {}
+
+impl BuildDataApp_Spec_StaticSite_Bitbucket {
+    pub fn build(self) -> DataApp_Spec_StaticSite_Bitbucket {
+        DataApp_Spec_StaticSite_Bitbucket {
+            branch: core::default::Default::default(),
+            deploy_on_push: core::default::Default::default(),
+            repo: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_StaticSite_BitbucketRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_StaticSite_BitbucketRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_StaticSite_BitbucketRef {
+        DataApp_Spec_StaticSite_BitbucketRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_StaticSite_BitbucketRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `branch` after provisioning.\n"]
+    pub fn branch(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.branch", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `deploy_on_push` after provisioning.\n"]
+    pub fn deploy_on_push(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deploy_on_push", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `repo` after provisioning.\n"]
+    pub fn repo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.repo", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_StaticSite_Cors_AllowOrigins {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exact: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5727,7 +8571,7 @@ pub struct DataAppSpecElStaticSiteElCorsElAllowOriginsEl {
     regex: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElStaticSiteElCorsElAllowOriginsEl {
+impl DataApp_Spec_StaticSite_Cors_AllowOrigins {
     #[doc = "Set the field `exact`.\n"]
     pub fn set_exact(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.exact = std::option::Option::Some(v.into());
@@ -5747,8 +8591,8 @@ impl DataAppSpecElStaticSiteElCorsElAllowOriginsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElStaticSiteElCorsElAllowOriginsEl {
-    type O = terrars::BlockAssignable<DataAppSpecElStaticSiteElCorsElAllowOriginsEl>;
+impl terrars::ToListMappable for DataApp_Spec_StaticSite_Cors_AllowOrigins {
+    type O = terrars::BlockAssignable<DataApp_Spec_StaticSite_Cors_AllowOrigins>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5759,11 +8603,11 @@ impl terrars::ToListMappable for DataAppSpecElStaticSiteElCorsElAllowOriginsEl {
     }
 }
 
-pub struct BuildDataAppSpecElStaticSiteElCorsElAllowOriginsEl {}
+pub struct BuildDataApp_Spec_StaticSite_Cors_AllowOrigins {}
 
-impl BuildDataAppSpecElStaticSiteElCorsElAllowOriginsEl {
-    pub fn build(self) -> DataAppSpecElStaticSiteElCorsElAllowOriginsEl {
-        DataAppSpecElStaticSiteElCorsElAllowOriginsEl {
+impl BuildDataApp_Spec_StaticSite_Cors_AllowOrigins {
+    pub fn build(self) -> DataApp_Spec_StaticSite_Cors_AllowOrigins {
+        DataApp_Spec_StaticSite_Cors_AllowOrigins {
             exact: core::default::Default::default(),
             prefix: core::default::Default::default(),
             regex: core::default::Default::default(),
@@ -5771,24 +8615,23 @@ impl BuildDataAppSpecElStaticSiteElCorsElAllowOriginsEl {
     }
 }
 
-pub struct DataAppSpecElStaticSiteElCorsElAllowOriginsElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_StaticSite_Cors_AllowOriginsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElStaticSiteElCorsElAllowOriginsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataAppSpecElStaticSiteElCorsElAllowOriginsElRef {
-        DataAppSpecElStaticSiteElCorsElAllowOriginsElRef {
+impl terrars::Ref for DataApp_Spec_StaticSite_Cors_AllowOriginsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_StaticSite_Cors_AllowOriginsRef {
+        DataApp_Spec_StaticSite_Cors_AllowOriginsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElStaticSiteElCorsElAllowOriginsElRef {
+impl DataApp_Spec_StaticSite_Cors_AllowOriginsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5810,7 +8653,7 @@ impl DataAppSpecElStaticSiteElCorsElAllowOriginsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElStaticSiteElCorsEl {
+pub struct DataApp_Spec_StaticSite_Cors {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_credentials: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5818,14 +8661,14 @@ pub struct DataAppSpecElStaticSiteElCorsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_methods: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_origins: std::option::Option<terrars::ListField<DataAppSpecElStaticSiteElCorsElAllowOriginsEl>>,
+    allow_origins: std::option::Option<terrars::ListField<DataApp_Spec_StaticSite_Cors_AllowOrigins>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     expose_headers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_age: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElStaticSiteElCorsEl {
+impl DataApp_Spec_StaticSite_Cors {
     #[doc = "Set the field `allow_credentials`.\n"]
     pub fn set_allow_credentials(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.allow_credentials = std::option::Option::Some(v.into());
@@ -5853,7 +8696,7 @@ impl DataAppSpecElStaticSiteElCorsEl {
     #[doc = "Set the field `allow_origins`.\n"]
     pub fn set_allow_origins(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElStaticSiteElCorsElAllowOriginsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_StaticSite_Cors_AllowOrigins>>,
     ) -> Self {
         self.allow_origins = std::option::Option::Some(v.into());
         self
@@ -5875,8 +8718,8 @@ impl DataAppSpecElStaticSiteElCorsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElStaticSiteElCorsEl {
-    type O = terrars::BlockAssignable<DataAppSpecElStaticSiteElCorsEl>;
+impl terrars::ToListMappable for DataApp_Spec_StaticSite_Cors {
+    type O = terrars::BlockAssignable<DataApp_Spec_StaticSite_Cors>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5887,11 +8730,11 @@ impl terrars::ToListMappable for DataAppSpecElStaticSiteElCorsEl {
     }
 }
 
-pub struct BuildDataAppSpecElStaticSiteElCorsEl {}
+pub struct BuildDataApp_Spec_StaticSite_Cors {}
 
-impl BuildDataAppSpecElStaticSiteElCorsEl {
-    pub fn build(self) -> DataAppSpecElStaticSiteElCorsEl {
-        DataAppSpecElStaticSiteElCorsEl {
+impl BuildDataApp_Spec_StaticSite_Cors {
+    pub fn build(self) -> DataApp_Spec_StaticSite_Cors {
+        DataApp_Spec_StaticSite_Cors {
             allow_credentials: core::default::Default::default(),
             allow_headers: core::default::Default::default(),
             allow_methods: core::default::Default::default(),
@@ -5902,21 +8745,23 @@ impl BuildDataAppSpecElStaticSiteElCorsEl {
     }
 }
 
-pub struct DataAppSpecElStaticSiteElCorsElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_StaticSite_CorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElStaticSiteElCorsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElStaticSiteElCorsElRef {
-        DataAppSpecElStaticSiteElCorsElRef {
+impl terrars::Ref for DataApp_Spec_StaticSite_CorsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_StaticSite_CorsRef {
+        DataApp_Spec_StaticSite_CorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElStaticSiteElCorsElRef {
+impl DataApp_Spec_StaticSite_CorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5937,7 +8782,7 @@ impl DataAppSpecElStaticSiteElCorsElRef {
     }
 
     #[doc = "Get a reference to the value of field `allow_origins` after provisioning.\n"]
-    pub fn allow_origins(&self) -> terrars::ListRef<DataAppSpecElStaticSiteElCorsElAllowOriginsElRef> {
+    pub fn allow_origins(&self) -> terrars::ListRef<DataApp_Spec_StaticSite_Cors_AllowOriginsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.allow_origins", self.base))
     }
 
@@ -5953,7 +8798,7 @@ impl DataAppSpecElStaticSiteElCorsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElStaticSiteElEnvEl {
+pub struct DataApp_Spec_StaticSite_Env {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5964,7 +8809,7 @@ pub struct DataAppSpecElStaticSiteElEnvEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElStaticSiteElEnvEl {
+impl DataApp_Spec_StaticSite_Env {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -5990,8 +8835,8 @@ impl DataAppSpecElStaticSiteElEnvEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElStaticSiteElEnvEl {
-    type O = terrars::BlockAssignable<DataAppSpecElStaticSiteElEnvEl>;
+impl terrars::ToListMappable for DataApp_Spec_StaticSite_Env {
+    type O = terrars::BlockAssignable<DataApp_Spec_StaticSite_Env>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6002,11 +8847,11 @@ impl terrars::ToListMappable for DataAppSpecElStaticSiteElEnvEl {
     }
 }
 
-pub struct BuildDataAppSpecElStaticSiteElEnvEl {}
+pub struct BuildDataApp_Spec_StaticSite_Env {}
 
-impl BuildDataAppSpecElStaticSiteElEnvEl {
-    pub fn build(self) -> DataAppSpecElStaticSiteElEnvEl {
-        DataAppSpecElStaticSiteElEnvEl {
+impl BuildDataApp_Spec_StaticSite_Env {
+    pub fn build(self) -> DataApp_Spec_StaticSite_Env {
+        DataApp_Spec_StaticSite_Env {
             key: core::default::Default::default(),
             scope: core::default::Default::default(),
             type_: core::default::Default::default(),
@@ -6015,21 +8860,23 @@ impl BuildDataAppSpecElStaticSiteElEnvEl {
     }
 }
 
-pub struct DataAppSpecElStaticSiteElEnvElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_StaticSite_EnvRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElStaticSiteElEnvElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElStaticSiteElEnvElRef {
-        DataAppSpecElStaticSiteElEnvElRef {
+impl terrars::Ref for DataApp_Spec_StaticSite_EnvRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_StaticSite_EnvRef {
+        DataApp_Spec_StaticSite_EnvRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElStaticSiteElEnvElRef {
+impl DataApp_Spec_StaticSite_EnvRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6056,14 +8903,14 @@ impl DataAppSpecElStaticSiteElEnvElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElStaticSiteElGitEl {
+pub struct DataApp_Spec_StaticSite_Git {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repo_clone_url: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElStaticSiteElGitEl {
+impl DataApp_Spec_StaticSite_Git {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -6077,8 +8924,8 @@ impl DataAppSpecElStaticSiteElGitEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElStaticSiteElGitEl {
-    type O = terrars::BlockAssignable<DataAppSpecElStaticSiteElGitEl>;
+impl terrars::ToListMappable for DataApp_Spec_StaticSite_Git {
+    type O = terrars::BlockAssignable<DataApp_Spec_StaticSite_Git>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6089,32 +8936,34 @@ impl terrars::ToListMappable for DataAppSpecElStaticSiteElGitEl {
     }
 }
 
-pub struct BuildDataAppSpecElStaticSiteElGitEl {}
+pub struct BuildDataApp_Spec_StaticSite_Git {}
 
-impl BuildDataAppSpecElStaticSiteElGitEl {
-    pub fn build(self) -> DataAppSpecElStaticSiteElGitEl {
-        DataAppSpecElStaticSiteElGitEl {
+impl BuildDataApp_Spec_StaticSite_Git {
+    pub fn build(self) -> DataApp_Spec_StaticSite_Git {
+        DataApp_Spec_StaticSite_Git {
             branch: core::default::Default::default(),
             repo_clone_url: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElStaticSiteElGitElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_StaticSite_GitRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElStaticSiteElGitElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElStaticSiteElGitElRef {
-        DataAppSpecElStaticSiteElGitElRef {
+impl terrars::Ref for DataApp_Spec_StaticSite_GitRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_StaticSite_GitRef {
+        DataApp_Spec_StaticSite_GitRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElStaticSiteElGitElRef {
+impl DataApp_Spec_StaticSite_GitRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6131,7 +8980,7 @@ impl DataAppSpecElStaticSiteElGitElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElStaticSiteElGithubEl {
+pub struct DataApp_Spec_StaticSite_Github {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6140,7 +8989,7 @@ pub struct DataAppSpecElStaticSiteElGithubEl {
     repo: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElStaticSiteElGithubEl {
+impl DataApp_Spec_StaticSite_Github {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -6160,8 +9009,8 @@ impl DataAppSpecElStaticSiteElGithubEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElStaticSiteElGithubEl {
-    type O = terrars::BlockAssignable<DataAppSpecElStaticSiteElGithubEl>;
+impl terrars::ToListMappable for DataApp_Spec_StaticSite_Github {
+    type O = terrars::BlockAssignable<DataApp_Spec_StaticSite_Github>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6172,11 +9021,11 @@ impl terrars::ToListMappable for DataAppSpecElStaticSiteElGithubEl {
     }
 }
 
-pub struct BuildDataAppSpecElStaticSiteElGithubEl {}
+pub struct BuildDataApp_Spec_StaticSite_Github {}
 
-impl BuildDataAppSpecElStaticSiteElGithubEl {
-    pub fn build(self) -> DataAppSpecElStaticSiteElGithubEl {
-        DataAppSpecElStaticSiteElGithubEl {
+impl BuildDataApp_Spec_StaticSite_Github {
+    pub fn build(self) -> DataApp_Spec_StaticSite_Github {
+        DataApp_Spec_StaticSite_Github {
             branch: core::default::Default::default(),
             deploy_on_push: core::default::Default::default(),
             repo: core::default::Default::default(),
@@ -6184,21 +9033,23 @@ impl BuildDataAppSpecElStaticSiteElGithubEl {
     }
 }
 
-pub struct DataAppSpecElStaticSiteElGithubElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_StaticSite_GithubRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElStaticSiteElGithubElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElStaticSiteElGithubElRef {
-        DataAppSpecElStaticSiteElGithubElRef {
+impl terrars::Ref for DataApp_Spec_StaticSite_GithubRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_StaticSite_GithubRef {
+        DataApp_Spec_StaticSite_GithubRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElStaticSiteElGithubElRef {
+impl DataApp_Spec_StaticSite_GithubRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6220,7 +9071,7 @@ impl DataAppSpecElStaticSiteElGithubElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElStaticSiteElGitlabEl {
+pub struct DataApp_Spec_StaticSite_Gitlab {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6229,7 +9080,7 @@ pub struct DataAppSpecElStaticSiteElGitlabEl {
     repo: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElStaticSiteElGitlabEl {
+impl DataApp_Spec_StaticSite_Gitlab {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -6249,8 +9100,8 @@ impl DataAppSpecElStaticSiteElGitlabEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElStaticSiteElGitlabEl {
-    type O = terrars::BlockAssignable<DataAppSpecElStaticSiteElGitlabEl>;
+impl terrars::ToListMappable for DataApp_Spec_StaticSite_Gitlab {
+    type O = terrars::BlockAssignable<DataApp_Spec_StaticSite_Gitlab>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6261,11 +9112,11 @@ impl terrars::ToListMappable for DataAppSpecElStaticSiteElGitlabEl {
     }
 }
 
-pub struct BuildDataAppSpecElStaticSiteElGitlabEl {}
+pub struct BuildDataApp_Spec_StaticSite_Gitlab {}
 
-impl BuildDataAppSpecElStaticSiteElGitlabEl {
-    pub fn build(self) -> DataAppSpecElStaticSiteElGitlabEl {
-        DataAppSpecElStaticSiteElGitlabEl {
+impl BuildDataApp_Spec_StaticSite_Gitlab {
+    pub fn build(self) -> DataApp_Spec_StaticSite_Gitlab {
+        DataApp_Spec_StaticSite_Gitlab {
             branch: core::default::Default::default(),
             deploy_on_push: core::default::Default::default(),
             repo: core::default::Default::default(),
@@ -6273,21 +9124,23 @@ impl BuildDataAppSpecElStaticSiteElGitlabEl {
     }
 }
 
-pub struct DataAppSpecElStaticSiteElGitlabElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_StaticSite_GitlabRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElStaticSiteElGitlabElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElStaticSiteElGitlabElRef {
-        DataAppSpecElStaticSiteElGitlabElRef {
+impl terrars::Ref for DataApp_Spec_StaticSite_GitlabRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_StaticSite_GitlabRef {
+        DataApp_Spec_StaticSite_GitlabRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElStaticSiteElGitlabElRef {
+impl DataApp_Spec_StaticSite_GitlabRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6309,14 +9162,14 @@ impl DataAppSpecElStaticSiteElGitlabElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElStaticSiteElRoutesEl {
+pub struct DataApp_Spec_StaticSite_Routes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preserve_path_prefix: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataAppSpecElStaticSiteElRoutesEl {
+impl DataApp_Spec_StaticSite_Routes {
     #[doc = "Set the field `path`.\n"]
     pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.path = std::option::Option::Some(v.into());
@@ -6330,8 +9183,8 @@ impl DataAppSpecElStaticSiteElRoutesEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElStaticSiteElRoutesEl {
-    type O = terrars::BlockAssignable<DataAppSpecElStaticSiteElRoutesEl>;
+impl terrars::ToListMappable for DataApp_Spec_StaticSite_Routes {
+    type O = terrars::BlockAssignable<DataApp_Spec_StaticSite_Routes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6342,32 +9195,34 @@ impl terrars::ToListMappable for DataAppSpecElStaticSiteElRoutesEl {
     }
 }
 
-pub struct BuildDataAppSpecElStaticSiteElRoutesEl {}
+pub struct BuildDataApp_Spec_StaticSite_Routes {}
 
-impl BuildDataAppSpecElStaticSiteElRoutesEl {
-    pub fn build(self) -> DataAppSpecElStaticSiteElRoutesEl {
-        DataAppSpecElStaticSiteElRoutesEl {
+impl BuildDataApp_Spec_StaticSite_Routes {
+    pub fn build(self) -> DataApp_Spec_StaticSite_Routes {
+        DataApp_Spec_StaticSite_Routes {
             path: core::default::Default::default(),
             preserve_path_prefix: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElStaticSiteElRoutesElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_StaticSite_RoutesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElStaticSiteElRoutesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElStaticSiteElRoutesElRef {
-        DataAppSpecElStaticSiteElRoutesElRef {
+impl terrars::Ref for DataApp_Spec_StaticSite_RoutesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_StaticSite_RoutesRef {
+        DataApp_Spec_StaticSite_RoutesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElStaticSiteElRoutesElRef {
+impl DataApp_Spec_StaticSite_RoutesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6384,27 +9239,29 @@ impl DataAppSpecElStaticSiteElRoutesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElStaticSiteEl {
+pub struct DataApp_Spec_StaticSite {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bitbucket: std::option::Option<terrars::ListField<DataApp_Spec_StaticSite_Bitbucket>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     build_command: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     catchall_document: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cors: std::option::Option<terrars::ListField<DataAppSpecElStaticSiteElCorsEl>>,
+    cors: std::option::Option<terrars::ListField<DataApp_Spec_StaticSite_Cors>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dockerfile_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    env: std::option::Option<terrars::SetField<DataAppSpecElStaticSiteElEnvEl>>,
+    env: std::option::Option<terrars::SetField<DataApp_Spec_StaticSite_Env>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     environment_slug: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_document: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    git: std::option::Option<terrars::ListField<DataAppSpecElStaticSiteElGitEl>>,
+    git: std::option::Option<terrars::ListField<DataApp_Spec_StaticSite_Git>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    github: std::option::Option<terrars::ListField<DataAppSpecElStaticSiteElGithubEl>>,
+    github: std::option::Option<terrars::ListField<DataApp_Spec_StaticSite_Github>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gitlab: std::option::Option<terrars::ListField<DataAppSpecElStaticSiteElGitlabEl>>,
+    gitlab: std::option::Option<terrars::ListField<DataApp_Spec_StaticSite_Gitlab>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     index_document: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6412,12 +9269,21 @@ pub struct DataAppSpecElStaticSiteEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     output_dir: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    routes: std::option::Option<terrars::ListField<DataAppSpecElStaticSiteElRoutesEl>>,
+    routes: std::option::Option<terrars::ListField<DataApp_Spec_StaticSite_Routes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_dir: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElStaticSiteEl {
+impl DataApp_Spec_StaticSite {
+    #[doc = "Set the field `bitbucket`.\n"]
+    pub fn set_bitbucket(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_StaticSite_Bitbucket>>,
+    ) -> Self {
+        self.bitbucket = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `build_command`.\n"]
     pub fn set_build_command(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.build_command = std::option::Option::Some(v.into());
@@ -6431,7 +9297,7 @@ impl DataAppSpecElStaticSiteEl {
     }
 
     #[doc = "Set the field `cors`.\n"]
-    pub fn set_cors(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElStaticSiteElCorsEl>>) -> Self {
+    pub fn set_cors(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_StaticSite_Cors>>) -> Self {
         self.cors = std::option::Option::Some(v.into());
         self
     }
@@ -6443,7 +9309,7 @@ impl DataAppSpecElStaticSiteEl {
     }
 
     #[doc = "Set the field `env`.\n"]
-    pub fn set_env(mut self, v: impl std::convert::Into<terrars::SetField<DataAppSpecElStaticSiteElEnvEl>>) -> Self {
+    pub fn set_env(mut self, v: impl std::convert::Into<terrars::SetField<DataApp_Spec_StaticSite_Env>>) -> Self {
         self.env = std::option::Option::Some(v.into());
         self
     }
@@ -6461,25 +9327,19 @@ impl DataAppSpecElStaticSiteEl {
     }
 
     #[doc = "Set the field `git`.\n"]
-    pub fn set_git(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElStaticSiteElGitEl>>) -> Self {
+    pub fn set_git(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_StaticSite_Git>>) -> Self {
         self.git = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `github`.\n"]
-    pub fn set_github(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElStaticSiteElGithubEl>>,
-    ) -> Self {
+    pub fn set_github(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_StaticSite_Github>>) -> Self {
         self.github = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `gitlab`.\n"]
-    pub fn set_gitlab(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElStaticSiteElGitlabEl>>,
-    ) -> Self {
+    pub fn set_gitlab(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_StaticSite_Gitlab>>) -> Self {
         self.gitlab = std::option::Option::Some(v.into());
         self
     }
@@ -6503,10 +9363,7 @@ impl DataAppSpecElStaticSiteEl {
     }
 
     #[doc = "Set the field `routes`.\n"]
-    pub fn set_routes(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElStaticSiteElRoutesEl>>,
-    ) -> Self {
+    pub fn set_routes(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_StaticSite_Routes>>) -> Self {
         self.routes = std::option::Option::Some(v.into());
         self
     }
@@ -6518,8 +9375,8 @@ impl DataAppSpecElStaticSiteEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElStaticSiteEl {
-    type O = terrars::BlockAssignable<DataAppSpecElStaticSiteEl>;
+impl terrars::ToListMappable for DataApp_Spec_StaticSite {
+    type O = terrars::BlockAssignable<DataApp_Spec_StaticSite>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6530,11 +9387,12 @@ impl terrars::ToListMappable for DataAppSpecElStaticSiteEl {
     }
 }
 
-pub struct BuildDataAppSpecElStaticSiteEl {}
+pub struct BuildDataApp_Spec_StaticSite {}
 
-impl BuildDataAppSpecElStaticSiteEl {
-    pub fn build(self) -> DataAppSpecElStaticSiteEl {
-        DataAppSpecElStaticSiteEl {
+impl BuildDataApp_Spec_StaticSite {
+    pub fn build(self) -> DataApp_Spec_StaticSite {
+        DataApp_Spec_StaticSite {
+            bitbucket: core::default::Default::default(),
             build_command: core::default::Default::default(),
             catchall_document: core::default::Default::default(),
             cors: core::default::Default::default(),
@@ -6554,23 +9412,30 @@ impl BuildDataAppSpecElStaticSiteEl {
     }
 }
 
-pub struct DataAppSpecElStaticSiteElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_StaticSiteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElStaticSiteElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElStaticSiteElRef {
-        DataAppSpecElStaticSiteElRef {
+impl terrars::Ref for DataApp_Spec_StaticSiteRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_StaticSiteRef {
+        DataApp_Spec_StaticSiteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElStaticSiteElRef {
+impl DataApp_Spec_StaticSiteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `bitbucket` after provisioning.\n"]
+    pub fn bitbucket(&self) -> terrars::ListRef<DataApp_Spec_StaticSite_BitbucketRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bitbucket", self.base))
     }
 
     #[doc = "Get a reference to the value of field `build_command` after provisioning.\n"]
@@ -6584,7 +9449,7 @@ impl DataAppSpecElStaticSiteElRef {
     }
 
     #[doc = "Get a reference to the value of field `cors` after provisioning.\n"]
-    pub fn cors(&self) -> terrars::ListRef<DataAppSpecElStaticSiteElCorsElRef> {
+    pub fn cors(&self) -> terrars::ListRef<DataApp_Spec_StaticSite_CorsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors", self.base))
     }
 
@@ -6594,7 +9459,7 @@ impl DataAppSpecElStaticSiteElRef {
     }
 
     #[doc = "Get a reference to the value of field `env` after provisioning.\n"]
-    pub fn env(&self) -> terrars::SetRef<DataAppSpecElStaticSiteElEnvElRef> {
+    pub fn env(&self) -> terrars::SetRef<DataApp_Spec_StaticSite_EnvRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.env", self.base))
     }
 
@@ -6609,17 +9474,17 @@ impl DataAppSpecElStaticSiteElRef {
     }
 
     #[doc = "Get a reference to the value of field `git` after provisioning.\n"]
-    pub fn git(&self) -> terrars::ListRef<DataAppSpecElStaticSiteElGitElRef> {
+    pub fn git(&self) -> terrars::ListRef<DataApp_Spec_StaticSite_GitRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.git", self.base))
     }
 
     #[doc = "Get a reference to the value of field `github` after provisioning.\n"]
-    pub fn github(&self) -> terrars::ListRef<DataAppSpecElStaticSiteElGithubElRef> {
+    pub fn github(&self) -> terrars::ListRef<DataApp_Spec_StaticSite_GithubRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.github", self.base))
     }
 
     #[doc = "Get a reference to the value of field `gitlab` after provisioning.\n"]
-    pub fn gitlab(&self) -> terrars::ListRef<DataAppSpecElStaticSiteElGitlabElRef> {
+    pub fn gitlab(&self) -> terrars::ListRef<DataApp_Spec_StaticSite_GitlabRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gitlab", self.base))
     }
 
@@ -6639,7 +9504,7 @@ impl DataAppSpecElStaticSiteElRef {
     }
 
     #[doc = "Get a reference to the value of field `routes` after provisioning.\n"]
-    pub fn routes(&self) -> terrars::ListRef<DataAppSpecElStaticSiteElRoutesElRef> {
+    pub fn routes(&self) -> terrars::ListRef<DataApp_Spec_StaticSite_RoutesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.routes", self.base))
     }
 
@@ -6650,7 +9515,233 @@ impl DataAppSpecElStaticSiteElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElWorkerElAlertEl {
+pub struct DataApp_Spec_Vpc {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Vpc {
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.id = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Vpc {
+    type O = terrars::BlockAssignable<DataApp_Spec_Vpc>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Vpc {}
+
+impl BuildDataApp_Spec_Vpc {
+    pub fn build(self) -> DataApp_Spec_Vpc {
+        DataApp_Spec_Vpc { id: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_VpcRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_VpcRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_VpcRef {
+        DataApp_Spec_VpcRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_VpcRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Worker_Alert_Destinations_SlackWebhooks {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    channel: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Worker_Alert_Destinations_SlackWebhooks {
+    #[doc = "Set the field `channel`.\n"]
+    pub fn set_channel(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.channel = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `url`.\n"]
+    pub fn set_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.url = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Worker_Alert_Destinations_SlackWebhooks {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_Alert_Destinations_SlackWebhooks>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Worker_Alert_Destinations_SlackWebhooks {}
+
+impl BuildDataApp_Spec_Worker_Alert_Destinations_SlackWebhooks {
+    pub fn build(self) -> DataApp_Spec_Worker_Alert_Destinations_SlackWebhooks {
+        DataApp_Spec_Worker_Alert_Destinations_SlackWebhooks {
+            channel: core::default::Default::default(),
+            url: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_Alert_Destinations_SlackWebhooksRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Worker_Alert_Destinations_SlackWebhooksRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataApp_Spec_Worker_Alert_Destinations_SlackWebhooksRef {
+        DataApp_Spec_Worker_Alert_Destinations_SlackWebhooksRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Worker_Alert_Destinations_SlackWebhooksRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `channel` after provisioning.\n"]
+    pub fn channel(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.channel", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `url` after provisioning.\n"]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Worker_Alert_Destinations {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    emails: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    slack_webhooks: std::option::Option<terrars::ListField<DataApp_Spec_Worker_Alert_Destinations_SlackWebhooks>>,
+}
+
+impl DataApp_Spec_Worker_Alert_Destinations {
+    #[doc = "Set the field `emails`.\n"]
+    pub fn set_emails(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.emails = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `slack_webhooks`.\n"]
+    pub fn set_slack_webhooks(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_Alert_Destinations_SlackWebhooks>>,
+    ) -> Self {
+        self.slack_webhooks = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Worker_Alert_Destinations {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_Alert_Destinations>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Worker_Alert_Destinations {}
+
+impl BuildDataApp_Spec_Worker_Alert_Destinations {
+    pub fn build(self) -> DataApp_Spec_Worker_Alert_Destinations {
+        DataApp_Spec_Worker_Alert_Destinations {
+            emails: core::default::Default::default(),
+            slack_webhooks: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_Alert_DestinationsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Worker_Alert_DestinationsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_Alert_DestinationsRef {
+        DataApp_Spec_Worker_Alert_DestinationsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Worker_Alert_DestinationsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `emails` after provisioning.\n"]
+    pub fn emails(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.emails", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `slack_webhooks` after provisioning.\n"]
+    pub fn slack_webhooks(&self) -> terrars::ListRef<DataApp_Spec_Worker_Alert_Destinations_SlackWebhooksRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.slack_webhooks", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Worker_Alert {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destinations: std::option::Option<terrars::SetField<DataApp_Spec_Worker_Alert_Destinations>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6663,7 +9754,16 @@ pub struct DataAppSpecElWorkerElAlertEl {
     window: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElWorkerElAlertEl {
+impl DataApp_Spec_Worker_Alert {
+    #[doc = "Set the field `destinations`.\n"]
+    pub fn set_destinations(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<DataApp_Spec_Worker_Alert_Destinations>>,
+    ) -> Self {
+        self.destinations = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `disabled`.\n"]
     pub fn set_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.disabled = std::option::Option::Some(v.into());
@@ -6695,8 +9795,8 @@ impl DataAppSpecElWorkerElAlertEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElWorkerElAlertEl {
-    type O = terrars::BlockAssignable<DataAppSpecElWorkerElAlertEl>;
+impl terrars::ToListMappable for DataApp_Spec_Worker_Alert {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_Alert>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6707,11 +9807,12 @@ impl terrars::ToListMappable for DataAppSpecElWorkerElAlertEl {
     }
 }
 
-pub struct BuildDataAppSpecElWorkerElAlertEl {}
+pub struct BuildDataApp_Spec_Worker_Alert {}
 
-impl BuildDataAppSpecElWorkerElAlertEl {
-    pub fn build(self) -> DataAppSpecElWorkerElAlertEl {
-        DataAppSpecElWorkerElAlertEl {
+impl BuildDataApp_Spec_Worker_Alert {
+    pub fn build(self) -> DataApp_Spec_Worker_Alert {
+        DataApp_Spec_Worker_Alert {
+            destinations: core::default::Default::default(),
             disabled: core::default::Default::default(),
             operator: core::default::Default::default(),
             rule: core::default::Default::default(),
@@ -6721,23 +9822,30 @@ impl BuildDataAppSpecElWorkerElAlertEl {
     }
 }
 
-pub struct DataAppSpecElWorkerElAlertElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_AlertRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElWorkerElAlertElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElWorkerElAlertElRef {
-        DataAppSpecElWorkerElAlertElRef {
+impl terrars::Ref for DataApp_Spec_Worker_AlertRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_AlertRef {
+        DataApp_Spec_Worker_AlertRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElWorkerElAlertElRef {
+impl DataApp_Spec_Worker_AlertRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `destinations` after provisioning.\n"]
+    pub fn destinations(&self) -> terrars::SetRef<DataApp_Spec_Worker_Alert_DestinationsRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.destinations", self.base))
     }
 
     #[doc = "Get a reference to the value of field `disabled` after provisioning.\n"]
@@ -6767,7 +9875,320 @@ impl DataAppSpecElWorkerElAlertElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElWorkerElEnvEl {
+pub struct DataApp_Spec_Worker_Autoscaling_Metrics_Cpu {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    percent: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataApp_Spec_Worker_Autoscaling_Metrics_Cpu {
+    #[doc = "Set the field `percent`.\n"]
+    pub fn set_percent(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.percent = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Worker_Autoscaling_Metrics_Cpu {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_Autoscaling_Metrics_Cpu>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Worker_Autoscaling_Metrics_Cpu {}
+
+impl BuildDataApp_Spec_Worker_Autoscaling_Metrics_Cpu {
+    pub fn build(self) -> DataApp_Spec_Worker_Autoscaling_Metrics_Cpu {
+        DataApp_Spec_Worker_Autoscaling_Metrics_Cpu { percent: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_Autoscaling_Metrics_CpuRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Worker_Autoscaling_Metrics_CpuRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataApp_Spec_Worker_Autoscaling_Metrics_CpuRef {
+        DataApp_Spec_Worker_Autoscaling_Metrics_CpuRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Worker_Autoscaling_Metrics_CpuRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `percent` after provisioning.\n"]
+    pub fn percent(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.percent", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Worker_Autoscaling_Metrics {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu: std::option::Option<terrars::ListField<DataApp_Spec_Worker_Autoscaling_Metrics_Cpu>>,
+}
+
+impl DataApp_Spec_Worker_Autoscaling_Metrics {
+    #[doc = "Set the field `cpu`.\n"]
+    pub fn set_cpu(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_Autoscaling_Metrics_Cpu>>,
+    ) -> Self {
+        self.cpu = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Worker_Autoscaling_Metrics {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_Autoscaling_Metrics>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Worker_Autoscaling_Metrics {}
+
+impl BuildDataApp_Spec_Worker_Autoscaling_Metrics {
+    pub fn build(self) -> DataApp_Spec_Worker_Autoscaling_Metrics {
+        DataApp_Spec_Worker_Autoscaling_Metrics { cpu: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_Autoscaling_MetricsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Worker_Autoscaling_MetricsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_Autoscaling_MetricsRef {
+        DataApp_Spec_Worker_Autoscaling_MetricsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Worker_Autoscaling_MetricsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `cpu` after provisioning.\n"]
+    pub fn cpu(&self) -> terrars::ListRef<DataApp_Spec_Worker_Autoscaling_Metrics_CpuRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cpu", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Worker_Autoscaling {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_instance_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metrics: std::option::Option<terrars::ListField<DataApp_Spec_Worker_Autoscaling_Metrics>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_instance_count: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataApp_Spec_Worker_Autoscaling {
+    #[doc = "Set the field `max_instance_count`.\n"]
+    pub fn set_max_instance_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_instance_count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `metrics`.\n"]
+    pub fn set_metrics(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_Autoscaling_Metrics>>,
+    ) -> Self {
+        self.metrics = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `min_instance_count`.\n"]
+    pub fn set_min_instance_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min_instance_count = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Worker_Autoscaling {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_Autoscaling>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Worker_Autoscaling {}
+
+impl BuildDataApp_Spec_Worker_Autoscaling {
+    pub fn build(self) -> DataApp_Spec_Worker_Autoscaling {
+        DataApp_Spec_Worker_Autoscaling {
+            max_instance_count: core::default::Default::default(),
+            metrics: core::default::Default::default(),
+            min_instance_count: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_AutoscalingRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Worker_AutoscalingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_AutoscalingRef {
+        DataApp_Spec_Worker_AutoscalingRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Worker_AutoscalingRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `max_instance_count` after provisioning.\n"]
+    pub fn max_instance_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_instance_count", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `metrics` after provisioning.\n"]
+    pub fn metrics(&self) -> terrars::ListRef<DataApp_Spec_Worker_Autoscaling_MetricsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metrics", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `min_instance_count` after provisioning.\n"]
+    pub fn min_instance_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_instance_count", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Worker_Bitbucket {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    branch: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deploy_on_push: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    repo: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Worker_Bitbucket {
+    #[doc = "Set the field `branch`.\n"]
+    pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.branch = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `deploy_on_push`.\n"]
+    pub fn set_deploy_on_push(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.deploy_on_push = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `repo`.\n"]
+    pub fn set_repo(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.repo = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Worker_Bitbucket {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_Bitbucket>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Worker_Bitbucket {}
+
+impl BuildDataApp_Spec_Worker_Bitbucket {
+    pub fn build(self) -> DataApp_Spec_Worker_Bitbucket {
+        DataApp_Spec_Worker_Bitbucket {
+            branch: core::default::Default::default(),
+            deploy_on_push: core::default::Default::default(),
+            repo: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_BitbucketRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Worker_BitbucketRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_BitbucketRef {
+        DataApp_Spec_Worker_BitbucketRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Worker_BitbucketRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `branch` after provisioning.\n"]
+    pub fn branch(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.branch", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `deploy_on_push` after provisioning.\n"]
+    pub fn deploy_on_push(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deploy_on_push", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `repo` after provisioning.\n"]
+    pub fn repo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.repo", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Worker_Env {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6778,7 +10199,7 @@ pub struct DataAppSpecElWorkerElEnvEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElWorkerElEnvEl {
+impl DataApp_Spec_Worker_Env {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -6804,8 +10225,8 @@ impl DataAppSpecElWorkerElEnvEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElWorkerElEnvEl {
-    type O = terrars::BlockAssignable<DataAppSpecElWorkerElEnvEl>;
+impl terrars::ToListMappable for DataApp_Spec_Worker_Env {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_Env>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6816,11 +10237,11 @@ impl terrars::ToListMappable for DataAppSpecElWorkerElEnvEl {
     }
 }
 
-pub struct BuildDataAppSpecElWorkerElEnvEl {}
+pub struct BuildDataApp_Spec_Worker_Env {}
 
-impl BuildDataAppSpecElWorkerElEnvEl {
-    pub fn build(self) -> DataAppSpecElWorkerElEnvEl {
-        DataAppSpecElWorkerElEnvEl {
+impl BuildDataApp_Spec_Worker_Env {
+    pub fn build(self) -> DataApp_Spec_Worker_Env {
+        DataApp_Spec_Worker_Env {
             key: core::default::Default::default(),
             scope: core::default::Default::default(),
             type_: core::default::Default::default(),
@@ -6829,21 +10250,23 @@ impl BuildDataAppSpecElWorkerElEnvEl {
     }
 }
 
-pub struct DataAppSpecElWorkerElEnvElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_EnvRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElWorkerElEnvElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElWorkerElEnvElRef {
-        DataAppSpecElWorkerElEnvElRef {
+impl terrars::Ref for DataApp_Spec_Worker_EnvRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_EnvRef {
+        DataApp_Spec_Worker_EnvRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElWorkerElEnvElRef {
+impl DataApp_Spec_Worker_EnvRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6870,14 +10293,14 @@ impl DataAppSpecElWorkerElEnvElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElWorkerElGitEl {
+pub struct DataApp_Spec_Worker_Git {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repo_clone_url: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElWorkerElGitEl {
+impl DataApp_Spec_Worker_Git {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -6891,8 +10314,8 @@ impl DataAppSpecElWorkerElGitEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElWorkerElGitEl {
-    type O = terrars::BlockAssignable<DataAppSpecElWorkerElGitEl>;
+impl terrars::ToListMappable for DataApp_Spec_Worker_Git {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_Git>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6903,32 +10326,34 @@ impl terrars::ToListMappable for DataAppSpecElWorkerElGitEl {
     }
 }
 
-pub struct BuildDataAppSpecElWorkerElGitEl {}
+pub struct BuildDataApp_Spec_Worker_Git {}
 
-impl BuildDataAppSpecElWorkerElGitEl {
-    pub fn build(self) -> DataAppSpecElWorkerElGitEl {
-        DataAppSpecElWorkerElGitEl {
+impl BuildDataApp_Spec_Worker_Git {
+    pub fn build(self) -> DataApp_Spec_Worker_Git {
+        DataApp_Spec_Worker_Git {
             branch: core::default::Default::default(),
             repo_clone_url: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElWorkerElGitElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_GitRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElWorkerElGitElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElWorkerElGitElRef {
-        DataAppSpecElWorkerElGitElRef {
+impl terrars::Ref for DataApp_Spec_Worker_GitRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_GitRef {
+        DataApp_Spec_Worker_GitRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElWorkerElGitElRef {
+impl DataApp_Spec_Worker_GitRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6945,7 +10370,7 @@ impl DataAppSpecElWorkerElGitElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElWorkerElGithubEl {
+pub struct DataApp_Spec_Worker_Github {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6954,7 +10379,7 @@ pub struct DataAppSpecElWorkerElGithubEl {
     repo: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElWorkerElGithubEl {
+impl DataApp_Spec_Worker_Github {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -6974,8 +10399,8 @@ impl DataAppSpecElWorkerElGithubEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElWorkerElGithubEl {
-    type O = terrars::BlockAssignable<DataAppSpecElWorkerElGithubEl>;
+impl terrars::ToListMappable for DataApp_Spec_Worker_Github {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_Github>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6986,11 +10411,11 @@ impl terrars::ToListMappable for DataAppSpecElWorkerElGithubEl {
     }
 }
 
-pub struct BuildDataAppSpecElWorkerElGithubEl {}
+pub struct BuildDataApp_Spec_Worker_Github {}
 
-impl BuildDataAppSpecElWorkerElGithubEl {
-    pub fn build(self) -> DataAppSpecElWorkerElGithubEl {
-        DataAppSpecElWorkerElGithubEl {
+impl BuildDataApp_Spec_Worker_Github {
+    pub fn build(self) -> DataApp_Spec_Worker_Github {
+        DataApp_Spec_Worker_Github {
             branch: core::default::Default::default(),
             deploy_on_push: core::default::Default::default(),
             repo: core::default::Default::default(),
@@ -6998,21 +10423,23 @@ impl BuildDataAppSpecElWorkerElGithubEl {
     }
 }
 
-pub struct DataAppSpecElWorkerElGithubElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_GithubRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElWorkerElGithubElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElWorkerElGithubElRef {
-        DataAppSpecElWorkerElGithubElRef {
+impl terrars::Ref for DataApp_Spec_Worker_GithubRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_GithubRef {
+        DataApp_Spec_Worker_GithubRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElWorkerElGithubElRef {
+impl DataApp_Spec_Worker_GithubRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7034,7 +10461,7 @@ impl DataAppSpecElWorkerElGithubElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElWorkerElGitlabEl {
+pub struct DataApp_Spec_Worker_Gitlab {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -7043,7 +10470,7 @@ pub struct DataAppSpecElWorkerElGitlabEl {
     repo: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElWorkerElGitlabEl {
+impl DataApp_Spec_Worker_Gitlab {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -7063,8 +10490,8 @@ impl DataAppSpecElWorkerElGitlabEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElWorkerElGitlabEl {
-    type O = terrars::BlockAssignable<DataAppSpecElWorkerElGitlabEl>;
+impl terrars::ToListMappable for DataApp_Spec_Worker_Gitlab {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_Gitlab>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7075,11 +10502,11 @@ impl terrars::ToListMappable for DataAppSpecElWorkerElGitlabEl {
     }
 }
 
-pub struct BuildDataAppSpecElWorkerElGitlabEl {}
+pub struct BuildDataApp_Spec_Worker_Gitlab {}
 
-impl BuildDataAppSpecElWorkerElGitlabEl {
-    pub fn build(self) -> DataAppSpecElWorkerElGitlabEl {
-        DataAppSpecElWorkerElGitlabEl {
+impl BuildDataApp_Spec_Worker_Gitlab {
+    pub fn build(self) -> DataApp_Spec_Worker_Gitlab {
+        DataApp_Spec_Worker_Gitlab {
             branch: core::default::Default::default(),
             deploy_on_push: core::default::Default::default(),
             repo: core::default::Default::default(),
@@ -7087,21 +10514,23 @@ impl BuildDataAppSpecElWorkerElGitlabEl {
     }
 }
 
-pub struct DataAppSpecElWorkerElGitlabElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_GitlabRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElWorkerElGitlabElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElWorkerElGitlabElRef {
-        DataAppSpecElWorkerElGitlabElRef {
+impl terrars::Ref for DataApp_Spec_Worker_GitlabRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_GitlabRef {
+        DataApp_Spec_Worker_GitlabRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElWorkerElGitlabElRef {
+impl DataApp_Spec_Worker_GitlabRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7123,12 +10552,12 @@ impl DataAppSpecElWorkerElGitlabElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElWorkerElImageElDeployOnPushEl {
+pub struct DataApp_Spec_Worker_Image_DeployOnPush {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataAppSpecElWorkerElImageElDeployOnPushEl {
+impl DataApp_Spec_Worker_Image_DeployOnPush {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -7136,8 +10565,8 @@ impl DataAppSpecElWorkerElImageElDeployOnPushEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElWorkerElImageElDeployOnPushEl {
-    type O = terrars::BlockAssignable<DataAppSpecElWorkerElImageElDeployOnPushEl>;
+impl terrars::ToListMappable for DataApp_Spec_Worker_Image_DeployOnPush {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_Image_DeployOnPush>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7148,29 +10577,31 @@ impl terrars::ToListMappable for DataAppSpecElWorkerElImageElDeployOnPushEl {
     }
 }
 
-pub struct BuildDataAppSpecElWorkerElImageElDeployOnPushEl {}
+pub struct BuildDataApp_Spec_Worker_Image_DeployOnPush {}
 
-impl BuildDataAppSpecElWorkerElImageElDeployOnPushEl {
-    pub fn build(self) -> DataAppSpecElWorkerElImageElDeployOnPushEl {
-        DataAppSpecElWorkerElImageElDeployOnPushEl { enabled: core::default::Default::default() }
+impl BuildDataApp_Spec_Worker_Image_DeployOnPush {
+    pub fn build(self) -> DataApp_Spec_Worker_Image_DeployOnPush {
+        DataApp_Spec_Worker_Image_DeployOnPush { enabled: core::default::Default::default() }
     }
 }
 
-pub struct DataAppSpecElWorkerElImageElDeployOnPushElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_Image_DeployOnPushRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElWorkerElImageElDeployOnPushElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElWorkerElImageElDeployOnPushElRef {
-        DataAppSpecElWorkerElImageElDeployOnPushElRef {
+impl terrars::Ref for DataApp_Spec_Worker_Image_DeployOnPushRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_Image_DeployOnPushRef {
+        DataApp_Spec_Worker_Image_DeployOnPushRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElWorkerElImageElDeployOnPushElRef {
+impl DataApp_Spec_Worker_Image_DeployOnPushRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7182,11 +10613,15 @@ impl DataAppSpecElWorkerElImageElDeployOnPushElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElWorkerElImageEl {
+pub struct DataApp_Spec_Worker_Image {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    deploy_on_push: std::option::Option<terrars::ListField<DataAppSpecElWorkerElImageElDeployOnPushEl>>,
+    deploy_on_push: std::option::Option<terrars::ListField<DataApp_Spec_Worker_Image_DeployOnPush>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    digest: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     registry: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    registry_credentials: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     registry_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -7195,19 +10630,34 @@ pub struct DataAppSpecElWorkerElImageEl {
     tag: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElWorkerElImageEl {
+impl DataApp_Spec_Worker_Image {
     #[doc = "Set the field `deploy_on_push`.\n"]
     pub fn set_deploy_on_push(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElWorkerElImageElDeployOnPushEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_Image_DeployOnPush>>,
     ) -> Self {
         self.deploy_on_push = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `digest`.\n"]
+    pub fn set_digest(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.digest = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `registry`.\n"]
     pub fn set_registry(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.registry = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `registry_credentials`.\n"]
+    pub fn set_registry_credentials(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.registry_credentials = std::option::Option::Some(v.into());
         self
     }
 
@@ -7230,8 +10680,8 @@ impl DataAppSpecElWorkerElImageEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElWorkerElImageEl {
-    type O = terrars::BlockAssignable<DataAppSpecElWorkerElImageEl>;
+impl terrars::ToListMappable for DataApp_Spec_Worker_Image {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_Image>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7242,13 +10692,15 @@ impl terrars::ToListMappable for DataAppSpecElWorkerElImageEl {
     }
 }
 
-pub struct BuildDataAppSpecElWorkerElImageEl {}
+pub struct BuildDataApp_Spec_Worker_Image {}
 
-impl BuildDataAppSpecElWorkerElImageEl {
-    pub fn build(self) -> DataAppSpecElWorkerElImageEl {
-        DataAppSpecElWorkerElImageEl {
+impl BuildDataApp_Spec_Worker_Image {
+    pub fn build(self) -> DataApp_Spec_Worker_Image {
+        DataApp_Spec_Worker_Image {
             deploy_on_push: core::default::Default::default(),
+            digest: core::default::Default::default(),
             registry: core::default::Default::default(),
+            registry_credentials: core::default::Default::default(),
             registry_type: core::default::Default::default(),
             repository: core::default::Default::default(),
             tag: core::default::Default::default(),
@@ -7256,33 +10708,45 @@ impl BuildDataAppSpecElWorkerElImageEl {
     }
 }
 
-pub struct DataAppSpecElWorkerElImageElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_ImageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElWorkerElImageElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElWorkerElImageElRef {
-        DataAppSpecElWorkerElImageElRef {
+impl terrars::Ref for DataApp_Spec_Worker_ImageRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_ImageRef {
+        DataApp_Spec_Worker_ImageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElWorkerElImageElRef {
+impl DataApp_Spec_Worker_ImageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `deploy_on_push` after provisioning.\n"]
-    pub fn deploy_on_push(&self) -> terrars::ListRef<DataAppSpecElWorkerElImageElDeployOnPushElRef> {
+    pub fn deploy_on_push(&self) -> terrars::ListRef<DataApp_Spec_Worker_Image_DeployOnPushRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deploy_on_push", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `digest` after provisioning.\n"]
+    pub fn digest(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.digest", self.base))
     }
 
     #[doc = "Get a reference to the value of field `registry` after provisioning.\n"]
     pub fn registry(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `registry_credentials` after provisioning.\n"]
+    pub fn registry_credentials(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_credentials", self.base))
     }
 
     #[doc = "Get a reference to the value of field `registry_type` after provisioning.\n"]
@@ -7302,14 +10766,161 @@ impl DataAppSpecElWorkerElImageElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElWorkerElLogDestinationElDatadogEl {
+pub struct DataApp_Spec_Worker_LivenessHealthCheck {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    failure_threshold: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http_path: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    initial_delay_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    period_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    success_threshold: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataApp_Spec_Worker_LivenessHealthCheck {
+    #[doc = "Set the field `failure_threshold`.\n"]
+    pub fn set_failure_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.failure_threshold = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `http_path`.\n"]
+    pub fn set_http_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.http_path = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `initial_delay_seconds`.\n"]
+    pub fn set_initial_delay_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.initial_delay_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `period_seconds`.\n"]
+    pub fn set_period_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.period_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `port`.\n"]
+    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.port = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `success_threshold`.\n"]
+    pub fn set_success_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.success_threshold = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `timeout_seconds`.\n"]
+    pub fn set_timeout_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.timeout_seconds = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Worker_LivenessHealthCheck {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_LivenessHealthCheck>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Worker_LivenessHealthCheck {}
+
+impl BuildDataApp_Spec_Worker_LivenessHealthCheck {
+    pub fn build(self) -> DataApp_Spec_Worker_LivenessHealthCheck {
+        DataApp_Spec_Worker_LivenessHealthCheck {
+            failure_threshold: core::default::Default::default(),
+            http_path: core::default::Default::default(),
+            initial_delay_seconds: core::default::Default::default(),
+            period_seconds: core::default::Default::default(),
+            port: core::default::Default::default(),
+            success_threshold: core::default::Default::default(),
+            timeout_seconds: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_LivenessHealthCheckRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Worker_LivenessHealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_LivenessHealthCheckRef {
+        DataApp_Spec_Worker_LivenessHealthCheckRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Worker_LivenessHealthCheckRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `failure_threshold` after provisioning.\n"]
+    pub fn failure_threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.failure_threshold", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `http_path` after provisioning.\n"]
+    pub fn http_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.http_path", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `initial_delay_seconds` after provisioning.\n"]
+    pub fn initial_delay_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.initial_delay_seconds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `period_seconds` after provisioning.\n"]
+    pub fn period_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.period_seconds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `success_threshold` after provisioning.\n"]
+    pub fn success_threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.success_threshold", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `timeout_seconds` after provisioning.\n"]
+    pub fn timeout_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.timeout_seconds", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Worker_LogDestination_Datadog {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     api_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElWorkerElLogDestinationElDatadogEl {
+impl DataApp_Spec_Worker_LogDestination_Datadog {
     #[doc = "Set the field `api_key`.\n"]
     pub fn set_api_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.api_key = std::option::Option::Some(v.into());
@@ -7323,8 +10934,8 @@ impl DataAppSpecElWorkerElLogDestinationElDatadogEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElWorkerElLogDestinationElDatadogEl {
-    type O = terrars::BlockAssignable<DataAppSpecElWorkerElLogDestinationElDatadogEl>;
+impl terrars::ToListMappable for DataApp_Spec_Worker_LogDestination_Datadog {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_LogDestination_Datadog>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7335,35 +10946,34 @@ impl terrars::ToListMappable for DataAppSpecElWorkerElLogDestinationElDatadogEl 
     }
 }
 
-pub struct BuildDataAppSpecElWorkerElLogDestinationElDatadogEl {}
+pub struct BuildDataApp_Spec_Worker_LogDestination_Datadog {}
 
-impl BuildDataAppSpecElWorkerElLogDestinationElDatadogEl {
-    pub fn build(self) -> DataAppSpecElWorkerElLogDestinationElDatadogEl {
-        DataAppSpecElWorkerElLogDestinationElDatadogEl {
+impl BuildDataApp_Spec_Worker_LogDestination_Datadog {
+    pub fn build(self) -> DataApp_Spec_Worker_LogDestination_Datadog {
+        DataApp_Spec_Worker_LogDestination_Datadog {
             api_key: core::default::Default::default(),
             endpoint: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElWorkerElLogDestinationElDatadogElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_LogDestination_DatadogRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElWorkerElLogDestinationElDatadogElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataAppSpecElWorkerElLogDestinationElDatadogElRef {
-        DataAppSpecElWorkerElLogDestinationElDatadogElRef {
+impl terrars::Ref for DataApp_Spec_Worker_LogDestination_DatadogRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_LogDestination_DatadogRef {
+        DataApp_Spec_Worker_LogDestination_DatadogRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElWorkerElLogDestinationElDatadogElRef {
+impl DataApp_Spec_Worker_LogDestination_DatadogRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7380,12 +10990,12 @@ impl DataAppSpecElWorkerElLogDestinationElDatadogElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElWorkerElLogDestinationElLogtailEl {
+pub struct DataApp_Spec_Worker_LogDestination_Logtail {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     token: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElWorkerElLogDestinationElLogtailEl {
+impl DataApp_Spec_Worker_LogDestination_Logtail {
     #[doc = "Set the field `token`.\n"]
     pub fn set_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.token = std::option::Option::Some(v.into());
@@ -7393,8 +11003,8 @@ impl DataAppSpecElWorkerElLogDestinationElLogtailEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElWorkerElLogDestinationElLogtailEl {
-    type O = terrars::BlockAssignable<DataAppSpecElWorkerElLogDestinationElLogtailEl>;
+impl terrars::ToListMappable for DataApp_Spec_Worker_LogDestination_Logtail {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_LogDestination_Logtail>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7405,32 +11015,31 @@ impl terrars::ToListMappable for DataAppSpecElWorkerElLogDestinationElLogtailEl 
     }
 }
 
-pub struct BuildDataAppSpecElWorkerElLogDestinationElLogtailEl {}
+pub struct BuildDataApp_Spec_Worker_LogDestination_Logtail {}
 
-impl BuildDataAppSpecElWorkerElLogDestinationElLogtailEl {
-    pub fn build(self) -> DataAppSpecElWorkerElLogDestinationElLogtailEl {
-        DataAppSpecElWorkerElLogDestinationElLogtailEl { token: core::default::Default::default() }
+impl BuildDataApp_Spec_Worker_LogDestination_Logtail {
+    pub fn build(self) -> DataApp_Spec_Worker_LogDestination_Logtail {
+        DataApp_Spec_Worker_LogDestination_Logtail { token: core::default::Default::default() }
     }
 }
 
-pub struct DataAppSpecElWorkerElLogDestinationElLogtailElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_LogDestination_LogtailRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElWorkerElLogDestinationElLogtailElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataAppSpecElWorkerElLogDestinationElLogtailElRef {
-        DataAppSpecElWorkerElLogDestinationElLogtailElRef {
+impl terrars::Ref for DataApp_Spec_Worker_LogDestination_LogtailRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_LogDestination_LogtailRef {
+        DataApp_Spec_Worker_LogDestination_LogtailRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElWorkerElLogDestinationElLogtailElRef {
+impl DataApp_Spec_Worker_LogDestination_LogtailRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7442,21 +11051,29 @@ impl DataAppSpecElWorkerElLogDestinationElLogtailElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElWorkerElLogDestinationElPapertrailEl {
+pub struct DataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuth {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+    password: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppSpecElWorkerElLogDestinationElPapertrailEl {
-    #[doc = "Set the field `endpoint`.\n"]
-    pub fn set_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.endpoint = std::option::Option::Some(v.into());
+impl DataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuth {
+    #[doc = "Set the field `password`.\n"]
+    pub fn set_password(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.password = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `user`.\n"]
+    pub fn set_user(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.user = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElWorkerElLogDestinationElPapertrailEl {
-    type O = terrars::BlockAssignable<DataAppSpecElWorkerElLogDestinationElPapertrailEl>;
+impl terrars::ToListMappable for DataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuth {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuth>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7467,32 +11084,217 @@ impl terrars::ToListMappable for DataAppSpecElWorkerElLogDestinationElPapertrail
     }
 }
 
-pub struct BuildDataAppSpecElWorkerElLogDestinationElPapertrailEl {}
+pub struct BuildDataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuth {}
 
-impl BuildDataAppSpecElWorkerElLogDestinationElPapertrailEl {
-    pub fn build(self) -> DataAppSpecElWorkerElLogDestinationElPapertrailEl {
-        DataAppSpecElWorkerElLogDestinationElPapertrailEl { endpoint: core::default::Default::default() }
+impl BuildDataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuth {
+    pub fn build(self) -> DataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuth {
+        DataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuth {
+            password: core::default::Default::default(),
+            user: core::default::Default::default(),
+        }
     }
 }
 
-pub struct DataAppSpecElWorkerElLogDestinationElPapertrailElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuthRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElWorkerElLogDestinationElPapertrailElRef {
+impl terrars::Ref for DataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuthRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAppSpecElWorkerElLogDestinationElPapertrailElRef {
-        DataAppSpecElWorkerElLogDestinationElPapertrailElRef {
+    ) -> DataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuthRef {
+        DataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuthRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElWorkerElLogDestinationElPapertrailElRef {
+impl DataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuthRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
+    pub fn password(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `user` after provisioning.\n"]
+    pub fn user(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Worker_LogDestination_OpenSearch {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    basic_auth: std::option::Option<terrars::ListField<DataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuth>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    index_name: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Worker_LogDestination_OpenSearch {
+    #[doc = "Set the field `basic_auth`.\n"]
+    pub fn set_basic_auth(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuth>>,
+    ) -> Self {
+        self.basic_auth = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cluster_name`.\n"]
+    pub fn set_cluster_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cluster_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `endpoint`.\n"]
+    pub fn set_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.endpoint = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `index_name`.\n"]
+    pub fn set_index_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.index_name = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Worker_LogDestination_OpenSearch {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_LogDestination_OpenSearch>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Worker_LogDestination_OpenSearch {}
+
+impl BuildDataApp_Spec_Worker_LogDestination_OpenSearch {
+    pub fn build(self) -> DataApp_Spec_Worker_LogDestination_OpenSearch {
+        DataApp_Spec_Worker_LogDestination_OpenSearch {
+            basic_auth: core::default::Default::default(),
+            cluster_name: core::default::Default::default(),
+            endpoint: core::default::Default::default(),
+            index_name: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_LogDestination_OpenSearchRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Worker_LogDestination_OpenSearchRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataApp_Spec_Worker_LogDestination_OpenSearchRef {
+        DataApp_Spec_Worker_LogDestination_OpenSearchRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Worker_LogDestination_OpenSearchRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `basic_auth` after provisioning.\n"]
+    pub fn basic_auth(&self) -> terrars::ListRef<DataApp_Spec_Worker_LogDestination_OpenSearch_BasicAuthRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.basic_auth", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cluster_name` after provisioning.\n"]
+    pub fn cluster_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `index_name` after provisioning.\n"]
+    pub fn index_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_name", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Worker_LogDestination_Papertrail {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_Spec_Worker_LogDestination_Papertrail {
+    #[doc = "Set the field `endpoint`.\n"]
+    pub fn set_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.endpoint = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Worker_LogDestination_Papertrail {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_LogDestination_Papertrail>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Worker_LogDestination_Papertrail {}
+
+impl BuildDataApp_Spec_Worker_LogDestination_Papertrail {
+    pub fn build(self) -> DataApp_Spec_Worker_LogDestination_Papertrail {
+        DataApp_Spec_Worker_LogDestination_Papertrail { endpoint: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_LogDestination_PapertrailRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Worker_LogDestination_PapertrailRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataApp_Spec_Worker_LogDestination_PapertrailRef {
+        DataApp_Spec_Worker_LogDestination_PapertrailRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Worker_LogDestination_PapertrailRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7504,22 +11306,24 @@ impl DataAppSpecElWorkerElLogDestinationElPapertrailElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElWorkerElLogDestinationEl {
+pub struct DataApp_Spec_Worker_LogDestination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    datadog: std::option::Option<terrars::ListField<DataAppSpecElWorkerElLogDestinationElDatadogEl>>,
+    datadog: std::option::Option<terrars::ListField<DataApp_Spec_Worker_LogDestination_Datadog>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logtail: std::option::Option<terrars::ListField<DataAppSpecElWorkerElLogDestinationElLogtailEl>>,
+    logtail: std::option::Option<terrars::ListField<DataApp_Spec_Worker_LogDestination_Logtail>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    papertrail: std::option::Option<terrars::ListField<DataAppSpecElWorkerElLogDestinationElPapertrailEl>>,
+    open_search: std::option::Option<terrars::ListField<DataApp_Spec_Worker_LogDestination_OpenSearch>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    papertrail: std::option::Option<terrars::ListField<DataApp_Spec_Worker_LogDestination_Papertrail>>,
 }
 
-impl DataAppSpecElWorkerElLogDestinationEl {
+impl DataApp_Spec_Worker_LogDestination {
     #[doc = "Set the field `datadog`.\n"]
     pub fn set_datadog(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElWorkerElLogDestinationElDatadogEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_LogDestination_Datadog>>,
     ) -> Self {
         self.datadog = std::option::Option::Some(v.into());
         self
@@ -7528,7 +11332,7 @@ impl DataAppSpecElWorkerElLogDestinationEl {
     #[doc = "Set the field `logtail`.\n"]
     pub fn set_logtail(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElWorkerElLogDestinationElLogtailEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_LogDestination_Logtail>>,
     ) -> Self {
         self.logtail = std::option::Option::Some(v.into());
         self
@@ -7540,18 +11344,27 @@ impl DataAppSpecElWorkerElLogDestinationEl {
         self
     }
 
+    #[doc = "Set the field `open_search`.\n"]
+    pub fn set_open_search(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_LogDestination_OpenSearch>>,
+    ) -> Self {
+        self.open_search = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `papertrail`.\n"]
     pub fn set_papertrail(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElWorkerElLogDestinationElPapertrailEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_LogDestination_Papertrail>>,
     ) -> Self {
         self.papertrail = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecElWorkerElLogDestinationEl {
-    type O = terrars::BlockAssignable<DataAppSpecElWorkerElLogDestinationEl>;
+impl terrars::ToListMappable for DataApp_Spec_Worker_LogDestination {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_LogDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7562,45 +11375,48 @@ impl terrars::ToListMappable for DataAppSpecElWorkerElLogDestinationEl {
     }
 }
 
-pub struct BuildDataAppSpecElWorkerElLogDestinationEl {}
+pub struct BuildDataApp_Spec_Worker_LogDestination {}
 
-impl BuildDataAppSpecElWorkerElLogDestinationEl {
-    pub fn build(self) -> DataAppSpecElWorkerElLogDestinationEl {
-        DataAppSpecElWorkerElLogDestinationEl {
+impl BuildDataApp_Spec_Worker_LogDestination {
+    pub fn build(self) -> DataApp_Spec_Worker_LogDestination {
+        DataApp_Spec_Worker_LogDestination {
             datadog: core::default::Default::default(),
             logtail: core::default::Default::default(),
             name: core::default::Default::default(),
+            open_search: core::default::Default::default(),
             papertrail: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElWorkerElLogDestinationElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_LogDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElWorkerElLogDestinationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElWorkerElLogDestinationElRef {
-        DataAppSpecElWorkerElLogDestinationElRef {
+impl terrars::Ref for DataApp_Spec_Worker_LogDestinationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_LogDestinationRef {
+        DataApp_Spec_Worker_LogDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElWorkerElLogDestinationElRef {
+impl DataApp_Spec_Worker_LogDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `datadog` after provisioning.\n"]
-    pub fn datadog(&self) -> terrars::ListRef<DataAppSpecElWorkerElLogDestinationElDatadogElRef> {
+    pub fn datadog(&self) -> terrars::ListRef<DataApp_Spec_Worker_LogDestination_DatadogRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.datadog", self.base))
     }
 
     #[doc = "Get a reference to the value of field `logtail` after provisioning.\n"]
-    pub fn logtail(&self) -> terrars::ListRef<DataAppSpecElWorkerElLogDestinationElLogtailElRef> {
+    pub fn logtail(&self) -> terrars::ListRef<DataApp_Spec_Worker_LogDestination_LogtailRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logtail", self.base))
     }
 
@@ -7609,50 +11425,142 @@ impl DataAppSpecElWorkerElLogDestinationElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `open_search` after provisioning.\n"]
+    pub fn open_search(&self) -> terrars::ListRef<DataApp_Spec_Worker_LogDestination_OpenSearchRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.open_search", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `papertrail` after provisioning.\n"]
-    pub fn papertrail(&self) -> terrars::ListRef<DataAppSpecElWorkerElLogDestinationElPapertrailElRef> {
+    pub fn papertrail(&self) -> terrars::ListRef<DataApp_Spec_Worker_LogDestination_PapertrailRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.papertrail", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecElWorkerEl {
+pub struct DataApp_Spec_Worker_Termination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    alert: std::option::Option<terrars::ListField<DataAppSpecElWorkerElAlertEl>>,
+    grace_period_seconds: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataApp_Spec_Worker_Termination {
+    #[doc = "Set the field `grace_period_seconds`.\n"]
+    pub fn set_grace_period_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.grace_period_seconds = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_Spec_Worker_Termination {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker_Termination>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_Spec_Worker_Termination {}
+
+impl BuildDataApp_Spec_Worker_Termination {
+    pub fn build(self) -> DataApp_Spec_Worker_Termination {
+        DataApp_Spec_Worker_Termination { grace_period_seconds: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_Spec_Worker_TerminationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_Spec_Worker_TerminationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_Worker_TerminationRef {
+        DataApp_Spec_Worker_TerminationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_Spec_Worker_TerminationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `grace_period_seconds` after provisioning.\n"]
+    pub fn grace_period_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.grace_period_seconds", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_Spec_Worker {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    alert: std::option::Option<terrars::ListField<DataApp_Spec_Worker_Alert>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    autoscaling: std::option::Option<terrars::ListField<DataApp_Spec_Worker_Autoscaling>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bitbucket: std::option::Option<terrars::ListField<DataApp_Spec_Worker_Bitbucket>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     build_command: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dockerfile_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    env: std::option::Option<terrars::SetField<DataAppSpecElWorkerElEnvEl>>,
+    env: std::option::Option<terrars::SetField<DataApp_Spec_Worker_Env>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     environment_slug: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    git: std::option::Option<terrars::ListField<DataAppSpecElWorkerElGitEl>>,
+    git: std::option::Option<terrars::ListField<DataApp_Spec_Worker_Git>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    github: std::option::Option<terrars::ListField<DataAppSpecElWorkerElGithubEl>>,
+    github: std::option::Option<terrars::ListField<DataApp_Spec_Worker_Github>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gitlab: std::option::Option<terrars::ListField<DataAppSpecElWorkerElGitlabEl>>,
+    gitlab: std::option::Option<terrars::ListField<DataApp_Spec_Worker_Gitlab>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    image: std::option::Option<terrars::ListField<DataAppSpecElWorkerElImageEl>>,
+    image: std::option::Option<terrars::ListField<DataApp_Spec_Worker_Image>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_size_slug: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_destination: std::option::Option<terrars::ListField<DataAppSpecElWorkerElLogDestinationEl>>,
+    liveness_health_check: std::option::Option<terrars::ListField<DataApp_Spec_Worker_LivenessHealthCheck>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    log_destination: std::option::Option<terrars::ListField<DataApp_Spec_Worker_LogDestination>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     run_command: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_dir: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    termination: std::option::Option<terrars::ListField<DataApp_Spec_Worker_Termination>>,
 }
 
-impl DataAppSpecElWorkerEl {
+impl DataApp_Spec_Worker {
     #[doc = "Set the field `alert`.\n"]
-    pub fn set_alert(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElWorkerElAlertEl>>) -> Self {
+    pub fn set_alert(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_Alert>>) -> Self {
         self.alert = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `autoscaling`.\n"]
+    pub fn set_autoscaling(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_Autoscaling>>,
+    ) -> Self {
+        self.autoscaling = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `bitbucket`.\n"]
+    pub fn set_bitbucket(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_Bitbucket>>,
+    ) -> Self {
+        self.bitbucket = std::option::Option::Some(v.into());
         self
     }
 
@@ -7669,7 +11577,7 @@ impl DataAppSpecElWorkerEl {
     }
 
     #[doc = "Set the field `env`.\n"]
-    pub fn set_env(mut self, v: impl std::convert::Into<terrars::SetField<DataAppSpecElWorkerElEnvEl>>) -> Self {
+    pub fn set_env(mut self, v: impl std::convert::Into<terrars::SetField<DataApp_Spec_Worker_Env>>) -> Self {
         self.env = std::option::Option::Some(v.into());
         self
     }
@@ -7681,25 +11589,25 @@ impl DataAppSpecElWorkerEl {
     }
 
     #[doc = "Set the field `git`.\n"]
-    pub fn set_git(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElWorkerElGitEl>>) -> Self {
+    pub fn set_git(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_Git>>) -> Self {
         self.git = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `github`.\n"]
-    pub fn set_github(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElWorkerElGithubEl>>) -> Self {
+    pub fn set_github(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_Github>>) -> Self {
         self.github = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `gitlab`.\n"]
-    pub fn set_gitlab(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElWorkerElGitlabEl>>) -> Self {
+    pub fn set_gitlab(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_Gitlab>>) -> Self {
         self.gitlab = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `image`.\n"]
-    pub fn set_image(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElWorkerElImageEl>>) -> Self {
+    pub fn set_image(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_Image>>) -> Self {
         self.image = std::option::Option::Some(v.into());
         self
     }
@@ -7719,10 +11627,19 @@ impl DataAppSpecElWorkerEl {
         self
     }
 
+    #[doc = "Set the field `liveness_health_check`.\n"]
+    pub fn set_liveness_health_check(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_LivenessHealthCheck>>,
+    ) -> Self {
+        self.liveness_health_check = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `log_destination`.\n"]
     pub fn set_log_destination(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataAppSpecElWorkerElLogDestinationEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_LogDestination>>,
     ) -> Self {
         self.log_destination = std::option::Option::Some(v.into());
         self
@@ -7745,10 +11662,19 @@ impl DataAppSpecElWorkerEl {
         self.source_dir = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `termination`.\n"]
+    pub fn set_termination(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker_Termination>>,
+    ) -> Self {
+        self.termination = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataAppSpecElWorkerEl {
-    type O = terrars::BlockAssignable<DataAppSpecElWorkerEl>;
+impl terrars::ToListMappable for DataApp_Spec_Worker {
+    type O = terrars::BlockAssignable<DataApp_Spec_Worker>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7759,12 +11685,14 @@ impl terrars::ToListMappable for DataAppSpecElWorkerEl {
     }
 }
 
-pub struct BuildDataAppSpecElWorkerEl {}
+pub struct BuildDataApp_Spec_Worker {}
 
-impl BuildDataAppSpecElWorkerEl {
-    pub fn build(self) -> DataAppSpecElWorkerEl {
-        DataAppSpecElWorkerEl {
+impl BuildDataApp_Spec_Worker {
+    pub fn build(self) -> DataApp_Spec_Worker {
+        DataApp_Spec_Worker {
             alert: core::default::Default::default(),
+            autoscaling: core::default::Default::default(),
+            bitbucket: core::default::Default::default(),
             build_command: core::default::Default::default(),
             dockerfile_path: core::default::Default::default(),
             env: core::default::Default::default(),
@@ -7775,36 +11703,50 @@ impl BuildDataAppSpecElWorkerEl {
             image: core::default::Default::default(),
             instance_count: core::default::Default::default(),
             instance_size_slug: core::default::Default::default(),
+            liveness_health_check: core::default::Default::default(),
             log_destination: core::default::Default::default(),
             name: core::default::Default::default(),
             run_command: core::default::Default::default(),
             source_dir: core::default::Default::default(),
+            termination: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElWorkerElRef {
+#[allow(dead_code)]
+pub struct DataApp_Spec_WorkerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElWorkerElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElWorkerElRef {
-        DataAppSpecElWorkerElRef {
+impl terrars::Ref for DataApp_Spec_WorkerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_Spec_WorkerRef {
+        DataApp_Spec_WorkerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElWorkerElRef {
+impl DataApp_Spec_WorkerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `alert` after provisioning.\n"]
-    pub fn alert(&self) -> terrars::ListRef<DataAppSpecElWorkerElAlertElRef> {
+    pub fn alert(&self) -> terrars::ListRef<DataApp_Spec_Worker_AlertRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.alert", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `autoscaling` after provisioning.\n"]
+    pub fn autoscaling(&self) -> terrars::ListRef<DataApp_Spec_Worker_AutoscalingRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `bitbucket` after provisioning.\n"]
+    pub fn bitbucket(&self) -> terrars::ListRef<DataApp_Spec_Worker_BitbucketRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bitbucket", self.base))
     }
 
     #[doc = "Get a reference to the value of field `build_command` after provisioning.\n"]
@@ -7818,7 +11760,7 @@ impl DataAppSpecElWorkerElRef {
     }
 
     #[doc = "Get a reference to the value of field `env` after provisioning.\n"]
-    pub fn env(&self) -> terrars::SetRef<DataAppSpecElWorkerElEnvElRef> {
+    pub fn env(&self) -> terrars::SetRef<DataApp_Spec_Worker_EnvRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.env", self.base))
     }
 
@@ -7828,22 +11770,22 @@ impl DataAppSpecElWorkerElRef {
     }
 
     #[doc = "Get a reference to the value of field `git` after provisioning.\n"]
-    pub fn git(&self) -> terrars::ListRef<DataAppSpecElWorkerElGitElRef> {
+    pub fn git(&self) -> terrars::ListRef<DataApp_Spec_Worker_GitRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.git", self.base))
     }
 
     #[doc = "Get a reference to the value of field `github` after provisioning.\n"]
-    pub fn github(&self) -> terrars::ListRef<DataAppSpecElWorkerElGithubElRef> {
+    pub fn github(&self) -> terrars::ListRef<DataApp_Spec_Worker_GithubRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.github", self.base))
     }
 
     #[doc = "Get a reference to the value of field `gitlab` after provisioning.\n"]
-    pub fn gitlab(&self) -> terrars::ListRef<DataAppSpecElWorkerElGitlabElRef> {
+    pub fn gitlab(&self) -> terrars::ListRef<DataApp_Spec_Worker_GitlabRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gitlab", self.base))
     }
 
     #[doc = "Get a reference to the value of field `image` after provisioning.\n"]
-    pub fn image(&self) -> terrars::ListRef<DataAppSpecElWorkerElImageElRef> {
+    pub fn image(&self) -> terrars::ListRef<DataApp_Spec_Worker_ImageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image", self.base))
     }
 
@@ -7857,8 +11799,13 @@ impl DataAppSpecElWorkerElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_size_slug", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `liveness_health_check` after provisioning.\n"]
+    pub fn liveness_health_check(&self) -> terrars::ListRef<DataApp_Spec_Worker_LivenessHealthCheckRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.liveness_health_check", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `log_destination` after provisioning.\n"]
-    pub fn log_destination(&self) -> terrars::ListRef<DataAppSpecElWorkerElLogDestinationElRef> {
+    pub fn log_destination(&self) -> terrars::ListRef<DataApp_Spec_Worker_LogDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_destination", self.base))
     }
 
@@ -7876,55 +11823,84 @@ impl DataAppSpecElWorkerElRef {
     pub fn source_dir(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_dir", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `termination` after provisioning.\n"]
+    pub fn termination(&self) -> terrars::ListRef<DataApp_Spec_Worker_TerminationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.termination", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataAppSpecEl {
+pub struct DataApp_Spec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    alert: std::option::Option<terrars::SetField<DataAppSpecElAlertEl>>,
+    alert: std::option::Option<terrars::ListField<DataApp_Spec_Alert>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    database: std::option::Option<terrars::ListField<DataAppSpecElDatabaseEl>>,
+    database: std::option::Option<terrars::ListField<DataApp_Spec_Database>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    domain: std::option::Option<terrars::ListField<DataAppSpecElDomainEl>>,
+    disable_edge_cache: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disable_email_obfuscation: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    domain: std::option::Option<terrars::ListField<DataApp_Spec_Domain>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     domains: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    env: std::option::Option<terrars::SetField<DataAppSpecElEnvEl>>,
+    egress: std::option::Option<terrars::ListField<DataApp_Spec_Egress>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enhanced_threat_control_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    env: std::option::Option<terrars::SetField<DataApp_Spec_Env>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     features: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    function: std::option::Option<terrars::ListField<DataAppSpecElFunctionEl>>,
+    function: std::option::Option<terrars::ListField<DataApp_Spec_Function>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ingress: std::option::Option<terrars::ListField<DataAppSpecElIngressEl>>,
+    ingress: std::option::Option<terrars::ListField<DataApp_Spec_Ingress>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    job: std::option::Option<terrars::ListField<DataAppSpecElJobEl>>,
+    job: std::option::Option<terrars::ListField<DataApp_Spec_Job>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maintenance: std::option::Option<terrars::ListField<DataApp_Spec_Maintenance>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    service: std::option::Option<terrars::ListField<DataAppSpecElServiceEl>>,
+    service: std::option::Option<terrars::ListField<DataApp_Spec_Service>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    static_site: std::option::Option<terrars::ListField<DataAppSpecElStaticSiteEl>>,
+    static_site: std::option::Option<terrars::ListField<DataApp_Spec_StaticSite>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    worker: std::option::Option<terrars::ListField<DataAppSpecElWorkerEl>>,
+    vpc: std::option::Option<terrars::ListField<DataApp_Spec_Vpc>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    worker: std::option::Option<terrars::ListField<DataApp_Spec_Worker>>,
 }
 
-impl DataAppSpecEl {
+impl DataApp_Spec {
     #[doc = "Set the field `alert`.\n"]
-    pub fn set_alert(mut self, v: impl std::convert::Into<terrars::SetField<DataAppSpecElAlertEl>>) -> Self {
+    pub fn set_alert(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Alert>>) -> Self {
         self.alert = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `database`.\n"]
-    pub fn set_database(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElDatabaseEl>>) -> Self {
+    pub fn set_database(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Database>>) -> Self {
         self.database = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc = "Set the field `disable_edge_cache`.\n"]
+    pub fn set_disable_edge_cache(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.disable_edge_cache = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `disable_email_obfuscation`.\n"]
+    pub fn set_disable_email_obfuscation(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.disable_email_obfuscation = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `domain`.\n"]
-    pub fn set_domain(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElDomainEl>>) -> Self {
+    pub fn set_domain(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Domain>>) -> Self {
         self.domain = std::option::Option::Some(v.into());
         self
     }
@@ -7938,8 +11914,20 @@ impl DataAppSpecEl {
         self
     }
 
+    #[doc = "Set the field `egress`.\n"]
+    pub fn set_egress(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Egress>>) -> Self {
+        self.egress = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enhanced_threat_control_enabled`.\n"]
+    pub fn set_enhanced_threat_control_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enhanced_threat_control_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `env`.\n"]
-    pub fn set_env(mut self, v: impl std::convert::Into<terrars::SetField<DataAppSpecElEnvEl>>) -> Self {
+    pub fn set_env(mut self, v: impl std::convert::Into<terrars::SetField<DataApp_Spec_Env>>) -> Self {
         self.env = std::option::Option::Some(v.into());
         self
     }
@@ -7954,20 +11942,26 @@ impl DataAppSpecEl {
     }
 
     #[doc = "Set the field `function`.\n"]
-    pub fn set_function(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElFunctionEl>>) -> Self {
+    pub fn set_function(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Function>>) -> Self {
         self.function = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `ingress`.\n"]
-    pub fn set_ingress(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElIngressEl>>) -> Self {
+    pub fn set_ingress(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Ingress>>) -> Self {
         self.ingress = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `job`.\n"]
-    pub fn set_job(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElJobEl>>) -> Self {
+    pub fn set_job(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Job>>) -> Self {
         self.job = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `maintenance`.\n"]
+    pub fn set_maintenance(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Maintenance>>) -> Self {
+        self.maintenance = std::option::Option::Some(v.into());
         self
     }
 
@@ -7984,26 +11978,32 @@ impl DataAppSpecEl {
     }
 
     #[doc = "Set the field `service`.\n"]
-    pub fn set_service(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElServiceEl>>) -> Self {
+    pub fn set_service(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Service>>) -> Self {
         self.service = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `static_site`.\n"]
-    pub fn set_static_site(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElStaticSiteEl>>) -> Self {
+    pub fn set_static_site(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_StaticSite>>) -> Self {
         self.static_site = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc = "Set the field `vpc`.\n"]
+    pub fn set_vpc(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Vpc>>) -> Self {
+        self.vpc = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `worker`.\n"]
-    pub fn set_worker(mut self, v: impl std::convert::Into<terrars::ListField<DataAppSpecElWorkerEl>>) -> Self {
+    pub fn set_worker(mut self, v: impl std::convert::Into<terrars::ListField<DataApp_Spec_Worker>>) -> Self {
         self.worker = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataAppSpecEl {
-    type O = terrars::BlockAssignable<DataAppSpecEl>;
+impl terrars::ToListMappable for DataApp_Spec {
+    type O = terrars::BlockAssignable<DataApp_Spec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -8014,60 +12014,78 @@ impl terrars::ToListMappable for DataAppSpecEl {
     }
 }
 
-pub struct BuildDataAppSpecEl {}
+pub struct BuildDataApp_Spec {}
 
-impl BuildDataAppSpecEl {
-    pub fn build(self) -> DataAppSpecEl {
-        DataAppSpecEl {
+impl BuildDataApp_Spec {
+    pub fn build(self) -> DataApp_Spec {
+        DataApp_Spec {
             alert: core::default::Default::default(),
             database: core::default::Default::default(),
+            disable_edge_cache: core::default::Default::default(),
+            disable_email_obfuscation: core::default::Default::default(),
             domain: core::default::Default::default(),
             domains: core::default::Default::default(),
+            egress: core::default::Default::default(),
+            enhanced_threat_control_enabled: core::default::Default::default(),
             env: core::default::Default::default(),
             features: core::default::Default::default(),
             function: core::default::Default::default(),
             ingress: core::default::Default::default(),
             job: core::default::Default::default(),
+            maintenance: core::default::Default::default(),
             name: core::default::Default::default(),
             region: core::default::Default::default(),
             service: core::default::Default::default(),
             static_site: core::default::Default::default(),
+            vpc: core::default::Default::default(),
             worker: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppSpecElRef {
+#[allow(dead_code)]
+pub struct DataApp_SpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppSpecElRef {
-        DataAppSpecElRef {
+impl terrars::Ref for DataApp_SpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_SpecRef {
+        DataApp_SpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppSpecElRef {
+impl DataApp_SpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `alert` after provisioning.\n"]
-    pub fn alert(&self) -> terrars::SetRef<DataAppSpecElAlertElRef> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.alert", self.base))
+    pub fn alert(&self) -> terrars::ListRef<DataApp_Spec_AlertRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.alert", self.base))
     }
 
     #[doc = "Get a reference to the value of field `database` after provisioning.\n"]
-    pub fn database(&self) -> terrars::ListRef<DataAppSpecElDatabaseElRef> {
+    pub fn database(&self) -> terrars::ListRef<DataApp_Spec_DatabaseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.database", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `disable_edge_cache` after provisioning.\n"]
+    pub fn disable_edge_cache(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_edge_cache", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `disable_email_obfuscation` after provisioning.\n"]
+    pub fn disable_email_obfuscation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_email_obfuscation", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `domain` after provisioning.\n"]
-    pub fn domain(&self) -> terrars::ListRef<DataAppSpecElDomainElRef> {
+    pub fn domain(&self) -> terrars::ListRef<DataApp_Spec_DomainRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.domain", self.base))
     }
 
@@ -8076,8 +12094,18 @@ impl DataAppSpecElRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.domains", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `egress` after provisioning.\n"]
+    pub fn egress(&self) -> terrars::ListRef<DataApp_Spec_EgressRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.egress", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `enhanced_threat_control_enabled` after provisioning.\n"]
+    pub fn enhanced_threat_control_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enhanced_threat_control_enabled", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `env` after provisioning.\n"]
-    pub fn env(&self) -> terrars::SetRef<DataAppSpecElEnvElRef> {
+    pub fn env(&self) -> terrars::SetRef<DataApp_Spec_EnvRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.env", self.base))
     }
 
@@ -8087,18 +12115,23 @@ impl DataAppSpecElRef {
     }
 
     #[doc = "Get a reference to the value of field `function` after provisioning.\n"]
-    pub fn function(&self) -> terrars::ListRef<DataAppSpecElFunctionElRef> {
+    pub fn function(&self) -> terrars::ListRef<DataApp_Spec_FunctionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.function", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ingress` after provisioning.\n"]
-    pub fn ingress(&self) -> terrars::ListRef<DataAppSpecElIngressElRef> {
+    pub fn ingress(&self) -> terrars::ListRef<DataApp_Spec_IngressRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ingress", self.base))
     }
 
     #[doc = "Get a reference to the value of field `job` after provisioning.\n"]
-    pub fn job(&self) -> terrars::ListRef<DataAppSpecElJobElRef> {
+    pub fn job(&self) -> terrars::ListRef<DataApp_Spec_JobRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.job", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `maintenance` after provisioning.\n"]
+    pub fn maintenance(&self) -> terrars::ListRef<DataApp_Spec_MaintenanceRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance", self.base))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
@@ -8112,17 +12145,121 @@ impl DataAppSpecElRef {
     }
 
     #[doc = "Get a reference to the value of field `service` after provisioning.\n"]
-    pub fn service(&self) -> terrars::ListRef<DataAppSpecElServiceElRef> {
+    pub fn service(&self) -> terrars::ListRef<DataApp_Spec_ServiceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service", self.base))
     }
 
     #[doc = "Get a reference to the value of field `static_site` after provisioning.\n"]
-    pub fn static_site(&self) -> terrars::ListRef<DataAppSpecElStaticSiteElRef> {
+    pub fn static_site(&self) -> terrars::ListRef<DataApp_Spec_StaticSiteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.static_site", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `vpc` after provisioning.\n"]
+    pub fn vpc(&self) -> terrars::ListRef<DataApp_Spec_VpcRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `worker` after provisioning.\n"]
-    pub fn worker(&self) -> terrars::ListRef<DataAppSpecElWorkerElRef> {
+    pub fn worker(&self) -> terrars::ListRef<DataApp_Spec_WorkerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.worker", self.base))
     }
+}
+
+#[derive(Serialize)]
+pub struct DataApp_DedicatedIps {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    status: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataApp_DedicatedIps {
+    #[doc = "Set the field `id`.\nThe ID of the dedicated egress IP."]
+    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ip`.\nThe IP address of the dedicated egress IP."]
+    pub fn set_ip(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `status`.\nThe status of the dedicated egress IP: 'UNKNOWN', 'ASSIGNING', 'ASSIGNED', or 'REMOVED'"]
+    pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.status = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataApp_DedicatedIps {
+    type O = terrars::BlockAssignable<DataApp_DedicatedIps>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataApp_DedicatedIps {}
+
+impl BuildDataApp_DedicatedIps {
+    pub fn build(self) -> DataApp_DedicatedIps {
+        DataApp_DedicatedIps {
+            id: core::default::Default::default(),
+            ip: core::default::Default::default(),
+            status: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataApp_DedicatedIpsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataApp_DedicatedIpsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApp_DedicatedIpsRef {
+        DataApp_DedicatedIpsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataApp_DedicatedIpsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\nThe ID of the dedicated egress IP."]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `ip` after provisioning.\nThe IP address of the dedicated egress IP."]
+    pub fn ip(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `status` after provisioning.\nThe status of the dedicated egress IP: 'UNKNOWN', 'ASSIGNING', 'ASSIGNED', or 'REMOVED'"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataAppDynamic {
+    dedicated_ips: std::option::Option<terrars::DynamicBlock<DataApp_DedicatedIps>>,
 }
